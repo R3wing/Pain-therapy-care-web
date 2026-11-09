@@ -1,0 +1,25 @@
+<div class="mobile-cta">
+        <a class="btn btn--outline btn--md" {{MOBILE_CALL_ATTRS}}>
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+            Call
+        </a>
+        <a class="btn btn--primary btn--md" href="{{BOOK_HREF}}">Book{{BOOK_SUFFIX}}</a>
+    </div>
+
+    <!-- Hoja inferior "Call a location" (móvil) / modal centrado (tablet+) -->
+    <dialog class="call-sheet" id="call-sheet" aria-labelledby="call-sheet-title">
+        <div class="call-sheet__inner">
+            <div class="call-sheet__header">
+                <h2 class="call-sheet__title" id="call-sheet-title">Call a location</h2>
+                <button class="icon-btn call-sheet__close" type="button" aria-label="Close" data-call-sheet-close>
+                    <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+                </button>
+            </div>
+            <ul class="call-list">
+                <li><a class="call-list__link" href="tel:+13473954008"><span class="call-list__name">Williamsburg</span><span class="call-list__address">16 Sumner Pl, Brooklyn</span><span class="call-list__phone">(347) 395-4008</span></a></li>
+                <li><a class="call-list__link" href="tel:+17187154484"><span class="call-list__name">Flatbush</span><span class="call-list__address">2577 Nostrand Ave, Brooklyn</span><span class="call-list__phone">(718) 715-4484</span></a></li>
+                <li><a class="call-list__link" href="tel:+15162762889"><span class="call-list__name">Inwood · Five Towns</span><span class="call-list__address">233 Doughty Blvd, Inwood</span><span class="call-list__phone">(516) 276-2889</span></a></li>
+                <li><a class="call-list__link" href="tel:+18454143711"><span class="call-list__name">Monsey</span><span class="call-list__address">40 Main St, Monsey</span><span class="call-list__phone">(845) 414-3711</span></a></li>
+            </ul>
+        </div>
+    </dialog>

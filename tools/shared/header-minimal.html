@@ -1,0 +1,38 @@
+<a class="skip-link" href="#content">Skip to content</a>
+
+    <!-- =====================================================
+         HEADER REDUCIDO (páginas de conversión): solo logo + "Questions? Call ▾".
+         Sin menú, sin utility bar y sin barra fija móvil.
+    ====================================================== -->
+    <header class="site-header is-scrolled" id="top" data-header data-header-solid data-header-scrolled>
+        <div class="site-header__bar">
+            <div class="container site-header__inner">
+
+                <a class="brand" href="/" aria-label="Pain Therapy Medical Care — Home">
+                    <img class="brand-logo"
+                         src="assets/icons/paintherapy-isotype_1.svg"
+                         alt=""
+                         width="32" height="48"
+                         decoding="async">
+                    <span class="brand-copy" aria-hidden="true">
+                        <span class="brand-name"><span class="brand-name-dark">Pain</span><span class="brand-name-blue">Therapy</span></span>
+                        <span class="brand-bar">Medical Care</span>
+                    </span>
+                </a>
+
+                <div class="site-header__actions">
+                    <div class="call-menu header-questions" data-dropdown="call">
+                        <button class="btn btn--outline btn--md call-menu__trigger" type="button" aria-expanded="false" aria-controls="call-menu-panel">
+                            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+                            Questions? Call
+                            <svg class="icon call-menu__chevron" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                        </button>
+                        <div class="call-menu__panel" id="call-menu-panel">
+                            {{CALL_LIST}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>

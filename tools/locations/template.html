@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- STAGING: quitar "noindex, nofollow" el día del lanzamiento (hay textos pendientes de confirmar) -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESC}}">
+    <link rel="canonical" href="{{URL}}">
+{{REDIRECT_NOTE}}
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pain Therapy Medical Care">
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:description" content="{{DESC}}">
+    <meta property="og:url" content="{{URL}}">
+    <meta property="og:image" content="{{SITE}}/assets/images/og-{{SLUG}}.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Pain Therapy Medical Care clinic in {{PLACE}}">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="../../assets/icons/paintherapy-isotype_1.svg" type="image/svg+xml">
+
+    <!-- Marca "JS disponible" antes del primer pintado -->
+    <script src="../../assets/js/js-detect.js"></script>
+
+    <!-- Fuentes: Montserrat (Gotham no es libre; se usa si está instalada) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../styles.css">
+    {{HEAD_SCRIPTS}}
+    <script src="../../assets/js/main.js" defer></script>
+    <script src="../../assets/js/location.js" defer></script>
+
+    <!--
+        Datos estructurados: MedicalClinic + BreadcrumbList + FAQPage.
+        El @id de la clínica es el mismo que usa la Home (department de #organization).
+        Las respuestas del FAQ coinciden EXACTAMENTE con el texto visible de la sección 10.
+
+        PENDIENTE [HOURS] → añadir a la MedicalClinic cuando el cliente confirme:
+        "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00" }
+        ],
+
+        PENDIENTE coordenadas → añadir a la MedicalClinic (copiar del pin de Google Business Profile):
+        "geo": { "@type": "GeoCoordinates", "latitude": [LAT], "longitude": [LNG] },
+    -->
+    <script type="application/ld+json">
+{{JSONLD}}
+    </script>
+</head>
+<body data-location="{{KEY}}" data-location-tel="tel:{{TEL}}">
+
+    <!-- =====================================================
+         SPRITE DE ÍCONOS (copiado de la Home)
+    ====================================================== -->
+    {{SPRITE}}
+
+    <!-- Íconos solo de las páginas de sede -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false">
+        <symbol id="i-transit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l-2 0M15 21h2M8 17l-2 4M16 17l2 4"/><circle cx="9" cy="14" r=".5"/><circle cx="15" cy="14" r=".5"/></g></symbol>
+        <symbol id="i-parking" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></g></symbol>
+        <symbol id="i-access" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M5 8h14M12 8v6M12 14l-4 7M12 14l4 7"/></g></symbol>
+    </svg>
+
+    {{HEADER}}
+
+    <main id="content" tabindex="-1">
+
+        <!-- =====================================================
+             1. BREADCRUMB
+        ====================================================== -->
+        <nav class="location-breadcrumb" aria-label="Breadcrumb">
+            <div class="container">
+                <ol class="location-breadcrumb__list">
+                    <li class="location-breadcrumb__item"><a href="/">Home</a></li>
+                    <li class="location-breadcrumb__item"><a href="/locations/">Locations</a></li>
+                    <li class="location-breadcrumb__item"><span aria-current="page">{{LIST_NAME}}</span></li>
+                </ol>
+            </div>
+        </nav>
+
+        <!-- =====================================================
+             2. HERO LOCAL
+        ====================================================== -->
+        <section class="location-hero" aria-labelledby="hero-title">
+            <div class="location-hero__deco" aria-hidden="true">
+                <svg class="arcs location-hero__arcs" aria-hidden="true" focusable="false"><use href="#i-arcs"></use></svg>
+            </div>
+
+            <div class="container location-hero__inner">
+                <div class="location-hero__content">
+                    <p class="pill location-pill">
+                        <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg>
+                        {{KICKER}}
+                    </p>
+                    <h1 class="location-hero__title" id="hero-title">{{H1}}</h1>
+                    <p class="location-hero__text">Drug-free Shockwave, EMTT and Laser Therapy close to home. Medicare, Medicaid and most insurance accepted.</p>
+
+                    <!-- NAP: idéntico a footer, schema y Google Business Profile -->
+                    <address class="location-nap">
+                        <p class="location-nap__name">{{SCHEMA_NAME}}</p>
+                        <p class="location-nap__row">
+                            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg>
+                            <a href="{{MAPS_SEARCH}}" target="_blank" rel="noopener" aria-label="{{ADDRESS}}, open in Google Maps (opens in a new tab)">{{ADDRESS}}</a>
+                        </p>
+                        <p class="location-nap__row">
+                            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+                            <a class="location-nap__phone" href="tel:{{TEL}}" aria-label="Call Pain Therapy {{SEDE}} at {{PHONE}}">{{PHONE}}</a>
+                        </p>
+                        <p class="location-nap__row">
+                            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
+                            <span>[HOURS]</span>
+                        </p>
+                        <p class="badge location-badge">
+                            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
+                            Same-day appointments
+                        </p>
+                    </address>
+
+                    <div class="btn-group location-hero__actions">
+                        <a class="btn btn--primary btn--lg" href="/schedule/?location={{KEY}}">Book in {{SEDE}}</a>
+                        <a class="btn btn--outline btn--lg" href="{{MAPS_DIR}}" target="_blank" rel="noopener">Get directions<span class="visually-hidden"> to our {{SEDE}} clinic (opens in a new tab)</span></a>
+                        <a class="btn btn--outline btn--lg" href="tel:{{TEL}}">
+                            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+                            <span>Call<span class="visually-hidden"> Pain Therapy</span> {{SEDE}}<span class="visually-hidden"> at {{PHONE}}</span></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="location-hero__map">
+                    <div class="media-placeholder media-placeholder--map" data-media="map-{{SLUG}}">
+                        <span class="media-placeholder__label">MAP: Google Maps embed (lazy) · {{SEDE}}</span>
+                        <!-- <iframe src="https://www.google.com/maps/embed?pb=PEGAR_CODIGO" title="Map to Pain Therapy {{SEDE}}" width="800" height="600" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             3. CÓMO LLEGAR
+        ====================================================== -->
+        <section class="section" id="directions" aria-labelledby="directions-title">
+            <div class="container" data-reveal>
+                <header class="section-header">
+                    <h2 class="section-title" id="directions-title">Getting to our {{SEDE}} clinic</h2>
+                </header>
+
+                <ul class="location-info">
+                    <li class="location-info__card">
+                        <span class="location-info__icon" aria-hidden="true"><svg class="icon" focusable="false"><use href="#i-transit"></use></svg></span>
+                        <h3 class="location-info__title">{{TRANSIT_TITLE}}</h3>
+                        <p class="location-info__text">[SUBWAY / BUS]</p>
+                    </li>
+                    <li class="location-info__card">
+                        <span class="location-info__icon" aria-hidden="true"><svg class="icon" focusable="false"><use href="#i-parking"></use></svg></span>
+                        <h3 class="location-info__title">Parking</h3>
+                        <p class="location-info__text">[PARKING]</p>
+                    </li>
+                    <li class="location-info__card">
+                        <span class="location-info__icon" aria-hidden="true"><svg class="icon" focusable="false"><use href="#i-access"></use></svg></span>
+                        <h3 class="location-info__title">Accessibility</h3>
+                        <p class="location-info__text">[ACCESSIBILITY]</p>
+                    </li>
+                    <li class="location-info__card">
+                        <span class="location-info__icon" aria-hidden="true"><svg class="icon" focusable="false"><use href="#i-clock"></use></svg></span>
+                        <h3 class="location-info__title" id="hours-title">Hours</h3>
+                        <!-- location.js resalta el día actual (hora de Nueva York) -->
+                        <table class="location-hours" aria-labelledby="hours-title" data-location-hours>
+                            <caption class="visually-hidden">Opening hours at our {{SEDE}} clinic</caption>
+                            <thead class="visually-hidden">
+                                <tr><th scope="col">Day</th><th scope="col">Hours</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr data-day="Mon"><th scope="row">Monday</th><td>[HOURS]</td></tr>
+                                <tr data-day="Tue"><th scope="row">Tuesday</th><td>[HOURS]</td></tr>
+                                <tr data-day="Wed"><th scope="row">Wednesday</th><td>[HOURS]</td></tr>
+                                <tr data-day="Thu"><th scope="row">Thursday</th><td>[HOURS]</td></tr>
+                                <tr data-day="Fri"><th scope="row">Friday</th><td>[HOURS]</td></tr>
+                                <tr data-day="Sat"><th scope="row">Saturday</th><td>[HOURS]</td></tr>
+                                <tr data-day="Sun"><th scope="row">Sunday</th><td>[HOURS]</td></tr>
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             4. DENTRO DE LA CLÍNICA
+        ====================================================== -->
+        <section class="section section--cloud" aria-labelledby="inside-title">
+            <div class="container" data-reveal>
+                <header class="section-header">
+                    <h2 class="section-title" id="inside-title">Inside our {{SEDE}} clinic</h2>
+                </header>
+                <ul class="location-gallery">
+                    <li>
+                        <div class="media-placeholder location-gallery__media" data-media="{{SLUG}}-interior-1">
+                            <span class="media-placeholder__label">IMAGE: {{SLUG}}-interior-1.webp · 1200×900</span>
+                            <!-- <img src="../../assets/images/locations/{{SLUG}}-interior-1.webp" alt="Reception and waiting area at Pain Therapy Medical Care in {{PLACE}}" width="1200" height="900" loading="lazy" decoding="async"> -->
+                        </div>
+                    </li>
+                    <li>
+                        <div class="media-placeholder location-gallery__media" data-media="{{SLUG}}-interior-2">
+                            <span class="media-placeholder__label">IMAGE: {{SLUG}}-interior-2.webp · 1200×900</span>
+                            <!-- <img src="../../assets/images/locations/{{SLUG}}-interior-2.webp" alt="Treatment room with Shockwave and EMTT equipment at our {{PLACE}} clinic" width="1200" height="900" loading="lazy" decoding="async"> -->
+                        </div>
+                    </li>
+                    <li>
+                        <div class="media-placeholder location-gallery__media" data-media="{{SLUG}}-interior-3">
+                            <span class="media-placeholder__label">IMAGE: {{SLUG}}-interior-3.webp · 1200×900</span>
+                            <!-- <img src="../../assets/images/locations/{{SLUG}}-interior-3.webp" alt="Rehabilitation and therapy area at Pain Therapy Medical Care in {{PLACE}}" width="1200" height="900" loading="lazy" decoding="async"> -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             5. TRATAMIENTOS EN ESTA SEDE
+             CONFIRMAR servicios por sede
+        ====================================================== -->
+        <section class="section" aria-labelledby="treatments-title">
+            <div class="container" data-reveal>
+                <header class="section-header">
+                    <h2 class="section-title" id="treatments-title">Treatments available in {{SEDE}}</h2>
+                </header>
+                <!-- CONFIRMAR servicios por sede -->
+                <div class="location-treatments">
+{{TREATMENTS}}
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             6. PROVIDERS EN ESTA SEDE
+        ====================================================== -->
+        <section class="section section--cloud" aria-labelledby="providers-title">
+            <div class="container" data-reveal>
+                <header class="section-header section-header--split">
+                    <h2 class="section-title" id="providers-title">Your care team in {{SEDE}}</h2>
+                    <a class="text-link" href="/providers/">Meet all providers <span aria-hidden="true">→</span></a>
+                </header>
+                <!-- CONFIRMAR asignación por sede -->
+                <ul class="providers-grid">
+{{PROVIDERS}}
+                </ul>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             7. BANDA DE ASEGURADORAS (componente de la Home)
+        ====================================================== -->
+        {{INSURANCE_BAND}}
+
+        <!-- =====================================================
+             8. RESEÑAS
+             PENDIENTE: 3 reseñas reales del Google Business Profile de la sede
+        ====================================================== -->
+        <section class="section" aria-labelledby="reviews-title">
+            <div class="container" data-reveal>
+                <header class="section-header section-header--split">
+                    <h2 class="section-title" id="reviews-title">What {{SEDE}} patients say</h2>
+                    <a class="text-link" href="/reviews/">Read all reviews <span aria-hidden="true">→</span></a>
+                </header>
+                <div class="reviews-grid">
+{{REVIEWS}}
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             9. BARRIOS QUE ATENDEMOS
+             PENDIENTE: [NEIGHBORHOODS SERVED]
+        ====================================================== -->
+        <section class="section section--cloud" aria-labelledby="areas-title">
+            <div class="container" data-reveal>
+                <header class="section-header">
+                    <h2 class="section-title" id="areas-title">Neighborhoods we serve near {{SEDE}}</h2>
+                </header>
+                <ul class="location-areas">
+                    <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
+                    <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
+                    <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
+                    <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
+                    <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
+                    <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
+                </ul>
+                <p class="location-areas__text">Patients come to our {{SEDE}} office from the surrounding communities for drug-free care without a long trip. Not sure which of our four clinics is closest to you? Call us and we'll help you choose.</p>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             10. FAQ LOCAL (<details>/<summary>, contenido siempre en el HTML)
+        ====================================================== -->
+        <section class="section" aria-labelledby="faq-title">
+            <div class="container container--narrow" data-reveal>
+                <header class="section-header section-header--center">
+                    <h2 class="section-title" id="faq-title">Questions about our {{SEDE}} clinic</h2>
+                </header>
+                <div class="faq">
+{{FAQ}}
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             11. OTRAS SEDES (id="locations": destino sin JS de "Call a location")
+        ====================================================== -->
+        <section class="section location-others" id="locations" aria-labelledby="others-title">
+            <div class="container" data-reveal>
+                <header class="section-header">
+                    <h2 class="section-title" id="others-title">Other locations</h2>
+                </header>
+                <div class="location-others__grid">
+{{OTHERS}}
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             12. CTA FINAL
+        ====================================================== -->
+        {{CTA_FINAL}}
+
+    </main>
+
+    {{FOOTER}}
+
+    {{MOBILE_AND_SHEET}}
+
+</body>
+</html>
