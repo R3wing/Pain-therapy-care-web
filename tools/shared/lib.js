@@ -10,7 +10,7 @@
 
    Partials: sprite · sprite-forms · header · header-minimal · footer ·
              mobile-bar · cta-final · insurance-band · insurers-grid ·
-             providers-grid · call-list · head-scripts
+             providers-grid · call-list · hours · head-scripts
    header-minimal: logo + "Questions? Call ▾" (schedule). Sin opciones.
    call-list / insurers-grid: indent = sangría de las líneas 2+
 
@@ -34,6 +34,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const hours = require('./hours.js');
 
 const DIR = __dirname;
 const SITE = 'https://paintherapycare.com';
@@ -160,6 +161,14 @@ const RENDER = {
     /* Header de conversión: logo + "Questions? Call ▾" (sin menú) */
     'header-minimal': function () {
         return fill(read('header-minimal'), { CALL_LIST: indent(read('call-list'), 28) }, 'header-minimal');
+    },
+
+    /* Horario resumido de una sede (texto inline): <!-- @partial hours key=williamsburg --> */
+    hours: function (o) {
+        const loc = require('../locations/data.js').filter(function (l) { return l.key === o.key; })[0];
+        if (!loc) throw new Error('hours: sede desconocida "' + o.key + '"');
+        hours.check(loc);
+        return hours.summaryHtml(loc);
     },
 
     /* <head>: GTM comentado + analytics.js */

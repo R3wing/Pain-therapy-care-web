@@ -70,8 +70,36 @@ htmlFiles(ROOT).forEach(function (file) {
     console.log('  ' + (same ? '=' : (CHECK ? '≠' : '✓')) + ' ' + rel.join('/'));
 });
 
+/* ---------- 3) coherencia de datos (el JSON-LD de la Home es estático) ---------- */
+
+console.log('\n› Coherencia de datos');
+let problems = 0;
+(function checkHomeHours() {
+    const hours = require('./shared/hours.js');
+    const locations = require('./locations/data.js');
+    const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+    const m = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(home);
+    if (!m) { console.error('  ✗ index.html: no hay JSON-LD'); problems++; return; }
+    const graph = JSON.parse(m[1])['@graph'];
+    locations.forEach(function (l) {
+        const node = graph.filter(function (n) { return n['@id'] === lib.SITE + '/locations/' + l.slug + '/#clinic'; })[0];
+        const want = JSON.stringify(hours.schemaSpec(l));
+        const got = JSON.stringify((node && node.openingHoursSpecification) || []);
+        if (want === got) {
+            console.log('  ✓ Home JSON-LD · horarios de ' + l.sede);
+        } else {
+            console.error('  ✗ Home JSON-LD · horarios de ' + l.sede + ' no coinciden con tools/locations/data.js');
+            problems++;
+        }
+    });
+})();
+
 if (CHECK && changed) {
     console.error('\n' + changed + ' página(s) desactualizada(s). Ejecuta: node tools/build-all.js');
+    process.exit(1);
+}
+if (problems) {
+    console.error('\n' + problems + ' incoherencia(s) de datos. Corrige index.html (JSON-LD) o data.js.');
     process.exit(1);
 }
 console.log('\nListo.');

@@ -20,6 +20,9 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const SITE = 'https://paintherapycare.com';
 const locations = require('./data.js');
 const lib = require('../shared/lib.js');
+const hours = require('../shared/hours.js');
+
+locations.forEach(hours.check);
 
 const template = fs.readFileSync(path.join(__dirname, 'template.html'), 'utf8');
 const EOL = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8').includes('\r\n') ? '\r\n' : '\n';
@@ -164,7 +167,7 @@ function othersHtml(current) {
             `        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>${l.street}<br>${l.city}, ${l.region} ${l.zip}</span></p>`,
             `        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:${l.tel}" aria-label="Call Pain Therapy ${l.sede} at ${l.phone}">${l.phone}</a></p>`,
             '    </address>',
-            '    <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>',
+            '    <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>' + hours.summaryHtml(l) + '</span></p>',
             '    <div class="location-card__actions">',
             `        <a class="btn btn--primary btn--md" href="/locations/${l.slug}/">View location<span class="visually-hidden">: ${l.listName}</span></a>`,
             `        <a class="btn btn--outline btn--md" href="${mapsDir(l)}" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to ${l.sede} (opens in a new tab)</span></a>`,
@@ -205,6 +208,7 @@ function jsonLd(l) {
                     addressCountry: 'US'
                 },
                 medicalSpecialty: 'PainMedicine',
+                openingHoursSpecification: hours.schemaSpec(l),
                 availableService: services,
                 parentOrganization: { '@id': SITE + '/#organization' }
             },
@@ -309,6 +313,9 @@ locations.forEach(function (l) {
         KICKER: l.kicker,
         PLACE: l.placeLabel,
         ADDRESS: addr(l),
+        FLOOR_NOTE: l.floor ? ` <span class="location-nap__floor">· ${l.floor}</span>` : '',
+        HOURS_SUMMARY: hours.summaryHtml(l),
+        HOURS_ROWS: indent(hours.tableRows(l), 32),
         PHONE: l.phone,
         TEL: l.tel,
         MAPS_SEARCH: mapsSearch(l),

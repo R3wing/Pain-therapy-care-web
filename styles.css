@@ -23,6 +23,7 @@
     13. === COMPONENT: BREADCRUMB === (.breadcrumb, genérico para páginas nuevas)
     14. === PAGE: SCHEDULE ===   (.schedule-*, .thanks-*)
     15. === FIX: FOOTER ===       (corrige el botón del footer)
+    16. === COMPONENT: MEDIA ===  (placeholder con imagen real)
     ·   Nuevos bloques → añadir debajo con un encabezado "=== PAGE: NOMBRE ==="
 ========================================================= */
 
@@ -4213,4 +4214,20 @@ html:not(.js) .schedule-step + .schedule-step {
 
 .site-footer__brand .btn--light {
     color: var(--navy-900);
+}
+
+
+/* =========================================================
+   === COMPONENT: MEDIA ===
+   Cuando un .media-placeholder contiene una imagen, video o iframe
+   REAL, se quita el aspecto de placeholder (borde punteado, fondo
+   gris, relleno). El medio ya lo cubre con position:absolute.
+   Sirve para cualquier imagen que se enlace desde la Media Library.
+========================================================= */
+
+.media-placeholder:has(> img, > video, > iframe) {
+    padding: 0;
+    background: transparent;
+    border-style: solid;
+    border-color: transparent;
 }

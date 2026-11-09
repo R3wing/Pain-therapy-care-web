@@ -44,14 +44,9 @@
     <script src="../../assets/js/location.js" defer></script>
 
     <!--
-        Datos estructurados: MedicalClinic + BreadcrumbList + FAQPage.
+        Datos estructurados: MedicalClinic (con openingHoursSpecification desde data.js) + BreadcrumbList + FAQPage.
         El @id de la clínica es el mismo que usa la Home (department de #organization).
         Las respuestas del FAQ coinciden EXACTAMENTE con el texto visible de la sección 10.
-
-        PENDIENTE [HOURS] → añadir a la MedicalClinic cuando el cliente confirme:
-        "openingHoursSpecification": [
-            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00" }
-        ],
 
         PENDIENTE coordenadas → añadir a la MedicalClinic (copiar del pin de Google Business Profile):
         "geo": { "@type": "GeoCoordinates", "latitude": [LAT], "longitude": [LNG] },
@@ -76,6 +71,16 @@
                     "addressCountry": "US"
                 },
                 "medicalSpecialty": "PainMedicine",
+                "openingHoursSpecification": [
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": [
+                            "Monday"
+                        ],
+                        "opens": "08:30",
+                        "closes": "16:30"
+                    }
+                ],
                 "availableService": [
                     {
                         "@type": "MedicalTherapy",
@@ -487,7 +492,7 @@
                         <p class="location-nap__name">Pain Therapy Medical Care – Inwood (Five Towns)</p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg>
-                            <a href="https://www.google.com/maps/search/?api=1&amp;query=233+Doughty+Blvd+Inwood+NY+11096" target="_blank" rel="noopener" aria-label="233 Doughty Blvd, Inwood, NY 11096, open in Google Maps (opens in a new tab)">233 Doughty Blvd, Inwood, NY 11096</a>
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query=233+Doughty+Blvd+Inwood+NY+11096" target="_blank" rel="noopener" aria-label="233 Doughty Blvd, Inwood, NY 11096, open in Google Maps (opens in a new tab)">233 Doughty Blvd, Inwood, NY 11096</a> <span class="location-nap__floor">· 2nd floor</span>
                         </p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
@@ -495,7 +500,7 @@
                         </p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
-                            <span>[HOURS]</span>
+                            <span>Mon: 8:30 am – 4:30 pm</span>
                         </p>
                         <p class="badge location-badge">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
@@ -557,13 +562,13 @@
                                 <tr><th scope="col">Day</th><th scope="col">Hours</th></tr>
                             </thead>
                             <tbody>
-                                <tr data-day="Mon"><th scope="row">Monday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Tue"><th scope="row">Tuesday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Wed"><th scope="row">Wednesday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Thu"><th scope="row">Thursday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Fri"><th scope="row">Friday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Sat"><th scope="row">Saturday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Sun"><th scope="row">Sunday</th><td>[HOURS]</td></tr>
+                                <tr data-day="Mon"><th scope="row">Monday</th><td>8:30 am – 4:30 pm</td></tr>
+                                <tr data-day="Tue"><th scope="row">Tuesday</th><td>Closed</td></tr>
+                                <tr data-day="Wed"><th scope="row">Wednesday</th><td>Closed</td></tr>
+                                <tr data-day="Thu"><th scope="row">Thursday</th><td>Closed</td></tr>
+                                <tr data-day="Fri"><th scope="row">Friday</th><td>Closed</td></tr>
+                                <tr data-day="Sat"><th scope="row">Saturday</th><td>Closed</td></tr>
+                                <tr data-day="Sun"><th scope="row">Sunday</th><td>Closed</td></tr>
                             </tbody>
                         </table>
                     </li>
@@ -853,7 +858,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>16 Sumner Place<br>Brooklyn, NY 11206</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+13473954008" aria-label="Call Pain Therapy Williamsburg at (347) 395-4008">(347) 395-4008</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 9:00 am – 2:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/locations/brooklyn-ny-williamsburg/">View location<span class="visually-hidden">: Williamsburg</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=16+Sumner+Place+Brooklyn+NY+11206" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Williamsburg (opens in a new tab)</span></a>
@@ -865,7 +870,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>2577 Nostrand Ave<br>Brooklyn, NY 11210</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+17187154484" aria-label="Call Pain Therapy Flatbush at (718) 715-4484">(718) 715-4484</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 9:00 am – 2:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/locations/brooklyn-ny-flatbush/">View location<span class="visually-hidden">: Flatbush</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=2577+Nostrand+Ave+Brooklyn+NY+11210" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Flatbush (opens in a new tab)</span></a>
@@ -877,7 +882,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>40 Main St<br>Monsey, NY 10952</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+18454143711" aria-label="Call Pain Therapy Monsey at (845) 414-3711">(845) 414-3711</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Tue, Thu: 9:00 am – 4:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/locations/monsey-ny/">View location<span class="visually-hidden">: Monsey</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=40+Main+St+Monsey+NY+10952" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Monsey (opens in a new tab)</span></a>

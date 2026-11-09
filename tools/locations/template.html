@@ -38,14 +38,9 @@
     <script src="../../assets/js/location.js" defer></script>
 
     <!--
-        Datos estructurados: MedicalClinic + BreadcrumbList + FAQPage.
+        Datos estructurados: MedicalClinic (con openingHoursSpecification desde data.js) + BreadcrumbList + FAQPage.
         El @id de la clínica es el mismo que usa la Home (department de #organization).
         Las respuestas del FAQ coinciden EXACTAMENTE con el texto visible de la sección 10.
-
-        PENDIENTE [HOURS] → añadir a la MedicalClinic cuando el cliente confirme:
-        "openingHoursSpecification": [
-            { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00" }
-        ],
 
         PENDIENTE coordenadas → añadir a la MedicalClinic (copiar del pin de Google Business Profile):
         "geo": { "@type": "GeoCoordinates", "latitude": [LAT], "longitude": [LNG] },
@@ -107,7 +102,7 @@
                         <p class="location-nap__name">{{SCHEMA_NAME}}</p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg>
-                            <a href="{{MAPS_SEARCH}}" target="_blank" rel="noopener" aria-label="{{ADDRESS}}, open in Google Maps (opens in a new tab)">{{ADDRESS}}</a>
+                            <a href="{{MAPS_SEARCH}}" target="_blank" rel="noopener" aria-label="{{ADDRESS}}, open in Google Maps (opens in a new tab)">{{ADDRESS}}</a>{{FLOOR_NOTE}}
                         </p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
@@ -115,7 +110,7 @@
                         </p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
-                            <span>[HOURS]</span>
+                            <span>{{HOURS_SUMMARY}}</span>
                         </p>
                         <p class="badge location-badge">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
@@ -177,13 +172,7 @@
                                 <tr><th scope="col">Day</th><th scope="col">Hours</th></tr>
                             </thead>
                             <tbody>
-                                <tr data-day="Mon"><th scope="row">Monday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Tue"><th scope="row">Tuesday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Wed"><th scope="row">Wednesday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Thu"><th scope="row">Thursday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Fri"><th scope="row">Friday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Sat"><th scope="row">Saturday</th><td>[HOURS]</td></tr>
-                                <tr data-day="Sun"><th scope="row">Sunday</th><td>[HOURS]</td></tr>
+{{HOURS_ROWS}}
                             </tbody>
                         </table>
                     </li>

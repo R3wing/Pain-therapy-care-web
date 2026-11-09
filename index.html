@@ -45,8 +45,9 @@
 
     <!--
         Datos estructurados.
-        Cuando el cliente confirme horarios, añadir a cada MedicalClinic:
-        "openingHours": ["Mo-Fr 09:00-18:00"]   ← [HOURS]
+        openingHoursSpecification de cada MedicalClinic: viene de tools/locations/data.js
+        (campo "hours"). Si cambian los horarios, edita data.js y ejecuta
+        node tools/build-all.js; el build avisa si este bloque quedó distinto.
     -->
     <script type="application/ld+json">
     {
@@ -80,6 +81,10 @@
                     "postalCode": "11206",
                     "addressCountry": "US"
                 },
+                "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "10:30", "closes": "17:00" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "14:00" }
+                ],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -96,6 +101,10 @@
                     "postalCode": "11210",
                     "addressCountry": "US"
                 },
+                "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "10:30", "closes": "17:00" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "14:00" }
+                ],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -112,6 +121,9 @@
                     "postalCode": "11096",
                     "addressCountry": "US"
                 },
+                "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "08:30", "closes": "16:30" }
+                ],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -128,6 +140,9 @@
                     "postalCode": "10952",
                     "addressCountry": "US"
                 },
+                "openingHoursSpecification": [
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Thursday"], "opens": "09:00", "closes": "16:00" }
+                ],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -582,9 +597,9 @@
                 <div class="treatments-grid">
                     <article class="treatment-card">
                         <figure class="treatment-card__image">
+                            <!-- Imagen real: URL de la Media Library de WordPress (1200×628) -->
                             <div class="media-placeholder media-placeholder--16x10" data-media="treatment-shockwave">
-                                <span class="media-placeholder__label">IMAGE: treatment-shockwave.webp · 800×500</span>
-                                <!-- <img src="assets/images/treatment-shockwave.webp" alt="Physician applying shockwave therapy to a patient's heel" width="800" height="500" loading="lazy" decoding="async"> -->
+                                <img src="https://paintherapycare.com/wp-content/uploads/2026/10/ptc-shockwave-therapy-brooklyn-featured.jpg" alt="Clinician in navy scrubs applying a shockwave therapy applicator to a patient's elbow" width="1200" height="628" loading="lazy" decoding="async">
                             </div>
                         </figure>
                         <div class="treatment-card__content">
@@ -603,9 +618,9 @@
 
                     <article class="treatment-card">
                         <figure class="treatment-card__image">
+                            <!-- Imagen real: URL de la Media Library de WordPress (700×795, vertical; se recorta a 16:10) -->
                             <div class="media-placeholder media-placeholder--16x10" data-media="treatment-emtt">
-                                <span class="media-placeholder__label">IMAGE: treatment-emtt.webp · 800×500</span>
-                                <!-- <img src="assets/images/treatment-emtt.webp" alt="Patient receiving EMTT therapy on the lower back" width="800" height="500" loading="lazy" decoding="async"> -->
+                                <img src="https://paintherapycare.com/wp-content/uploads/2026/04/image-4-1.png" alt="Clinician guiding an EMTT applicator over a patient's lower back" width="700" height="795" loading="lazy" decoding="async">
                             </div>
                         </figure>
                         <div class="treatment-card__content">
@@ -624,9 +639,9 @@
 
                     <article class="treatment-card">
                         <figure class="treatment-card__image">
+                            <!-- Imagen real: URL de la Media Library de WordPress (1200×628) -->
                             <div class="media-placeholder media-placeholder--16x10" data-media="treatment-laser">
-                                <span class="media-placeholder__label">IMAGE: treatment-laser.webp · 800×500</span>
-                                <!-- <img src="assets/images/treatment-laser.webp" alt="Clinician using a therapeutic laser on a patient's knee" width="800" height="500" loading="lazy" decoding="async"> -->
+                                <img src="https://paintherapycare.com/wp-content/uploads/2026/10/ptc-cold-laser-therapy-featured.jpg" alt="Clinician in teal scrubs using a therapeutic laser on a seated patient's knee, both wearing protective eyewear" width="1200" height="628" loading="lazy" decoding="async">
                             </div>
                         </figure>
                         <div class="treatment-card__content">
@@ -827,7 +842,11 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>16 Sumner Place<br>Brooklyn, NY 11206</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+13473954008">(347) 395-4008</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>
+                            <!-- @partial hours key=williamsburg -->
+                            Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 9:00 am – 2:00 pm
+                            <!-- @end hours -->
+                        </span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=williamsburg">Book here<span class="visually-hidden"> at Williamsburg</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=16+Sumner+Place+Brooklyn+NY+11206" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Williamsburg (opens in a new tab)</span></a>
@@ -840,7 +859,11 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>2577 Nostrand Ave<br>Brooklyn, NY 11210</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+17187154484">(718) 715-4484</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>
+                            <!-- @partial hours key=flatbush -->
+                            Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 9:00 am – 2:00 pm
+                            <!-- @end hours -->
+                        </span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=flatbush">Book here<span class="visually-hidden"> at Flatbush</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=2577+Nostrand+Ave+Brooklyn+NY+11210" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Flatbush (opens in a new tab)</span></a>
@@ -853,7 +876,11 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>233 Doughty Blvd<br>Inwood, NY 11096</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+15162762889">(516) 276-2889</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>
+                            <!-- @partial hours key=inwood -->
+                            Mon: 8:30 am – 4:30 pm
+                            <!-- @end hours -->
+                        </span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=inwood">Book here<span class="visually-hidden"> at Inwood</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=233+Doughty+Blvd+Inwood+NY+11096" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Inwood (opens in a new tab)</span></a>
@@ -866,7 +893,11 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>40 Main St<br>Monsey, NY 10952</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+18454143711">(845) 414-3711</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>[HOURS]</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>
+                            <!-- @partial hours key=monsey -->
+                            Mon, Tue, Thu: 9:00 am – 4:00 pm
+                            <!-- @end hours -->
+                        </span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=monsey">Book here<span class="visually-hidden"> at Monsey</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=40+Main+St+Monsey+NY+10952" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Monsey (opens in a new tab)</span></a>

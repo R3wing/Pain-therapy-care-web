@@ -2,6 +2,11 @@
    Datos de las 4 sedes. ÚNICA fuente para generar las páginas.
    NAP: debe coincidir carácter por carácter con Google Business Profile.
    Lo que aún no se conoce va como [MARCADOR] visible.
+
+   hours  → horarios (formato en tools/shared/hours.js). Fuente: tabla de horarios
+            enviada por el cliente. Un día sin tramo = cerrado.
+   floor  → piso / suite (solo se muestra en el hero de la sede; NO forma parte
+            del NAP hasta confirmar cómo está en Google Business Profile).
 ========================================================= */
 
 module.exports = [
@@ -22,7 +27,12 @@ module.exports = [
         kicker: 'Brooklyn, NY',
         titleArea: 'Williamsburg, Brooklyn',
         placeLabel: 'Williamsburg, Brooklyn',      // para textos alt
-        hasSubway: true
+        hasSubway: true,
+        floor: '3rd floor',
+        hours: [
+            { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
+            { days: ['Fri'], opens: '09:00', closes: '14:00' }
+        ]
     },
     {
         key: 'flatbush',
@@ -41,7 +51,12 @@ module.exports = [
         kicker: 'Brooklyn, NY',
         titleArea: 'Flatbush, Brooklyn',
         placeLabel: 'Flatbush, Brooklyn',
-        hasSubway: true
+        hasSubway: true,
+        floor: 'Ground floor, Suite C',
+        hours: [
+            { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
+            { days: ['Fri'], opens: '09:00', closes: '14:00' }
+        ]
     },
     {
         key: 'inwood',
@@ -61,6 +76,10 @@ module.exports = [
         titleArea: 'Inwood, Five Towns',
         placeLabel: 'Inwood, Five Towns',
         hasSubway: false,
+        floor: '2nd floor',
+        hours: [
+            { days: ['Mon'], opens: '08:30', closes: '16:30' }
+        ],
         legacyUrl: '/locations/brooklyn-ny-inwood/'
     },
     {
@@ -80,6 +99,10 @@ module.exports = [
         kicker: 'Rockland County, NY',
         titleArea: 'Monsey, Rockland County',
         placeLabel: 'Monsey, NY',
-        hasSubway: false
+        hasSubway: false,
+        floor: '',
+        hours: [
+            { days: ['Mon', 'Tue', 'Thu'], opens: '09:00', closes: '16:00' }
+        ]
     }
 ];
