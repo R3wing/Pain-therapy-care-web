@@ -4231,3 +4231,315 @@ html:not(.js) .schedule-step + .schedule-step {
     border-style: solid;
     border-color: transparent;
 }
+
+/* =========================================================
+   === PAGE: LOCATION · FIX (tarjetas "Cómo llegar" + piso) ===
+   - Las 4 tarjetas comparten alto y padding (aspecto isométrico).
+   - La tarjeta Hours es más ancha en escritorio: las horas no se parten.
+   - El piso/suite del hero es una etiqueta propia, no texto suelto.
+========================================================= */
+
+.location-info__card {
+    padding: var(--sp-6) var(--sp-5);
+    min-height: 280px;
+}
+
+.location-hours th,
+.location-hours td {
+    white-space: nowrap;
+}
+
+.location-hours th,
+.location-hours td {
+    padding-block: 4px;
+}
+
+.location-hours__today {
+    margin-left: var(--sp-2);
+}
+
+.location-nap__floor {
+    flex: none;
+    padding: 2px var(--sp-2);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+    color: var(--slate);
+    background: var(--tint);
+    border-radius: var(--r-pill);
+}
+
+@media (min-width: 1200px) {
+    .location-info {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.45fr);
+    }
+}
+
+
+/* =========================================================
+   === PAGE: SERVICE ===
+   /services/<slug>/ (tratamientos). Generadas por tools/services/.
+   Reutiliza: .breadcrumb, .pill, .check-list, .media-placeholder,
+   .steps/.step, .pill-link, .faq, .location-card, .section-header.
+   Solo se define lo que falta.
+========================================================= */
+
+/* ---------- Hero ---------- */
+
+.service-hero {
+    padding: var(--sp-3) 0 var(--sp-8);
+    background: var(--cloud);
+}
+
+.service-hero__inner {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+}
+
+.service-hero__content {
+    display: grid;
+    justify-items: start;
+    gap: var(--sp-5);
+    max-width: 640px;
+}
+
+.service-pill {
+    color: var(--teal-700);
+    background: var(--teal-50);
+    border: 1px solid rgba(30, 111, 111, .25);
+}
+
+.service-hero__title {
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+}
+
+.service-hero__text {
+    max-width: 34em;
+    color: var(--slate);
+}
+
+.service-hero__media .media-placeholder {
+    border-radius: var(--r-card);
+}
+
+/* ---------- Secciones de contenido ---------- */
+
+.service-prose {
+    display: grid;
+    gap: var(--sp-4);
+    max-width: 46em;
+    margin-bottom: var(--sp-6);
+    color: var(--slate);
+}
+
+.service-intro {
+    max-width: 46em;
+    margin-bottom: var(--sp-5);
+    color: var(--slate);
+}
+
+.service-note {
+    max-width: 46em;
+    margin-top: var(--sp-5);
+    font-size: var(--fs-small);
+    color: var(--slate);
+}
+
+.service-group + .service-group {
+    margin-top: var(--sp-7);
+}
+
+.service-group__title {
+    margin-bottom: var(--sp-4);
+}
+
+.service-cards {
+    display: grid;
+    gap: var(--sp-4);
+    list-style: none;
+}
+
+.service-card {
+    display: grid;
+    align-content: start;
+    gap: var(--sp-2);
+    padding: var(--sp-5);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+}
+
+.service-card__title {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--navy-900);
+}
+
+.service-card__text {
+    color: var(--slate);
+}
+
+.service-checks {
+    display: grid;
+    gap: var(--sp-3);
+    list-style: none;
+}
+
+.service-checks li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding: var(--sp-4);
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--navy-900);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-btn);
+}
+
+.service-checks .icon {
+    flex: none;
+    margin-top: 2px;
+    color: var(--teal-700);
+}
+
+.service-tags,
+.service-combine {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    list-style: none;
+}
+
+.service-tags__item {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--sp-4);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy-900);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+}
+
+.service-steps .step {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--medical-500);
+}
+
+/* Chip informativo (sin enlace): sin estado hover */
+.service-pill-static {
+    cursor: default;
+}
+
+.service-pill-static:hover {
+    color: var(--navy-900);
+    border-color: var(--input-border);
+}
+
+/* ---------- Sedes y relacionados ---------- */
+
+.service-locations,
+.service-related {
+    display: grid;
+    gap: var(--sp-4);
+    list-style: none;
+}
+
+.service-related__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    min-height: 64px;
+    padding: var(--sp-3) var(--sp-5);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--navy-900);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+}
+
+.service-related__link:hover {
+    color: var(--action-700);
+    border-color: var(--action-700);
+}
+
+.service-related__link .icon {
+    flex: none;
+    color: var(--action-700);
+}
+
+/* Médico de la página (IMS) */
+
+.service-provider {
+    display: grid;
+    gap: var(--sp-5);
+    align-items: center;
+    max-width: 520px;
+}
+
+.service-provider__media {
+    width: 160px;
+    border-radius: var(--r-card);
+}
+
+.service-provider__name {
+    margin-bottom: var(--sp-1);
+}
+
+.service-provider__text {
+    color: var(--slate);
+}
+
+@media (min-width: 768px) {
+    .service-provider {
+        grid-template-columns: 160px 1fr;
+    }
+}
+
+/* ---------- Service: tablet (≥ 768px) ---------- */
+
+@media (min-width: 768px) {
+    .service-hero {
+        padding-bottom: var(--sp-9);
+    }
+
+    .service-cards {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .service-checks,
+    .service-locations,
+    .service-related {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .service-steps {
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+}
+
+/* ---------- Service: desktop (≥ 1200px) ---------- */
+
+@media (min-width: 1200px) {
+    .service-hero__inner {
+        grid-template-columns: 6fr 5fr;
+        gap: var(--sp-8);
+    }
+}
+
+
+/* Logo Medicaid NY (blanco, 3.00:1): se suma a la lista de .insurer-logo */
+.insurer-logo[data-media="logo-medicaid-ny"] { --logo-h: 66%; }
