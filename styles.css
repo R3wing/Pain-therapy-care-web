@@ -4543,3 +4543,199 @@ html:not(.js) .schedule-step + .schedule-step {
 
 /* Logo Medicaid NY (blanco, 3.00:1): se suma a la lista de .insurer-logo */
 .insurer-logo[data-media="logo-medicaid-ny"] { --logo-h: 66%; }
+
+
+/* =========================================================
+   === PAGE: LEGAL ===
+   /terms-and-conditions/ (y reutilizable en /privacy-policy/).
+   Reutiliza: .breadcrumb, .location-card, .container.
+   Texto en una columna de 68ch, 18px, interlineado 1.7.
+========================================================= */
+
+.legal-header {
+    padding: var(--sp-5) 0 var(--sp-7);
+    background: var(--cloud);
+}
+
+.legal-header .container {
+    display: grid;
+    justify-items: start;
+    gap: var(--sp-3);
+}
+
+.legal-header__date {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--slate);
+}
+
+.legal-header__text {
+    max-width: 40em;
+    color: var(--slate);
+}
+
+/* Resumen solo visual (el texto legal completo va debajo) */
+.legal-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-5);
+    margin-top: var(--sp-3);
+    padding: var(--sp-4) var(--sp-5);
+    list-style: none;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--tint);
+    border: 1px solid var(--border);
+    border-radius: var(--r-btn);
+}
+
+.legal-page {
+    padding-block: var(--sp-7);
+}
+
+.legal-layout {
+    display: grid;
+    gap: var(--sp-6);
+}
+
+/* Índice "On this page": lista arriba en móvil, sticky en escritorio */
+.legal-toc {
+    padding: var(--sp-4) var(--sp-5);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-btn);
+}
+
+.legal-toc__title {
+    margin-bottom: var(--sp-2);
+    font-size: var(--fs-small);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--slate);
+}
+
+.legal-toc__list {
+    padding-left: 1.4em;
+    font-size: 1rem;
+}
+
+.legal-toc__list a,
+.legal-toc__more a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 600;
+}
+
+.legal-toc__more {
+    margin-top: var(--sp-1);
+    padding-top: var(--sp-1);
+    border-top: 1px solid var(--border);
+    font-size: 1rem;
+}
+
+.legal-body {
+    max-width: 68ch;
+    font-size: var(--fs-body);   /* 18px */
+    line-height: 1.7;
+    color: var(--ink);
+}
+
+.legal-body > p,
+.legal-section p,
+.legal-contact > p {
+    margin-top: var(--sp-3);
+}
+
+.legal-section {
+    margin-top: var(--sp-7);
+    scroll-margin-top: calc(var(--nav-h) + var(--sp-4));
+}
+
+.legal-section h2,
+.legal-contact h2 {
+    font-size: clamp(1.375rem, 1.2rem + .8vw, 1.75rem);
+}
+
+.legal-body a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.legal-contact {
+    margin-top: var(--sp-8);
+    padding-top: var(--sp-7);
+    border-top: 1px solid var(--border);
+    scroll-margin-top: calc(var(--nav-h) + var(--sp-4));
+}
+
+.legal-contact__grid {
+    display: grid;
+    gap: var(--sp-4);
+    margin-top: var(--sp-5);
+    list-style: none;
+    line-height: 1.5;
+}
+
+.legal-contact__more {
+    margin-top: var(--sp-5);
+}
+
+.legal-updated {
+    margin-top: var(--sp-7);
+    font-size: var(--fs-small);
+    color: var(--slate);
+}
+
+@media (min-width: 768px) {
+    .legal-contact__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1200px) {
+    .legal-layout {
+        grid-template-columns: 260px minmax(0, 68ch);
+        gap: var(--sp-8);
+        align-items: start;
+    }
+
+    .legal-toc {
+        position: sticky;
+        top: calc(var(--nav-h) + var(--sp-5));
+    }
+}
+
+
+/* =========================================================
+   === FORMS: SMS CONSENT ===
+   Checkbox opcional de consentimiento SMS (/schedule/ y /contact-us/).
+   Extiende .insurance-check: bloque sutil, texto largo con enlaces.
+========================================================= */
+
+.sms-consent {
+    align-items: flex-start;
+    padding: var(--sp-4);
+    background: var(--tint);
+    border: 1px solid var(--border);
+    border-radius: var(--r-btn);
+}
+
+.sms-consent .insurance-check__input {
+    margin-top: 12px;                   /* alinea la caja con la 1.ª línea */
+}
+
+.insurance-check__label--text {
+    display: block;
+    padding-block: 2px;
+    font-size: 1rem;                    /* 16px: nunca por debajo de 15px */
+    line-height: 1.55;
+    color: var(--ink);
+}
+
+.insurance-check__label--text a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}

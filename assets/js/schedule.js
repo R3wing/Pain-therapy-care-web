@@ -10,6 +10,9 @@
    3) Validación por paso (al salir del campo y al pulsar Continue),
       foco al primer error, errores con texto + ícono + aria-describedby
    4) Envío: redirige a /thank-you-schedule/ y dispara generate_lead
+      (con sms_opt_in true/false). El checkbox SMS (#sms-consent) es opcional
+      y no tiene validación; al enviar se añaden sms_consent (yes/no),
+      sms_consent_text_version, sms_consent_timestamp y form_source.
    5) Thank-you: personaliza con ?location=
 
    Sin JS: los 3 fieldsets se ven seguidos y el formulario usa la
@@ -408,16 +411,25 @@
 
 
         /* ---------- 4) Envío ---------- */
+        function smsOptIn() {
+            var box = form.querySelector('#sms-consent');
+            return !!(box && box.checked);
+        }
+
         function collect() {
             var data = {};
-            Array.prototype.forEach.call(new FormData(form).entries(), function (pair) {
-                var key = pair[0];
+            new FormData(form).forEach(function (value, key) {
                 if (key === 'pain_area') {
-                    (data[key] = data[key] || []).push(pair[1]);
+                    (data[key] = data[key] || []).push(value);
                 } else {
-                    data[key] = pair[1];
+                    data[key] = value;
                 }
             });
+            /* Prueba de opt-in SMS (10DLC): un checkbox sin marcar no viaja en FormData,
+               por eso se fija explícitamente "yes" / "no". La versión del texto y
+               form_source son campos ocultos del formulario. */
+            data.sms_consent = smsOptIn() ? 'yes' : 'no';
+            data.sms_consent_timestamp = new Date().toISOString();
             return data;
         }
 
@@ -429,7 +441,11 @@
 
         function onSent() {
             reportStep(steps.length);
-            track('generate_lead', { form: 'schedule', location: has(LOCATIONS, selectedLocation()) ? selectedLocation() : undefined });
+            track('generate_lead', {
+                form: 'schedule',
+                location: has(LOCATIONS, selectedLocation()) ? selectedLocation() : undefined,
+                sms_opt_in: smsOptIn()   /* booleano: sin teléfono ni datos personales */
+            });
             /* Pequeña espera para que GTM procese el evento antes de salir */
             window.setTimeout(redirect, 200);
         }

@@ -497,6 +497,21 @@
                                         </p>
                                     </div>
 
+                                    <!-- =====================================================
+                                         CONSENTIMIENTO SMS (opcional, separado del consentimiento general)
+                                         Mismo texto que /terms-and-conditions/ y /contact-us/ (versión 2026-11-v1).
+                                         TODO backend: guardar sms_consent, versión del texto, timestamp, form_source y teléfono como prueba del opt-in (requisito 10DLC). Endpoint compatible con HIPAA (con BAA).
+                                    ====================================================== -->
+                                    <input type="hidden" name="sms_consent_text_version" value="2026-11-v1">
+                                    <input type="hidden" name="form_source" value="schedule">
+                                    <div class="insurance-field">
+                                        <div class="insurance-check sms-consent">
+                                            <input class="insurance-check__input" id="sms-consent" name="sms_consent" type="checkbox" value="yes">
+                                            <!-- CONFIRMAR CON CLIENTE: si no se enviarán mensajes de marketing, eliminar "marketing messages," en /terms-and-conditions/, /schedule/ y /contact-us/ -->
+                                            <label class="insurance-check__label insurance-check__label--text" for="sms-consent">By checking this box, I consent to receive SMS text messages from Pain Therapy Medical Care for appointment reminders, <span data-confirm="marketing">marketing messages,</span> and general two-way communication. Msg frequency varies. Msg and data rates may apply. Reply HELP for support. Reply STOP to opt out. View our <a href="/terms-and-conditions/" target="_blank" rel="noopener">Terms and Conditions<span class="visually-hidden"> (opens in a new tab)</span></a> and <a href="/privacy-policy/" target="_blank" rel="noopener">Privacy Policy<span class="visually-hidden"> (opens in a new tab)</span></a>.</label>
+                                        </div>
+                                    </div>
+
                                     <div class="insurance-field">
                                         <label class="insurance-field__label" for="sc-email">Email <span class="insurance-field__optional">(optional)</span></label>
                                         <input class="insurance-input" id="sc-email" name="email" type="email" autocomplete="email" inputmode="email" data-validate="email">
@@ -757,7 +772,7 @@
             <div class="container site-footer__bottom-inner">
                 <p>© 2026 Pain Therapy Medical Care</p>
                 <ul class="site-footer__legal">
-                    <li><a href="/privacy-policy/">Privacy</a></li>
+                    <li><a href="/privacy-policy/">Privacy Policy</a></li>
                     <li><a href="/terms-and-conditions/">Terms &amp; Conditions</a></li>
                     <!-- CONFIRMAR CON CLIENTE: estas páginas NO existen en el sitio en vivo.
                          Descomentar solo si se deciden crear (HIPAA / Sec. 1557 / WCAG).
