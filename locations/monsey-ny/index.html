@@ -75,11 +75,16 @@
                         "dayOfWeek": [
                             "Monday",
                             "Tuesday",
-                            "Thursday"
+                            "Thursday",
+                            "Friday"
                         ],
                         "opens": "09:00",
-                        "closes": "16:00"
+                        "closes": "17:00"
                     }
+                ],
+                "knowsLanguage": [
+                    "en",
+                    "yi"
                 ],
                 "availableService": [
                     {
@@ -405,7 +410,22 @@
                             </li>
 
                             <li class="site-nav__item"><a class="site-nav__link" href="/insurance/">Insurance</a></li>
-                            <li class="site-nav__item"><a class="site-nav__link" href="/about-us/">About</a></li>
+                            <!-- About ▾ (desplegable compacto; acordeón en móvil) -->
+                            <li class="site-nav__item site-nav__item--compact" data-dropdown="nav">
+                                <button class="site-nav__link site-nav__trigger" type="button" aria-expanded="false" aria-controls="menu-about">
+                                    About
+                                    <svg class="icon site-nav__chevron" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                                </button>
+                                <div class="mega-menu mega-menu--sm" id="menu-about">
+                                    <ul class="mega-menu__list">
+                                        <li><a href="/about-us/">About us</a></li>
+                                        <li><a href="/providers/">Providers</a></li>
+                                        <li><a href="/new-patients/">New Patients</a></li>
+                                        <li><a href="/reviews/">Reviews</a></li>
+                                        <li><a href="/contact-us/">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li class="site-nav__item"><a class="site-nav__link" href="/blog/">Blog</a></li>
                         </ul>
                     </nav>
@@ -500,7 +520,7 @@
                         </p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
-                            <span>Mon, Tue, Thu: 9:00 am – 4:00 pm</span>
+                            <span>Mon, Tue, Thu, Fri: 9:00 am – 5:00 pm</span>
                         </p>
                         <p class="badge location-badge">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
@@ -562,11 +582,12 @@
                                 <tr><th scope="col">Day</th><th scope="col">Hours</th></tr>
                             </thead>
                             <tbody>
-                                <tr data-day="Mon"><th scope="row">Monday</th><td>9:00 am – 4:00 pm</td></tr>
-                                <tr data-day="Tue"><th scope="row">Tuesday</th><td>9:00 am – 4:00 pm</td></tr>
+                                <!-- CONFIRMAR CON CLIENTE: sábado y domingo figuran como cerrados porque la web en vivo (/new-patients/) no los menciona -->
+                                <tr data-day="Mon"><th scope="row">Monday</th><td>9:00 am – 5:00 pm</td></tr>
+                                <tr data-day="Tue"><th scope="row">Tuesday</th><td>9:00 am – 5:00 pm</td></tr>
                                 <tr data-day="Wed"><th scope="row">Wednesday</th><td>Closed</td></tr>
-                                <tr data-day="Thu"><th scope="row">Thursday</th><td>9:00 am – 4:00 pm</td></tr>
-                                <tr data-day="Fri"><th scope="row">Friday</th><td>Closed</td></tr>
+                                <tr data-day="Thu"><th scope="row">Thursday</th><td>9:00 am – 5:00 pm</td></tr>
+                                <tr data-day="Fri"><th scope="row">Friday</th><td>9:00 am – 5:00 pm</td></tr>
                                 <tr data-day="Sat"><th scope="row">Saturday</th><td>Closed</td></tr>
                                 <tr data-day="Sun"><th scope="row">Sunday</th><td>Closed</td></tr>
                             </tbody>
@@ -711,12 +732,15 @@
         <!-- =====================================================
              7. BANDA DE ASEGURADORAS (componente de la Home)
         ====================================================== -->
-        <section class="insurers on-dark" aria-labelledby="insurers-title">
+        <section class="insurers insurance-band on-dark" aria-labelledby="insurers-title">
             <div class="container" data-reveal>
                 <div class="insurers__header">
                     <h2 class="insurers__title" id="insurers-title">We accept your insurance in Monsey</h2>
-                    <a class="text-link text-link--on-dark" href="/insurance/">Check your coverage <span aria-hidden="true">→</span></a>
+                    <a class="text-link text-link--on-dark" href="/insurance/">Check your coverage</a>
                 </div>
+            </div>
+            <!-- Marquee: dos listas idénticas seguidas (la 2.ª es solo visual: aria-hidden y alt="") -->
+            <div class="insurance-band__viewport">
                 <ul class="insurers__grid">
                     <li>
                         <div class="insurer-logo" data-media="logo-medicare">
@@ -756,6 +780,48 @@
                     <li>
                         <div class="insurer-logo" data-media="logo-bcbs">
                             <img src="../../assets/images/logo-bcbs.png" alt="Blue Cross Blue Shield" width="197" height="39" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="insurers__grid" aria-hidden="true">
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logo-medicare.png" alt="" width="559" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logotipo-Medicaid-NY.png" alt="" width="2172" height="724" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logo-fideliscare.png" alt="" width="286" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logo-metroplus.png" alt="" width="1100" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logo-affinity.png" alt="" width="991" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logo-unitedhealtcare.png" alt="" width="512" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logo-healthfirst.png" alt="" width="183" height="43" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="../../assets/images/logo-bcbs.png" alt="" width="197" height="39" loading="lazy" decoding="async">
                         </div>
                     </li>
                 </ul>
@@ -869,7 +935,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>2577 Nostrand Ave<br>Brooklyn, NY 11210</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+17187154484" aria-label="Call Pain Therapy Flatbush at (718) 715-4484">(718) 715-4484</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 9:00 am – 2:00 pm</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 10:00 am – 2:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/locations/brooklyn-ny-flatbush/">View location<span class="visually-hidden">: Flatbush</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=2577+Nostrand+Ave+Brooklyn+NY+11210" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Flatbush (opens in a new tab)</span></a>
@@ -949,6 +1015,7 @@
                 <ul class="site-footer__list">
                     <li><a href="/about-us/">About us</a></li>
                     <li><a href="/providers/">Providers</a></li>
+                    <li><a href="/new-patients/">New Patients</a></li>
                     <li><a href="/insurance/">Insurance</a></li>
                     <li><a href="/reviews/">Reviews</a></li>
                     <li><a href="/blog/">Blog</a></li>

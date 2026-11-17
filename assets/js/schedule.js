@@ -202,8 +202,24 @@
             summary.hidden = false;
         }
         renderSummary();
+
+        /* Aviso de horario por sede: Inwood abre solo los lunes (data.js) */
+        var locationNote = form.querySelector('[data-location-note]');
+        var LOCATION_NOTES = { inwood: 'Inwood is open on Mondays only.' };
+        function renderLocationNote() {
+            if (!locationNote) return;
+            var key = selectedLocation();
+            var msg = has(LOCATION_NOTES, key) ? LOCATION_NOTES[key] : '';
+            locationNote.textContent = msg;
+            locationNote.hidden = !msg;
+        }
+        renderLocationNote();
+
         form.addEventListener('change', function (e) {
-            if (e.target.name === 'location') renderSummary();
+            if (e.target.name === 'location') {
+                renderSummary();
+                renderLocationNote();
+            }
         });
 
 

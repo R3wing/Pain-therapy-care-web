@@ -91,6 +91,14 @@ let problems = 0;
             console.error('  ✗ Home JSON-LD · horarios de ' + l.sede + ' no coinciden con tools/locations/data.js');
             problems++;
         }
+        const wantLang = JSON.stringify(hours.languageCodes(l));
+        const gotLang = JSON.stringify((node && node.knowsLanguage) || []);
+        if (wantLang === gotLang) {
+            console.log('  ✓ Home JSON-LD · idiomas de ' + l.sede);
+        } else {
+            console.error('  ✗ Home JSON-LD · idiomas de ' + l.sede + ' no coinciden con tools/locations/data.js');
+            problems++;
+        }
     });
 })();
 

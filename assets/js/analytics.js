@@ -10,6 +10,8 @@
      generate_lead                  solicitud de cita enviada (schedule.js)
      form_start        {form}       primer contacto con un formulario
      form_step         {form,step}  paso completado en un formulario multi-paso
+     share_click       {method}     "Share this page" en /new-patients/ ("native" | "copy")
+     print_checklist                "Print this checklist" en /new-patients/
 
    PRIVACIDAD (HIPAA): jamás se envían nombre, teléfono, email, mensaje,
    síntomas ni nada que identifique a la persona. Solo claves de sede

@@ -34,6 +34,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="preload" as="image" href="https://paintherapycare.com/wp-content/uploads/2026/11/video-banner-poster.jpeg" fetchpriority="high">
     <!-- @partial head-scripts -->
     <!-- Analítica: UN solo contenedor GTM. Al lanzar, descomentar y reemplazar GTM-XXXXXXX. -->
     <!--
@@ -45,8 +46,8 @@
 
     <!--
         Datos estructurados.
-        openingHoursSpecification de cada MedicalClinic: viene de tools/locations/data.js
-        (campo "hours"). Si cambian los horarios, edita data.js y ejecuta
+        openingHoursSpecification y knowsLanguage de cada MedicalClinic: vienen de tools/locations/data.js
+        (campos "hours" y "languages"). Si cambian los horarios, edita data.js y ejecuta
         node tools/build-all.js; el build avisa si este bloque quedó distinto.
     -->
     <script type="application/ld+json">
@@ -85,6 +86,7 @@
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "10:30", "closes": "17:00" },
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "14:00" }
                 ],
+                "knowsLanguage": ["en", "es", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -103,8 +105,9 @@
                 },
                 "openingHoursSpecification": [
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "10:30", "closes": "17:00" },
-                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "14:00" }
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "10:00", "closes": "14:00" }
                 ],
+                "knowsLanguage": ["en", "es", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -124,6 +127,7 @@
                 "openingHoursSpecification": [
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "08:30", "closes": "16:30" }
                 ],
+                "knowsLanguage": ["en", "es", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -141,8 +145,9 @@
                     "addressCountry": "US"
                 },
                 "openingHoursSpecification": [
-                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Thursday"], "opens": "09:00", "closes": "16:00" }
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Thursday", "Friday"], "opens": "09:00", "closes": "17:00" }
                 ],
+                "knowsLanguage": ["en", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -353,7 +358,22 @@
                             </li>
 
                             <li class="site-nav__item"><a class="site-nav__link" href="/insurance/">Insurance</a></li>
-                            <li class="site-nav__item"><a class="site-nav__link" href="/about-us/">About</a></li>
+                            <!-- About ▾ (desplegable compacto; acordeón en móvil) -->
+                            <li class="site-nav__item site-nav__item--compact" data-dropdown="nav">
+                                <button class="site-nav__link site-nav__trigger" type="button" aria-expanded="false" aria-controls="menu-about">
+                                    About
+                                    <svg class="icon site-nav__chevron" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                                </button>
+                                <div class="mega-menu mega-menu--sm" id="menu-about">
+                                    <ul class="mega-menu__list">
+                                        <li><a href="/about-us/">About us</a></li>
+                                        <li><a href="/providers/">Providers</a></li>
+                                        <li><a href="/new-patients/">New Patients</a></li>
+                                        <li><a href="/reviews/">Reviews</a></li>
+                                        <li><a href="/contact-us/">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li class="site-nav__item"><a class="site-nav__link" href="/blog/">Blog</a></li>
                         </ul>
                     </nav>
@@ -411,23 +431,15 @@
         ====================================================== -->
         <section class="hero" aria-labelledby="hero-title">
 
+            <!-- Poster = background-image del contenedor (se ve al instante). Video decorativo encima: autoplay solo mientras el hero es visible (main.js) -->
             <div class="hero__media">
-                <!-- Poster (capa inferior). Es la imagen LCP: sin lazy, con fetchpriority alto -->
-                <div class="media-placeholder media-placeholder--cover media-placeholder--poster" data-media="hero-poster">
-                    <span class="media-placeholder__label">IMAGE: hero-poster.webp · 1920×1080</span>
-                    <!-- <img src="assets/images/hero-poster.webp" alt="" width="1920" height="1080" fetchpriority="high" decoding="async"> -->
-                </div>
-                <!-- Video (capa superior). Decorativo: todo el texto está en HTML -->
-                <div class="media-placeholder media-placeholder--cover media-placeholder--video" data-media="hero-video">
-                    <span class="media-placeholder__label">VIDEO: hero-video.mp4 · 1920×1080</span>
-                    <!--
-                    <video class="hero__video" data-hero-video autoplay muted loop playsinline preload="metadata"
-                           poster="assets/images/hero-poster.webp" width="1920" height="1080" aria-hidden="true">
-                        <source src="assets/video/hero-video.webm" type="video/webm">
-                        <source src="assets/video/hero-video.mp4" type="video/mp4">
-                    </video>
-                    -->
-                </div>
+                <video class="hero__video" data-hero-video
+                       autoplay muted loop playsinline
+                       preload="metadata"
+                       poster="https://paintherapycare.com/wp-content/uploads/2026/11/video-banner-poster.jpeg"
+                       aria-hidden="true" tabindex="-1">
+                    <source src="https://paintherapycare.com/wp-content/uploads/2026/11/video-banner-pain-therapy-v2-wordpress.mp4" type="video/mp4">
+                </video>
             </div>
 
             <svg class="arcs hero__arcs" aria-hidden="true" focusable="false"><use href="#i-arcs"></use></svg>
@@ -468,12 +480,15 @@
              4. BANDA DE ASEGURADORAS
         ====================================================== -->
         <!-- @partial insurance-band -->
-        <section class="insurers on-dark" aria-labelledby="insurers-title">
+        <section class="insurers insurance-band on-dark" aria-labelledby="insurers-title">
             <div class="container" data-reveal>
                 <div class="insurers__header">
                     <h2 class="insurers__title" id="insurers-title">Medicare, Medicaid &amp; most major insurance accepted</h2>
-                    <a class="text-link text-link--on-dark" href="/insurance/">Check your coverage <span aria-hidden="true">→</span></a>
+                    <a class="text-link text-link--on-dark" href="/insurance/">Check your coverage</a>
                 </div>
+            </div>
+            <!-- Marquee: dos listas idénticas seguidas (la 2.ª es solo visual: aria-hidden y alt="") -->
+            <div class="insurance-band__viewport">
                 <ul class="insurers__grid">
                     <li>
                         <div class="insurer-logo" data-media="logo-medicare">
@@ -513,6 +528,48 @@
                     <li>
                         <div class="insurer-logo" data-media="logo-bcbs">
                             <img src="assets/images/logo-bcbs.png" alt="Blue Cross Blue Shield" width="197" height="39" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="insurers__grid" aria-hidden="true">
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logo-medicare.png" alt="" width="559" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logotipo-Medicaid-NY.png" alt="" width="2172" height="724" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logo-fideliscare.png" alt="" width="286" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logo-metroplus.png" alt="" width="1100" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logo-affinity.png" alt="" width="991" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logo-unitedhealtcare.png" alt="" width="512" height="160" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logo-healthfirst.png" alt="" width="183" height="43" loading="lazy" decoding="async">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="insurer-logo">
+                            <img src="assets/images/logo-bcbs.png" alt="" width="197" height="39" loading="lazy" decoding="async">
                         </div>
                     </li>
                 </ul>
@@ -735,6 +792,7 @@
                         <p class="step__text">Begin a personalized, drug-free treatment plan — with your insurance coverage reviewed first.</p>
                     </li>
                 </ol>
+                <p class="steps-more"><a class="text-link" href="/new-patients/">New patient? See what to expect <span aria-hidden="true">→</span></a></p>
             </div>
         </section>
 
@@ -860,7 +918,7 @@
                         </address>
                         <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>
                             <!-- @partial hours key=flatbush -->
-                            Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 9:00 am – 2:00 pm
+                            Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 10:00 am – 2:00 pm
                             <!-- @end hours -->
                         </span></p>
                         <div class="location-card__actions">
@@ -894,7 +952,7 @@
                         </address>
                         <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>
                             <!-- @partial hours key=monsey -->
-                            Mon, Tue, Thu: 9:00 am – 4:00 pm
+                            Mon, Tue, Thu, Fri: 9:00 am – 5:00 pm
                             <!-- @end hours -->
                         </span></p>
                         <div class="location-card__actions">
@@ -1006,6 +1064,7 @@
                 <ul class="site-footer__list">
                     <li><a href="/about-us/">About us</a></li>
                     <li><a href="/providers/">Providers</a></li>
+                    <li><a href="/new-patients/">New Patients</a></li>
                     <li><a href="/insurance/">Insurance</a></li>
                     <li><a href="/reviews/">Reviews</a></li>
                     <li><a href="/blog/">Blog</a></li>

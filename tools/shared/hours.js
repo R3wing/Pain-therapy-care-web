@@ -58,6 +58,15 @@ function groups(loc) {
     return loc.hours.map(function (s) { return { label: dayLabel(s.days), range: range(s) }; });
 }
 
+/* Días sin ningún tramo = cerrados: "Sat, Sun" · "Wed, Sat, Sun" · '' si abre todos los días */
+function closedLabel(loc) {
+    if (!loc.hours || !loc.hours.length) return '';
+    const open = {};
+    loc.hours.forEach(function (s) { s.days.forEach(function (d) { open[d] = true; }); });
+    const closed = DAYS.filter(function (d) { return !open[d]; });
+    return closed.length ? dayLabel(closed) : '';
+}
+
 /* Texto en una o varias líneas (separadas por <br>) */
 function summaryHtml(loc) {
     const g = groups(loc);
@@ -77,6 +86,15 @@ function tableRows(loc) {
     }).join('\n');
 }
 
+/* schema.org knowsLanguage: códigos BCP 47 a partir de loc.languages (data.js) */
+const LANG_CODES = { English: 'en', Spanish: 'es', Yiddish: 'yi' };
+function languageCodes(loc) {
+    return (loc.languages || []).map(function (name) {
+        if (!LANG_CODES[name]) throw new Error(loc.key + ': idioma sin código BCP 47: ' + name);
+        return LANG_CODES[name];
+    });
+}
+
 /* schema.org: openingHoursSpecification (vacío si no hay horarios) */
 function schemaSpec(loc) {
     if (!loc.hours || !loc.hours.length) return [];
@@ -90,4 +108,4 @@ function schemaSpec(loc) {
     });
 }
 
-module.exports = { DAYS, FULL, MARKER, time12, range, check, dayLabel, groups, summaryHtml, tableRows, schemaSpec };
+module.exports = { DAYS, FULL, MARKER, time12, range, check, dayLabel, closedLabel, groups, summaryHtml, tableRows, languageCodes, schemaSpec };

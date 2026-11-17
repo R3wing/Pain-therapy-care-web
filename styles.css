@@ -1066,26 +1066,16 @@ main:focus-visible {
     position: absolute;
     inset: 0;
     z-index: -3;
-}
-
-/* Etiquetas de los dos placeholders del hero: video arriba, poster abajo */
-.hero__media .media-placeholder {
-    place-items: start end;
-    padding: calc(var(--header-h) + var(--sp-4)) var(--sp-4) var(--sp-4);
-}
-
-.media-placeholder--video {
-    background: transparent;
-    border-color: transparent;
-}
-
-.hero__media .media-placeholder--poster {
-    place-items: end;
-    padding-bottom: var(--sp-9);
+    background: var(--navy-900) url("https://paintherapycare.com/wp-content/uploads/2026/11/video-banner-poster.jpeg") center / cover no-repeat;
 }
 
 .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 /* Overlay. Móvil: vertical. + franja superior para que el navbar
@@ -4738,4 +4728,545 @@ html:not(.js) .schedule-step + .schedule-step {
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
+}
+
+
+/* =========================================================
+   === PAGE: NEW PATIENTS ===
+   /new-patients/ + el desplegable compacto "About ▾" del header.
+   Reutiliza: .service-hero*, .service-pill, .breadcrumb, .pill-link,
+   .location-treatments__list, .location-info__card/__icon, .location-card,
+   .faq, .badge-list, .insurers, .cta-band, .media-placeholder.
+========================================================= */
+
+/* Enlace "New patient? See what to expect →" (Home) y similares */
+.steps-more,
+.np-more {
+    margin-top: var(--sp-6);
+    text-align: center;
+}
+
+.np-more {
+    margin-top: var(--sp-5);
+    text-align: left;
+}
+
+/* ---------- Hero ---------- */
+
+.np-hero {
+    position: relative;
+    z-index: 1;
+}
+
+.np-hero__deco {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.np-hero__arcs {
+    top: 30%;
+    right: -100px;
+    width: 260px;
+    height: 325px;
+    opacity: .22;
+}
+
+.np-status {
+    min-height: 1.5em;                  /* reserva el alto: el aviso no mueve la página */
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--teal-700);
+}
+
+.np-jump__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    list-style: none;
+}
+
+/* Destinos de las anclas: reciben el foco y no quedan bajo el header fijo */
+.np-section {
+    scroll-margin-top: calc(var(--nav-h) + var(--sp-4));
+}
+
+/* ---------- Secciones ---------- */
+
+.np-text {
+    max-width: 46em;
+    color: var(--slate);
+}
+
+.np-cards {
+    display: grid;
+    gap: var(--sp-4);
+    list-style: none;
+}
+
+.np-cards .location-info__card {
+    min-height: 0;
+}
+
+.np-card-list {
+    display: grid;
+    gap: var(--sp-1);
+    list-style: none;
+}
+
+.np-card-list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--navy-900);
+}
+
+.np-card-list a:hover {
+    color: var(--action-700);
+}
+
+/* ---------- Timeline (vertical en móvil, horizontal en escritorio) ---------- */
+
+.np-timeline {
+    display: grid;
+    gap: var(--sp-5);
+    list-style: none;
+}
+
+.np-timeline__step {
+    position: relative;
+    padding-left: 64px;
+}
+
+.np-timeline__num {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--white);
+    background: var(--navy-900);
+    border-radius: 50%;
+}
+
+/* Línea que une los pasos (decorativa; el <ol> ya comunica el orden) */
+.np-timeline__step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 44px;
+    bottom: calc(var(--sp-5) * -1 + 4px);
+    left: 19px;
+    width: 2px;
+    background: var(--border);
+}
+
+.np-timeline__title {
+    margin-bottom: var(--sp-1);
+}
+
+.np-timeline__step p {
+    color: var(--slate);
+}
+
+.np-timeline__step a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ---------- What to bring ---------- */
+
+.np-bring {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+}
+
+.np-checklist {
+    display: grid;
+    gap: var(--sp-1);
+    margin-bottom: var(--sp-5);
+    list-style: none;
+    font-size: var(--fs-body);          /* 18px */
+}
+
+.np-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding-block: var(--sp-2);
+    border-bottom: 1px solid var(--border);
+}
+
+.np-checklist .icon {
+    flex: none;
+    margin-top: 3px;
+    color: var(--teal-700);
+}
+
+.np-bring__media .media-placeholder {
+    border-radius: var(--r-card);
+}
+
+/* ---------- Our offices (tarjeta de sede ampliada) ---------- */
+
+.np-offices {
+    display: grid;
+    gap: var(--sp-4);
+    list-style: none;
+}
+
+.np-office {
+    height: 100%;
+    align-content: start;
+    gap: var(--sp-4);
+}
+
+.np-office__note {
+    margin-top: var(--sp-1);
+    padding-left: calc(1.25em + var(--sp-3));   /* alinea con la dirección, bajo el ícono */
+    font-size: var(--fs-small);
+    color: var(--slate);
+}
+
+.np-office__phone a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    min-height: 48px;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--navy-900);
+    text-decoration-color: var(--input-border);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.np-office__phone a:hover {
+    color: var(--action-700);
+}
+
+.np-hours {
+    display: grid;
+    margin: 0;
+}
+
+.np-hours > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.np-hours dt {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--navy-900);
+}
+
+.np-hours dd {
+    margin: 0;
+    text-align: right;
+    color: var(--slate);
+}
+
+/* ---------- Tablet (≥ 768px) ---------- */
+
+@media (min-width: 768px) {
+    .np-cards {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .np-bring {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp-8);
+    }
+
+    .np-offices {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ---------- Timeline horizontal (≥ 992px) ---------- */
+
+@media (min-width: 992px) {
+    .np-timeline {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--sp-5);
+    }
+
+    .np-timeline__step {
+        padding: 56px 0 0;
+    }
+
+    .np-timeline__step:not(:last-child)::before {
+        top: 19px;
+        bottom: auto;
+        left: 48px;
+        right: calc(var(--sp-5) * -1);
+        width: auto;
+        height: 2px;
+    }
+}
+
+/* ---------- Desktop (≥ 1200px) ---------- */
+
+@media (min-width: 1200px) {
+    .np-hero__arcs {
+        right: 2%;
+        width: 480px;
+        height: 600px;
+    }
+
+    /* About ▾: desplegable compacto bajo su botón (los demás son anchos y centrados) */
+    .site-nav__item--compact {
+        position: relative;
+    }
+
+    .site-nav__item--compact > .mega-menu,
+    .site-nav__item--compact.is-open > .mega-menu {
+        left: 0;
+        width: 260px;                   /* la regla base usa 100% del <li>: aquí se fija */
+        padding: var(--sp-4);
+    }
+
+    .site-nav__item--compact > .mega-menu {
+        transform: translate(0, -8px);
+    }
+
+    .site-nav__item--compact.is-open > .mega-menu {
+        transform: translate(0, 0);
+    }
+}
+
+/* ---------- Imprimir: solo la checklist y las sedes, en letra grande ---------- */
+
+@media print {
+    @page {
+        margin: 16mm;
+    }
+
+    body {
+        font-size: 20px;
+        color: #000;
+        background: #fff;
+    }
+
+    /* Fuera: header, footer, barra móvil, hoja "Call"… (el sprite se queda: los íconos lo usan) */
+    body > *:not(main):not(.svg-sprite) {
+        display: none !important;
+    }
+
+    /* Fuera: migas y todas las secciones salvo la checklist y las sedes */
+    main > nav,
+    main > section:not(#what-to-bring):not(#offices) {
+        display: none !important;
+    }
+
+    .reveal-ready [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    #what-to-bring,
+    #offices {
+        padding-block: 12px;
+        background: #fff !important;
+    }
+
+    .np-bring {
+        display: block;
+    }
+
+    .np-bring__media,
+    [data-print],
+    .np-office .location-card__actions,
+    .np-office__languages {
+        display: none !important;
+    }
+
+    .np-checklist li {
+        font-size: 1.5rem;
+        border-bottom-color: #000;
+    }
+
+    .np-checklist .icon,
+    a {
+        color: #000;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: #000;
+    }
+
+    .np-offices {
+        display: block;
+    }
+
+    .np-office {
+        margin-bottom: 12px;
+        break-inside: avoid;
+        border: 1px solid #000;
+        box-shadow: none;
+    }
+
+    .np-office__phone a {
+        font-size: 1.75rem;
+        color: #000;
+        text-decoration: none;
+    }
+
+    .np-hours dt,
+    .np-hours dd {
+        font-size: 1.125rem;
+        color: #000;
+    }
+}
+
+/* Proporciones reales de las imágenes de /new-patients/ (hero 1200×800 = 3:2; checklist 1080×1080 = 1:1) */
+.np-hero .service-hero__media .media-placeholder {
+    aspect-ratio: 3 / 2;
+}
+
+
+/* =========================================================
+   === COMPONENT: INSURANCE BAND (marquee) ===
+   Partial tools/shared/insurance-band.html (sin JS: arranca sola, se pausa con el mouse)
+   Dos listas idénticas seguidas dentro de .insurance-band__viewport; cada una se
+   desplaza -100% de su propio ancho, así el bucle no tiene salto. Solo CSS +
+   transform. La 2.ª lista (aria-hidden) es solo visual.
+   Las listas conservan la clase .insurers__grid: el partial "insurers-grid" de
+   Schedule la lee tal cual, por eso aquí se estilan por contexto.
+========================================================= */
+
+.insurance-band {
+    --ib-h: 40px;                       /* alto de cada logo */
+    --ib-gap: 48px;                     /* separación entre logos */
+    --ib-speed: 37s;                    /* una vuelta; por breakpoint para ir a ~45 px/s (ancho de lista / 45) */
+    padding-block: 36px;
+}
+
+/* Franja a todo el ancho; alto fijo por breakpoint (sin salto de layout) */
+.insurance-band__viewport {
+    display: flex;
+    height: var(--ib-h);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.insurance-band__viewport > .insurers__grid {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--ib-gap);
+    padding-right: var(--ib-gap);       /* mismo hueco al cerrar la lista: bucle uniforme */
+    will-change: transform;
+    animation: insurance-marquee var(--ib-speed) linear infinite;
+}
+
+.insurance-band__viewport > .insurers__grid > li {
+    flex: none;
+}
+
+@keyframes insurance-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+}
+
+/* Logos sueltos sobre el fondo (sin caja ni borde), todos blancos al mismo 95% */
+.insurance-band .insurer-logo {
+    position: static;
+    width: auto;
+    aspect-ratio: auto;
+    background: none;
+    border: 0;
+    border-radius: 0;
+}
+
+.insurance-band .insurer-logo > img {
+    position: static;
+    display: block;
+    width: auto;
+    max-width: 220px;
+    height: var(--ib-h);
+    object-fit: contain;
+    opacity: .95;
+    transform: none;
+}
+
+/* Pausa: al pasar el mouse por los logos (y con foco de teclado en el enlace) */
+.insurance-band__viewport:hover > .insurers__grid,
+.insurance-band:has(.text-link:focus-visible) .insurance-band__viewport > .insurers__grid {
+    animation-play-state: paused;
+}
+
+@media (min-width: 768px) {
+    .insurance-band {
+        --ib-h: 48px;
+        --ib-gap: 64px;
+        --ib-speed: 43s;
+    }
+}
+
+@media (min-width: 1200px) {
+    .insurance-band {
+        --ib-h: 56px;
+        --ib-gap: 96px;
+        --ib-speed: 51s;
+        padding-block: 48px;
+    }
+}
+
+/* Sin animación: logos en cuadrícula estática y centrada, sin la copia */
+@media (prefers-reduced-motion: reduce) {
+    .insurance-band__viewport {
+        display: block;
+        height: auto;
+        padding-inline: var(--gutter);
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .insurance-band__viewport > .insurers__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--sp-5) var(--sp-4);
+        justify-items: center;
+        padding-right: 0;
+        will-change: auto;
+        animation: none;
+    }
+
+    .insurance-band__viewport > .insurers__grid[aria-hidden="true"] {
+        display: none;
+    }
+
+    .insurance-band .insurer-logo > img {
+        max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 768px) {
+    .insurance-band__viewport > .insurers__grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 1200px) {
+    .insurance-band__viewport > .insurers__grid {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
 }

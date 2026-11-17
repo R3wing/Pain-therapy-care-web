@@ -10,7 +10,7 @@
 
    Partials: sprite · sprite-forms · header · header-minimal · footer ·
              mobile-bar · cta-final · insurance-band · insurers-grid ·
-             providers-grid · call-list · hours · head-scripts
+             providers-grid · call-list · hours · offices · head-scripts
    header-minimal: logo + "Questions? Call ▾" (schedule). Sin opciones.
    call-list / insurers-grid: indent = sangría de las líneas 2+
 
@@ -169,6 +169,45 @@ const RENDER = {
         if (!loc) throw new Error('hours: sede desconocida "' + o.key + '"');
         hours.check(loc);
         return hours.summaryHtml(loc);
+    },
+
+    /* Tarjetas ampliadas de las 4 sedes (/new-patients/). TODO sale de
+       tools/locations/data.js: dirección, teléfono, horario, idiomas y enlaces.
+       <!-- @partial offices indent=24 --> */
+    offices: function (o) {
+        const locs = require('../locations/data.js');
+        const icon = function (id) { return '<svg class="icon" aria-hidden="true" focusable="false"><use href="#' + id + '"></use></svg>'; };
+        const cards = locs.map(function (l) {
+            hours.check(l);
+            const rows = hours.groups(l).map(function (g) {
+                return '<div><dt>' + g.label + '</dt><dd>' + g.range + '</dd></div>';
+            });
+            const closed = hours.closedLabel(l);
+            if (closed) rows.push('<div><dt>' + closed + '</dt><dd>Closed</dd></div>');
+            return [
+                '<li>',
+                '    <article class="location-card np-office">',
+                '        <h3 class="location-card__name">' + l.listName + '</h3>',
+                '        <address class="location-card__details">',
+                '            <p class="location-card__row">' + icon('i-pin') + '<span>' + l.street + '<br>' + l.city + ', ' + l.region + ' ' + l.zip + '</span></p>',
+                l.floor ? '            <p class="np-office__note">' + l.floor + '</p>' : '',
+                '        </address>',
+                '        <p class="np-office__phone"><a href="tel:' + l.tel + '" aria-label="Call Pain Therapy ' + l.sede + ' at ' + l.phone + '">' + icon('i-phone') + l.phone + '</a></p>',
+                '        <dl class="np-hours">',
+                rows.map(function (r) { return '            ' + r; }).join('\n'),
+                '        </dl>',
+                '        <ul class="badge-list np-office__languages" aria-label="Languages spoken at ' + l.sede + '">',
+                l.languages.map(function (lang) { return '            <li class="badge">' + lang + '</li>'; }).join('\n'),
+                '        </ul>',
+                '        <div class="location-card__actions">',
+                '            <a class="btn btn--outline btn--md" href="/locations/' + l.slug + '/">Directions and details<span class="visually-hidden"> for ' + l.sede + '</span></a>',
+                '            <a class="btn btn--primary btn--md" href="/schedule/?location=' + l.key + '">Book here<span class="visually-hidden"> in ' + l.sede + '</span></a>',
+                '        </div>',
+                '    </article>',
+                '</li>'
+            ].filter(Boolean).join('\n');
+        });
+        return indent(cards.join('\n'), o.indent || 0);
     },
 
     /* <head>: GTM comentado + analytics.js */

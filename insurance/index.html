@@ -293,7 +293,22 @@
                             </li>
 
                             <li class="site-nav__item"><a class="site-nav__link" href="/insurance/" aria-current="page">Insurance</a></li>
-                            <li class="site-nav__item"><a class="site-nav__link" href="/about-us/">About</a></li>
+                            <!-- About ▾ (desplegable compacto; acordeón en móvil) -->
+                            <li class="site-nav__item site-nav__item--compact" data-dropdown="nav">
+                                <button class="site-nav__link site-nav__trigger" type="button" aria-expanded="false" aria-controls="menu-about">
+                                    About
+                                    <svg class="icon site-nav__chevron" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
+                                </button>
+                                <div class="mega-menu mega-menu--sm" id="menu-about">
+                                    <ul class="mega-menu__list">
+                                        <li><a href="/about-us/">About us</a></li>
+                                        <li><a href="/providers/">Providers</a></li>
+                                        <li><a href="/new-patients/">New Patients</a></li>
+                                        <li><a href="/reviews/">Reviews</a></li>
+                                        <li><a href="/contact-us/">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li class="site-nav__item"><a class="site-nav__link" href="/blog/">Blog</a></li>
                         </ul>
                     </nav>
@@ -818,6 +833,7 @@
                 <ul class="site-footer__list">
                     <li><a href="/about-us/">About us</a></li>
                     <li><a href="/providers/">Providers</a></li>
+                    <li><a href="/new-patients/">New Patients</a></li>
                     <li><a href="/insurance/" aria-current="page">Insurance</a></li>
                     <li><a href="/reviews/">Reviews</a></li>
                     <li><a href="/blog/">Blog</a></li>

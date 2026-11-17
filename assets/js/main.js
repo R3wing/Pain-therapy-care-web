@@ -264,16 +264,38 @@
         if (!videoToggle) return;
         videoToggle.setAttribute('data-state', playing ? 'playing' : 'paused');
         videoToggle.setAttribute('aria-label', playing ? 'Pause background video' : 'Play background video');
+        videoToggle.setAttribute('aria-pressed', playing ? 'false' : 'true'); /* true = pausado */
+    }
+
+    /* Ahorro de datos / conexión lenta: no se descarga el video, solo queda el poster */
+    var conn = navigator.connection || {};
+    var lowData = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || '');
+
+    if (video && lowData) {
+        while (video.firstChild) video.removeChild(video.firstChild); /* quita <source> */
+        video.removeAttribute('autoplay');
+        video.load();
+        if (videoToggle) videoToggle.hidden = true;
+        video = null;
     }
 
     if (video && videoToggle) {
-        videoToggle.hidden = false;
+        var userPaused = false;   /* el visitante lo pausó con el botón */
+        var offscreen = false;    /* el hero no está en pantalla */
+
+        function tryPlay() {
+            var p = video.play();
+            if (p && p.catch) p.catch(function () { setVideoState(false); }); /* autoplay bloqueado: poster + "Play" */
+        }
 
         var applyMotionPreference = function () {
             if (reduceMotion.matches) {
                 video.removeAttribute('autoplay');
                 video.pause();
+                videoToggle.hidden = true;      /* solo poster, sin botón */
                 setVideoState(false);
+            } else {
+                videoToggle.hidden = false;
             }
         };
 
@@ -285,16 +307,29 @@
 
         videoToggle.addEventListener('click', function () {
             if (video.paused) {
-                var p = video.play();
-                if (p && p.catch) p.catch(function () { setVideoState(false); });
+                userPaused = false;
+                tryPlay();
             } else {
+                userPaused = true;
                 video.pause();
             }
         });
 
+        /* Solo corre mientras el hero se ve: fuera de pantalla se pausa y al volver se reanuda
+           (salvo que el visitante lo haya pausado o prefiera menos movimiento) */
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                offscreen = !entries[entries.length - 1].isIntersecting;
+                if (offscreen) {
+                    video.pause();
+                } else if (!userPaused && !reduceMotion.matches) {
+                    tryPlay();
+                }
+            }, { threshold: 0.1 }).observe(video);
+        }
+
         setVideoState(!video.paused || (video.autoplay && !reduceMotion.matches));
     } else if (videoToggle) {
-        /* Aún no hay <video> (placeholder): no se muestra un control inútil */
         videoToggle.hidden = true;
     }
 

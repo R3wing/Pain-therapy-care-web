@@ -209,6 +209,7 @@ function jsonLd(l) {
                 },
                 medicalSpecialty: 'PainMedicine',
                 openingHoursSpecification: hours.schemaSpec(l),
+                knowsLanguage: hours.languageCodes(l),
                 availableService: services,
                 parentOrganization: { '@id': SITE + '/#organization' }
             },

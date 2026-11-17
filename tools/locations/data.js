@@ -5,8 +5,12 @@
 
    hours  → horarios (formato en tools/shared/hours.js). Fuente: tabla de horarios
             enviada por el cliente. Un día sin tramo = cerrado.
-   floor  → piso / suite (solo se muestra en el hero de la sede; NO forma parte
-            del NAP hasta confirmar cómo está en Google Business Profile).
+   floor  → piso / suite / nota de acceso (se muestra en el hero de la sede y en la
+            tarjeta de /new-patients/; NO forma parte del NAP: la dirección debe
+            quedar idéntica a Google Business Profile).
+   languages → idiomas de atención (fuente: página en vivo /new-patients/).
+   Sábado y domingo: la web en vivo NO los menciona; se muestran como cerrados
+   (CONFIRMAR CON CLIENTE).
 ========================================================= */
 
 module.exports = [
@@ -28,11 +32,12 @@ module.exports = [
         titleArea: 'Williamsburg, Brooklyn',
         placeLabel: 'Williamsburg, Brooklyn',      // para textos alt
         hasSubway: true,
-        floor: '3rd floor',
+        floor: '3rd floor · Just off Broadway',
         hours: [
             { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
             { days: ['Fri'], opens: '09:00', closes: '14:00' }
-        ]
+        ],
+        languages: ['English', 'Spanish', 'Yiddish']
     },
     {
         key: 'flatbush',
@@ -55,8 +60,9 @@ module.exports = [
         floor: 'Ground floor, Suite C',
         hours: [
             { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
-            { days: ['Fri'], opens: '09:00', closes: '14:00' }
-        ]
+            { days: ['Fri'], opens: '10:00', closes: '14:00' }
+        ],
+        languages: ['English', 'Spanish', 'Yiddish']
     },
     {
         key: 'inwood',
@@ -80,6 +86,7 @@ module.exports = [
         hours: [
             { days: ['Mon'], opens: '08:30', closes: '16:30' }
         ],
+        languages: ['English', 'Spanish', 'Yiddish'],
         legacyUrl: '/locations/brooklyn-ny-inwood/'
     },
     {
@@ -102,7 +109,8 @@ module.exports = [
         hasSubway: false,
         floor: '',
         hours: [
-            { days: ['Mon', 'Tue', 'Thu'], opens: '09:00', closes: '16:00' }
-        ]
+            { days: ['Mon', 'Tue', 'Thu', 'Fri'], opens: '09:00', closes: '17:00' }
+        ],
+        languages: ['English', 'Yiddish']
     }
 ];
