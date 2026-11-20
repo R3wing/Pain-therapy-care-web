@@ -32,10 +32,8 @@
             if (dayCell) {
                 var tag = document.createElement('span');
                 tag.className = 'location-hours__today';
-                /* Si la sede cierra hoy (p. ej. Inwood de martes a domingo): "Closed today" */
-                var timeCell = row.querySelector('td');
-                var closedToday = timeCell && /^\s*closed\s*$/i.test(timeCell.textContent);
-                tag.textContent = closedToday ? 'Closed today' : 'Today';
+                /* Siempre "Today": si la sede cierra hoy, la celda de al lado ya dice "Closed" (en negrita) */
+                tag.textContent = 'Today';
                 dayCell.appendChild(document.createTextNode(' '));
                 dayCell.appendChild(tag);
             }

@@ -5655,3 +5655,14 @@ html:not(.js) .schedule-step + .schedule-step {
 .location-hours__today {
     margin-block: 2px;
 }
+
+/* Móvil: celdas del horario un poco más compactas para que "Friday · Today" no baje de línea */
+@media (max-width: 767px) {
+    .location-hours th,
+    .location-hours td {
+        padding-inline: 4px;
+    }
+    .location-hours__today {
+        margin-left: var(--sp-1);
+    }
+}
