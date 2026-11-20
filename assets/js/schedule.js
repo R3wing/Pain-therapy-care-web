@@ -32,12 +32,16 @@
 
     /* Listas cerradas: solo se aceptan valores conocidos de la URL
        (evita inyectar texto arbitrario en la página). */
+    /* GENERADO desde tools/locations/data.js (node tools/build-all.js): no editar a mano. */
+    /* @locations:schedule */
     var LOCATIONS = {
-        williamsburg: { name: 'Williamsburg', slug: 'brooklyn-ny-williamsburg', tel: '+13473954008', phone: '(347) 395-4008' },
-        flatbush: { name: 'Flatbush', slug: 'brooklyn-ny-flatbush', tel: '+17187154484', phone: '(718) 715-4484' },
-        inwood: { name: 'Inwood · Five Towns', slug: 'inwood-ny', tel: '+15162762889', phone: '(516) 276-2889' },
-        monsey: { name: 'Monsey', slug: 'monsey-ny', tel: '+18454143711', phone: '(845) 414-3711' }
+        'williamsburg': { name: 'Williamsburg', slug: 'brooklyn-ny-williamsburg', tel: '+13473954008', phone: '(347) 395-4008' },
+        'flatbush': { name: 'Flatbush', slug: 'brooklyn-ny-flatbush', tel: '+17187154484', phone: '(718) 715-4484' },
+        'crown-heights': { name: 'Crown Heights', slug: 'brooklyn-ny-crown-heights', tel: '+13473845630', phone: '(347) 384-5630' },
+        'inwood': { name: 'Inwood · Five Towns', slug: 'inwood-ny', tel: '+15162762889', phone: '(516) 276-2889' },
+        'monsey': { name: 'Monsey', slug: 'monsey-ny', tel: '+18454143711', phone: '(845) 414-3711' }
     };
+    /* @end locations:schedule */
 
     var PROVIDERS = {
         'henry-sardar-md': 'Henry Sardar, MD',
@@ -89,7 +93,14 @@
 
     function getParam(name) {
         try {
-            return new URLSearchParams(window.location.search).get(name) || '';
+            var v = new URLSearchParams(window.location.search).get(name) || '';
+            /* ?location= acepta la clave (crown-heights) o el slug de la página (brooklyn-ny-crown-heights) */
+            if (name === 'location') {
+                for (var k in LOCATIONS) {
+                    if (Object.prototype.hasOwnProperty.call(LOCATIONS, k) && LOCATIONS[k].slug === v) return k;
+                }
+            }
+            return v;
         } catch (e) {
             return '';
         }
@@ -203,9 +214,14 @@
         }
         renderSummary();
 
-        /* Aviso de horario por sede: Inwood abre solo los lunes (data.js) */
+        /* Aviso de horario por sede: avisos por sede (scheduleNote en data.js; hoy Inwood y Crown Heights) */
         var locationNote = form.querySelector('[data-location-note]');
-        var LOCATION_NOTES = { inwood: 'Inwood is open on Mondays only.' };
+        /* @locations:notes */
+        var LOCATION_NOTES = {
+            'crown-heights': 'Crown Heights is open on Tuesdays only.',
+            'inwood': 'Inwood is open on Mondays only.'
+        };
+        /* @end locations:notes */
         function renderLocationNote() {
             if (!locationNote) return;
             var key = selectedLocation();

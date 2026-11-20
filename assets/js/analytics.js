@@ -15,7 +15,7 @@
 
    PRIVACIDAD (HIPAA): jamás se envían nombre, teléfono, email, mensaje,
    síntomas ni nada que identifique a la persona. Solo claves de sede
-   (williamsburg, flatbush, inwood, monsey) y nombres de formulario.
+   (williamsburg, flatbush, crown-heights, inwood, monsey) y nombres de formulario.
    track() descarta cualquier parámetro cuya clave parezca un dato personal.
 
    Uso desde otros scripts:
@@ -27,13 +27,17 @@
 
     window.dataLayer = window.dataLayer || [];
 
-    /* Sedes: clave, teléfono (tel:) y calle tal como aparece en los enlaces de Maps */
+    /* Sedes: clave, teléfono (tel:) y calle tal como aparece en los enlaces de Maps.
+       GENERADO desde tools/locations/data.js (node tools/build-all.js): no editar a mano. */
+    /* @locations:analytics */
     var LOCATIONS = [
         { key: 'williamsburg', tel: '+13473954008', street: '16 sumner place' },
-        { key: 'flatbush',     tel: '+17187154484', street: '2577 nostrand ave' },
-        { key: 'inwood',       tel: '+15162762889', street: '233 doughty blvd' },
-        { key: 'monsey',       tel: '+18454143711', street: '40 main st' }
+        { key: 'flatbush', tel: '+17187154484', street: '2577 nostrand ave' },
+        { key: 'crown-heights', tel: '+13473845630', street: '358 kingston ave' },
+        { key: 'inwood', tel: '+15162762889', street: '233 doughty blvd' },
+        { key: 'monsey', tel: '+18454143711', street: '40 main st' }
     ];
+    /* @end locations:analytics */
 
     var PII_KEY = /name|phone|tel$|email|mail|message|msg|dob|birth|address|zip|insurance|plan|pain|symptom/i;
 

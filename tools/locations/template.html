@@ -36,14 +36,15 @@
     {{HEAD_SCRIPTS}}
     <script src="../../assets/js/main.js" defer></script>
     <script src="../../assets/js/location.js" defer></script>
+    <script src="../../assets/js/locations-data.js" defer></script>
+    <script src="../../assets/js/map.js" defer></script>
 
     <!--
         Datos estructurados: MedicalClinic (con openingHoursSpecification desde data.js) + BreadcrumbList + FAQPage.
         El @id de la clínica es el mismo que usa la Home (department de #organization).
         Las respuestas del FAQ coinciden EXACTAMENTE con el texto visible de la sección 10.
 
-        PENDIENTE coordenadas → añadir a la MedicalClinic (copiar del pin de Google Business Profile):
-        "geo": { "@type": "GeoCoordinates", "latitude": [LAT], "longitude": [LNG] },
+        {{JSONLD_NOTES}}geo: coordenadas de data.js (solo para mapas y schema; la dirección NO cambia).
     -->
     <script type="application/ld+json">
 {{JSONLD}}
@@ -95,11 +96,11 @@
                         {{KICKER}}
                     </p>
                     <h1 class="location-hero__title" id="hero-title">{{H1}}</h1>
-                    <p class="location-hero__text">Drug-free Shockwave, EMTT and Laser Therapy close to home. Medicare, Medicaid and most insurance accepted.</p>
+                    <p class="location-hero__text">{{HERO_TEXT}}</p>
 
                     <!-- NAP: idéntico a footer, schema y Google Business Profile -->
                     <address class="location-nap">
-                        <p class="location-nap__name">{{SCHEMA_NAME}}</p>
+                        <p class="location-nap__name">{{SCHEMA_NAME}}</p>{{NAP_VENUE}}
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg>
                             <a href="{{MAPS_SEARCH}}" target="_blank" rel="noopener" aria-label="{{ADDRESS}}, open in Google Maps (opens in a new tab)">{{ADDRESS}}</a>{{FLOOR_NOTE}}
@@ -110,11 +111,11 @@
                         </p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
-                            <span>{{HOURS_SUMMARY}}</span>
+                            <span>{{HERO_HOURS}}</span>
                         </p>
                         <p class="badge location-badge">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
-                            Same-day appointments
+                            {{BADGE_TEXT}}
                         </p>
                     </address>
 
@@ -129,10 +130,7 @@
                 </div>
 
                 <div class="location-hero__map">
-                    <div class="media-placeholder media-placeholder--map" data-media="map-{{SLUG}}">
-                        <span class="media-placeholder__label">MAP: Google Maps embed (lazy) · {{SEDE}}</span>
-                        <!-- <iframe src="https://www.google.com/maps/embed?pb=PEGAR_CODIGO" title="Map to Pain Therapy {{SEDE}}" width="800" height="600" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
-                    </div>
+{{MAP}}
                 </div>
             </div>
         </section>
@@ -189,8 +187,8 @@
                 <header class="section-header">
                     <h2 class="section-title" id="inside-title">Inside our {{SEDE}} clinic</h2>
                 </header>
-                <ul class="location-gallery">
-                    <li>
+                <ul class="location-gallery{{GALLERY_CLASS}}">
+                    {{GALLERY_FACADE}}<li>
                         <div class="media-placeholder location-gallery__media" data-media="{{SLUG}}-interior-1">
                             <span class="media-placeholder__label">IMAGE: {{SLUG}}-interior-1.webp · 1200×900</span>
                             <!-- <img src="../../assets/images/locations/{{SLUG}}-interior-1.webp" alt="Reception and waiting area at Pain Therapy Medical Care in {{PLACE}}" width="1200" height="900" loading="lazy" decoding="async"> -->
@@ -219,7 +217,7 @@
         <section class="section" aria-labelledby="treatments-title">
             <div class="container" data-reveal>
                 <header class="section-header">
-                    <h2 class="section-title" id="treatments-title">Treatments available in {{SEDE}}</h2>
+                    <h2 class="section-title" id="treatments-title">{{TREATMENTS_TITLE}}</h2>
                 </header>
                 <!-- CONFIRMAR servicios por sede -->
                 <div class="location-treatments">
@@ -282,7 +280,7 @@
                     <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
                     <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
                 </ul>
-                <p class="location-areas__text">Patients come to our {{SEDE}} office from the surrounding communities for drug-free care without a long trip. Not sure which of our four clinics is closest to you? Call us and we'll help you choose.</p>
+                <p class="location-areas__text">Patients come to our {{SEDE}} office from the surrounding communities for drug-free care without a long trip. Not sure which of our {{CLINICS_WORD}} clinics is closest to you? Call us and we'll help you choose.</p>
             </div>
         </section>
 

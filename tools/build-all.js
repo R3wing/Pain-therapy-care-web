@@ -70,6 +70,98 @@ htmlFiles(ROOT).forEach(function (file) {
     console.log('  ' + (same ? '=' : (CHECK ? '≠' : '✓')) + ' ' + rel.join('/'));
 });
 
+/* ---------- 2b) tablas de sedes dentro de assets/js (generadas desde data.js) ---------- */
+
+console.log('\n› JS con tabla de sedes');
+(function jsTables() {
+    const locations = require('./locations/data.js');
+    const q = function (v) { return "'" + String(v).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'"; };
+    const blocks = {
+        analytics: function () {
+            return '    var LOCATIONS = [\n' + locations.map(function (l) {
+                return '        { key: ' + q(l.key) + ', tel: ' + q(l.tel) + ', street: ' + q(l.street.toLowerCase()) + ' }';
+            }).join(',\n') + '\n    ];';
+        },
+        schedule: function () {
+            return '    var LOCATIONS = {\n' + locations.map(function (l) {
+                return '        ' + q(l.key) + ': { name: ' + q(l.listName) + ', slug: ' + q(l.slug) + ', tel: ' + q(l.tel) + ', phone: ' + q(l.phone) + ' }';
+            }).join(',\n') + '\n    };';
+        },
+        notes: function () {
+            const n = locations.filter(function (l) { return l.scheduleNote; });
+            return '        var LOCATION_NOTES = {\n' + n.map(function (l) {
+                return '            ' + q(l.key) + ': ' + q(l.scheduleNote);
+            }).join(',\n') + '\n        };';
+        }
+    };
+    [['assets/js/analytics.js', ['analytics']], ['assets/js/schedule.js', ['schedule', 'notes']]].forEach(function (pair) {
+        const file = path.join(ROOT, pair[0]);
+        const raw = fs.readFileSync(file, 'utf8');
+        const eol = raw.includes('\r\n') ? '\r\n' : '\n';
+        let out = raw.replace(/\r\n/g, '\n');
+        pair[1].forEach(function (name) {
+            const re = new RegExp('(/\\* @locations:' + name + ' \\*/\\n)[\\s\\S]*?(\\n[ \\t]*/\\* @end locations:' + name + ' \\*/)');
+            if (!re.test(out)) throw new Error(pair[0] + ': faltan los marcadores @locations:' + name);
+            out = out.replace(re, function (m, a, b) { return a + blocks[name]() + b; });
+        });
+        out = out.replace(/\n/g, eol);
+        const same = out === raw;
+        if (!same) changed++;
+        if (!same && !CHECK) fs.writeFileSync(file, out, 'utf8');
+        console.log('  ' + (same ? '=' : (CHECK ? '≠' : '✓')) + ' ' + pair[0]);
+    });
+})();
+
+/* ---------- 2c) assets/js/locations-data.js: sedes para los mapas (generado desde data.js) ---------- */
+
+console.log('\n› Datos para los mapas');
+(function locationsData() {
+    const hours = require('./shared/hours.js');
+    const locations = require('./locations/data.js');
+
+    /* "Tuesdays only" si abre un solo día; si no, "Mon–Thu · Fri" */
+    const daysText = function (l) {
+        const open = [];
+        (l.hours || []).forEach(function (s) { s.days.forEach(function (d) { if (open.indexOf(d) === -1) open.push(d); }); });
+        if (open.length === 1) return hours.FULL[open[0]] + 's only';
+        return hours.groups(l).map(function (g) { return g.label; }).join(' · ');
+    };
+
+    const rows = locations.map(function (l) {
+        if (!l.geo || typeof l.geo.lat !== 'number' || typeof l.geo.lng !== 'number') {
+            console.error('  ✗ ' + l.key + ': falta geo { lat, lng } en data.js');
+            process.exit(1);
+        }
+        const address = l.street + ', ' + l.city + ', ' + l.region + ' ' + l.zip;
+        return {
+            key: l.key, slug: l.slug, name: l.listName, sede: l.sede,
+            street: l.street, city: l.city, region: l.region, zip: l.zip,
+            phone: l.phone, tel: l.tel,
+            lat: l.geo.lat, lng: l.geo.lng,
+            days: daysText(l),
+            directions: 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(address)
+        };
+    });
+
+    const body = [
+        '/* =========================================================',
+        '   GENERADO por tools/build-all.js desde tools/locations/data.js',
+        '   NO editar a mano. Lo lee assets/js/map.js (window.PT_LOCATIONS).',
+        '========================================================= */',
+        'window.PT_LOCATIONS = ' + JSON.stringify(rows, null, 4) + ';',
+        ''
+    ].join('\n');
+
+    const file = path.join(ROOT, 'assets', 'js', 'locations-data.js');
+    const raw = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+    const eol = raw.includes('\r\n') ? '\r\n' : '\n';
+    const out = body.replace(/\n/g, eol);
+    const same = out === raw;
+    if (!same) changed++;
+    if (!same && !CHECK) fs.writeFileSync(file, out, 'utf8');
+    console.log('  ' + (same ? '=' : (CHECK ? '≠' : '✓')) + ' assets/js/locations-data.js');
+})();
+
 /* ---------- 3) coherencia de datos (el JSON-LD de la Home es estático) ---------- */
 
 console.log('\n› Coherencia de datos');
@@ -91,6 +183,14 @@ let problems = 0;
             console.error('  ✗ Home JSON-LD · horarios de ' + l.sede + ' no coinciden con tools/locations/data.js');
             problems++;
         }
+        const wantGeo = JSON.stringify(l.geo ? { latitude: l.geo.lat, longitude: l.geo.lng } : null);
+        const gotGeo = JSON.stringify(node && node.geo ? { latitude: node.geo.latitude, longitude: node.geo.longitude } : null);
+        if (wantGeo === gotGeo) {
+            console.log('  ✓ Home JSON-LD · coordenadas de ' + l.sede);
+        } else {
+            console.error('  ✗ Home JSON-LD · coordenadas de ' + l.sede + ' no coinciden con tools/locations/data.js');
+            problems++;
+        }
         const wantLang = JSON.stringify(hours.languageCodes(l));
         const gotLang = JSON.stringify((node && node.knowsLanguage) || []);
         if (wantLang === gotLang) {
@@ -100,6 +200,25 @@ let problems = 0;
             problems++;
         }
     });
+})();
+
+(function staleCounts() {
+    const n = require('./locations/data.js').length;
+    const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+    const stale = /\b(\d+) (?:New York )?locations\b|\b(?:all|our) (zero|one|two|three|four|five|six|seven|eight|nine|ten)\b(?: of our)? (?:locations|clinics|offices)\b/gi;
+    htmlFiles(ROOT).forEach(function (file) {
+        const txt = fs.readFileSync(file, 'utf8');
+        let m;
+        stale.lastIndex = 0;
+        while ((m = stale.exec(txt))) {
+            const v = m[1] ? parseInt(m[1], 10) : words.indexOf(m[2].toLowerCase());
+            if (v !== n) {
+                console.error('  ✗ ' + path.relative(ROOT, file) + ': "' + m[0] + '" pero hay ' + n + ' sedes en data.js');
+                problems++;
+            }
+        }
+    });
+    if (!problems) console.log('  ✓ Textos "N locations" coinciden con el número de sedes (' + n + ')');
 })();
 
 if (CHECK && changed) {

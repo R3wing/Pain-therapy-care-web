@@ -5270,3 +5270,374 @@ html:not(.js) .schedule-step + .schedule-step {
         grid-template-columns: repeat(8, minmax(0, 1fr));
     }
 }
+
+
+/* =========================================================
+   === FIX: 5 LOCATIONS ===
+   El sitio pasa de 4 a 5 sedes (Crown Heights). Ajusta las cuadrículas que
+   asumían 4 tarjetas y añade los detalles propios de la sede de martes.
+========================================================= */
+
+/* Menú Locations ▾: 5 columnas en desktop */
+@media (min-width: 1200px) {
+    .mega-menu--5 .mega-menu__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--sp-4); }
+}
+
+/* Home · sedes: 5 tarjetas + mapa como 6.ª celda (sin huecos) */
+@media (min-width: 768px) {
+    .locations__map {
+        grid-column: auto;
+        grid-row: auto;
+    }
+    .locations__map .media-placeholder {
+        aspect-ratio: auto;
+        min-height: 100%;
+    }
+}
+@media (min-width: 1200px) {
+    .locations {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .locations__map {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+/* /new-patients/ · Our offices: 5 tarjetas (2 columnas en tablet, 3 en desktop) */
+@media (min-width: 1200px) {
+    .np-offices {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Páginas de sede · "Other locations" ahora son 4 (2×2 en tablet, 4 en desktop) */
+@media (min-width: 768px) {
+    .location-others__grid > :last-child {
+        grid-column: auto;
+    }
+}
+@media (min-width: 1200px) {
+    .location-others__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Crown Heights: línea "at Ahava Medical Center" bajo el nombre del NAP */
+.location-nap__venue {
+    margin: calc(var(--sp-2) * -1) 0 var(--sp-2);
+    font-size: .9375rem;
+    font-weight: 500;
+    color: var(--slate);
+}
+
+/* Galería con fachada + 3 interiores */
+@media (min-width: 1200px) {
+    .location-gallery--4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* Tarjeta de provider con credencial/especialidad; una sola tarjeta no se estira */
+.provider-card__role {
+    font-size: .9375rem;
+    font-weight: 500;
+}
+.providers-grid:has(> .provider-card:only-child) {
+    grid-template-columns: minmax(0, 280px);
+}
+
+/* Horario con la etiqueta "Closed today" (Crown Heights abre solo el martes): la tarjeta
+   no debe ensancharse en móvil; el rango no se parte y la etiqueta puede bajar de línea */
+.location-info {
+    grid-template-columns: minmax(0, 1fr);
+}
+.location-info__card {
+    min-width: 0;
+}
+.location-hours td {
+    white-space: normal;
+}
+@media (min-width: 768px) {
+    .location-hours td {
+        white-space: nowrap;
+    }
+}
+.location-hours__today {
+    display: inline-block;
+    white-space: nowrap;
+}
+@media (min-width: 768px) {
+    .location-info {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media (min-width: 1200px) {
+    .location-info {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) 1.45fr;
+    }
+}
+
+/* Hero de sede: los botones con nombres largos (p. ej. "Book in Crown Heights") pueden
+   partirse en móvil en vez de ensanchar la página */
+.location-hero__content,
+.location-hero__actions {
+    min-width: 0;
+}
+.location-hero__actions .btn {
+    white-space: normal;
+    text-align: center;
+}
+
+/* Chip de piso/suite: puede partirse o bajar de línea en pantallas estrechas
+   (ya desbordaba en Williamsburg: "3rd floor · Just off Broadway") */
+.location-nap__row {
+    flex-wrap: wrap;
+}
+.location-nap__floor {
+    flex: 0 1 auto;
+    white-space: normal;
+}
+
+
+/* =========================================================
+   === COMPONENT: MAP (Leaflet, assets/js/map.js) ===
+   <div class="map" data-map="all | <slug>"> reserva su alto con aspect-ratio
+   (sin layout shift); Leaflet se carga solo al acercarse a pantalla.
+========================================================= */
+
+.map {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--placeholder);
+    border-radius: var(--r-img);
+}
+
+.map__canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+/* Fallback (sin JS o si falla): lista de sedes con "Open in Google Maps".
+   Con JS se oculta mientras carga y al estar listo el mapa. */
+.map__fallback {
+    padding: var(--sp-5);
+}
+.map__fallback-list {
+    display: grid;
+    gap: var(--sp-3);
+    list-style: none;
+    font-size: var(--fs-small);
+}
+.map__fallback-list a {
+    text-decoration: underline;
+}
+.js .map:not(.map--failed) .map__fallback,
+.map--ready .map__fallback {
+    visibility: hidden;
+}
+.map--ready .map__fallback {
+    display: none;
+}
+
+/* Móvil: un dedo desplaza la página, dos dedos mueven el mapa */
+.map .leaflet-container {
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+    touch-action: pan-x pan-y;
+    background: var(--placeholder);
+}
+
+/* Controles de zoom ≥ 44px */
+.map .leaflet-bar a,
+.map .leaflet-bar a:hover {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--navy-900);
+}
+.map .leaflet-touch .leaflet-bar a {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+}
+.map .leaflet-control-attribution {
+    font-size: .75rem;
+}
+.map .leaflet-control-attribution a {
+    color: var(--action-700);
+}
+
+/* Aviso "dos dedos" (solo táctil) */
+.map__hint {
+    position: absolute;
+    inset: auto var(--sp-3) var(--sp-6) var(--sp-3);
+    z-index: 1000;
+    padding: var(--sp-2) var(--sp-3);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    text-align: center;
+    color: var(--white);
+    background: rgba(15, 51, 67, .88);
+    border-radius: var(--r-btn);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+}
+.map__hint.is-visible {
+    opacity: 1;
+}
+
+/* Pins de marca: navy #0F3343 con punto Action Blue; activo = Action Blue, más grande */
+.map-pin {
+    background: none;
+    border: 0;
+}
+.map-pin svg {
+    display: block;
+    transform-origin: 50% 100%;
+    transition: transform .15s;
+}
+.map-pin__body { fill: #0F3343; }
+.map-pin__dot  { fill: #1B6F96; }
+.map-pin.map-pin--active svg { transform: scale(1.25); }
+.map-pin.map-pin--active .map-pin__body { fill: #1B6F96; }
+.map-pin.map-pin--active .map-pin__dot  { fill: #fff; }
+.map-pin:focus-visible {
+    outline: 3px solid var(--navy-900);
+    outline-offset: 2px;
+    border-radius: 50%;
+}
+@media (prefers-reduced-motion: reduce) {
+    .map-pin svg,
+    .map__hint { transition: none; }
+}
+
+/* Popup de cada sede */
+.map .leaflet-popup-content {
+    margin: var(--sp-4);
+    font-size: var(--fs-small);
+    line-height: 1.5;
+    color: var(--ink);
+}
+.map-popup {
+    display: grid;
+    gap: var(--sp-2);
+    justify-items: start;
+}
+.map-popup__name {
+    margin: 0;
+    font-size: 1rem;
+}
+.map-popup__name a {
+    color: var(--navy-900);
+    text-decoration: underline;
+}
+.map-popup__days {
+    margin: 0;
+}
+.map-popup__address {
+    font-style: normal;
+}
+.map-popup__row {
+    margin: 0;
+}
+.map-popup__phone {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+    color: var(--action-700);
+    text-decoration: underline;
+}
+.map-popup__directions {
+    color: var(--white);
+}
+.map .leaflet-popup-close-button {
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    line-height: 44px;
+}
+
+/* Home: tarjeta resaltada ↔ pin */
+.location-card.is-map-active {
+    border-color: var(--action-700);
+    box-shadow: 0 0 0 2px var(--action-700);
+}
+
+/* Home: el mapa general llena la 6.ª celda del grid */
+.locations__map .map {
+    height: 100%;
+    min-height: 100%;
+}
+@media (min-width: 1200px) {
+    .locations__map .map {
+        aspect-ratio: auto;
+    }
+}
+
+/* /new-patients/: mapa general bajo las tarjetas de oficinas */
+.np-offices-map {
+    margin-top: var(--sp-6);
+}
+@media (min-width: 768px) {
+    .np-offices-map .map {
+        aspect-ratio: 16 / 7;
+    }
+}
+
+/* Provider con foto real: recorte 1:1 */
+.provider-card__photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--r-card);
+}
+
+/* Popup: Leaflet pisa el color de los enlaces y da 17px de margen a los <p>;
+   se compacta para que quepa en mapas bajos (móvil) */
+.map .leaflet-popup-content p {
+    margin: 0;
+}
+.map .leaflet-popup-content .map-popup__directions,
+.map .leaflet-popup-content .map-popup__directions:hover {
+    color: var(--white);
+    text-decoration: none;
+}
+.map .leaflet-popup-content .map-popup__name a,
+.map .leaflet-popup-content .map-popup__phone {
+    color: var(--action-700);
+}
+.map .leaflet-popup-content .map-popup__name a {
+    color: var(--navy-900);
+}
+.map .map-popup {
+    gap: var(--sp-1);
+}
+.map .map-popup__directions {
+    margin-top: var(--sp-1);
+}
+
+/* Página de sede en móvil: el popup abierto necesita alto para no tapar el pin (4:3 en tablet+) */
+@media (max-width: 767px) {
+    .location-hero__map .map {
+        aspect-ratio: 1 / 1;
+    }
+}
+
+/* Impresión: el mapa interactivo no se imprime (las direcciones ya están en las tarjetas) */
+@media print {
+    .map,
+    .np-offices-map {
+        display: none;
+    }
+}

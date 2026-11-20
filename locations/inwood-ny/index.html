@@ -42,14 +42,15 @@
     <script src="../../assets/js/analytics.js" defer></script>
     <script src="../../assets/js/main.js" defer></script>
     <script src="../../assets/js/location.js" defer></script>
+    <script src="../../assets/js/locations-data.js" defer></script>
+    <script src="../../assets/js/map.js" defer></script>
 
     <!--
         Datos estructurados: MedicalClinic (con openingHoursSpecification desde data.js) + BreadcrumbList + FAQPage.
         El @id de la clínica es el mismo que usa la Home (department de #organization).
         Las respuestas del FAQ coinciden EXACTAMENTE con el texto visible de la sección 10.
 
-        PENDIENTE coordenadas → añadir a la MedicalClinic (copiar del pin de Google Business Profile):
-        "geo": { "@type": "GeoCoordinates", "latitude": [LAT], "longitude": [LNG] },
+        geo: coordenadas de data.js (solo para mapas y schema; la dirección NO cambia).
     -->
     <script type="application/ld+json">
     {
@@ -81,6 +82,9 @@
                         "closes": "16:30"
                     }
                 ],
+                "parentOrganization": {
+                    "@id": "https://paintherapycare.com/#organization"
+                },
                 "knowsLanguage": [
                     "en",
                     "es",
@@ -158,8 +162,10 @@
                         "url": "https://paintherapycare.com/services/pelvic-floor-therapy/"
                     }
                 ],
-                "parentOrganization": {
-                    "@id": "https://paintherapycare.com/#organization"
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 40.618158,
+                    "longitude": -73.747115
                 }
             },
             {
@@ -211,7 +217,7 @@
                         "name": "Do you accept Medicare and Medicaid at this location?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. We accept Medicare, Medicaid and most major insurance plans at all four locations."
+                            "text": "Yes. We accept Medicare, Medicaid and most major insurance plans at all five locations."
                         }
                     },
                     {
@@ -399,10 +405,11 @@
                                     Locations
                                     <svg class="icon site-nav__chevron" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg>
                                 </button>
-                                <div class="mega-menu mega-menu--4" id="menu-locations">
+                                <div class="mega-menu mega-menu--5" id="menu-locations">
                                     <ul class="mega-menu__grid mega-menu__locations">
                                         <li><a href="/locations/brooklyn-ny-williamsburg/"><strong>Williamsburg</strong><span>16 Sumner Pl, Brooklyn</span></a></li>
                                         <li><a href="/locations/brooklyn-ny-flatbush/"><strong>Flatbush</strong><span>2577 Nostrand Ave, Brooklyn</span></a></li>
+                                        <li><a href="/locations/brooklyn-ny-crown-heights/"><strong>Crown Heights</strong><span>358 Kingston Ave, Brooklyn</span></a></li>
                                         <li><a href="/locations/inwood-ny/" aria-current="page"><strong>Inwood · Five Towns</strong><span>233 Doughty Blvd, Inwood</span></a></li>
                                         <li><a href="/locations/monsey-ny/"><strong>Monsey</strong><span>40 Main St, Monsey</span></a></li>
                                     </ul>
@@ -452,6 +459,7 @@
                             <ul class="call-list">
                                 <li><a class="call-list__link" href="tel:+13473954008"><span class="call-list__name">Williamsburg</span><span class="call-list__address">16 Sumner Pl, Brooklyn</span><span class="call-list__phone">(347) 395-4008</span></a></li>
                                 <li><a class="call-list__link" href="tel:+17187154484"><span class="call-list__name">Flatbush</span><span class="call-list__address">2577 Nostrand Ave, Brooklyn</span><span class="call-list__phone">(718) 715-4484</span></a></li>
+                                <li><a class="call-list__link" href="tel:+13473845630"><span class="call-list__name">Crown Heights</span><span class="call-list__address">358 Kingston Ave, Brooklyn</span><span class="call-list__phone">(347) 384-5630</span></a></li>
                                 <li><a class="call-list__link" href="tel:+15162762889"><span class="call-list__name">Inwood · Five Towns</span><span class="call-list__address">233 Doughty Blvd, Inwood</span><span class="call-list__phone">(516) 276-2889</span></a></li>
                                 <li><a class="call-list__link" href="tel:+18454143711"><span class="call-list__name">Monsey</span><span class="call-list__address">40 Main St, Monsey</span><span class="call-list__phone">(845) 414-3711</span></a></li>
                             </ul>
@@ -539,9 +547,15 @@
                 </div>
 
                 <div class="location-hero__map">
-                    <div class="media-placeholder media-placeholder--map" data-media="map-inwood-ny">
-                        <span class="media-placeholder__label">MAP: Google Maps embed (lazy) · Inwood</span>
-                        <!-- <iframe src="https://www.google.com/maps/embed?pb=PEGAR_CODIGO" title="Map to Pain Therapy Inwood" width="800" height="600" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+<div class="map" data-map="inwood-ny" role="region" aria-label="Map to Pain Therapy Inwood">
+                        <div class="map__fallback">
+                            <ul class="map__fallback-list">
+                                <li>
+                                    <a href="/locations/inwood-ny/">Inwood · Five Towns</a> · 233 Doughty Blvd, Inwood, NY 11096 ·
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=233+Doughty+Blvd+Inwood+NY+11096" target="_blank" rel="noopener">Open in Google Maps<span class="visually-hidden"> — Inwood (opens in a new tab)</span></a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -875,7 +889,7 @@
                     <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
                     <li class="location-areas__item">[NEIGHBORHOODS SERVED]</li>
                 </ul>
-                <p class="location-areas__text">Patients come to our Inwood office from the surrounding communities for drug-free care without a long trip. Not sure which of our four clinics is closest to you? Call us and we'll help you choose.</p>
+                <p class="location-areas__text">Patients come to our Inwood office from the surrounding communities for drug-free care without a long trip. Not sure which of our five clinics is closest to you? Call us and we'll help you choose.</p>
             </div>
         </section>
 
@@ -898,7 +912,7 @@
                     </details>
                     <details class="faq__item">
                         <summary class="faq__question">Do you accept Medicare and Medicaid at this location?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
-                        <div class="faq__answer"><p>Yes. We accept Medicare, Medicaid and most major insurance plans at all four locations.</p></div>
+                        <div class="faq__answer"><p>Yes. We accept Medicare, Medicaid and most major insurance plans at all five locations.</p></div>
                     </details>
                     <details class="faq__item">
                         <summary class="faq__question">Can I get a same-day appointment?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
@@ -939,6 +953,18 @@
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/locations/brooklyn-ny-flatbush/">View location<span class="visually-hidden">: Flatbush</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=2577+Nostrand+Ave+Brooklyn+NY+11210" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Flatbush (opens in a new tab)</span></a>
+                        </div>
+                    </article>
+                    <article class="location-card">
+                        <h3 class="location-card__name"><a href="/locations/brooklyn-ny-crown-heights/">Crown Heights</a></h3>
+                        <address class="location-card__details">
+                            <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>358 Kingston Ave<br>Brooklyn, NY 11213</span></p>
+                            <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+13473845630" aria-label="Call Pain Therapy Crown Heights at (347) 384-5630">(347) 384-5630</a></p>
+                        </address>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Tue: 9:00 am – 5:00 pm</span></p>
+                        <div class="location-card__actions">
+                            <a class="btn btn--primary btn--md" href="/locations/brooklyn-ny-crown-heights/">View location<span class="visually-hidden">: Crown Heights</span></a>
+                            <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=358+Kingston+Ave+Brooklyn+NY+11213" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Crown Heights (opens in a new tab)</span></a>
                         </div>
                     </article>
                     <article class="location-card">
@@ -1035,6 +1061,10 @@
                         <address>2577 Nostrand Ave, Brooklyn, NY 11210<br><a href="tel:+17187154484">(718) 715-4484</a></address>
                     </li>
                     <li>
+                        <a class="site-footer__loc-name" href="/locations/brooklyn-ny-crown-heights/">Crown Heights</a>
+                        <address>358 Kingston Ave, Brooklyn, NY 11213<br><a href="tel:+13473845630">(347) 384-5630</a></address>
+                    </li>
+                    <li>
                         <a class="site-footer__loc-name" href="/locations/inwood-ny/" aria-current="page">Inwood · Five Towns</a>
                         <address>233 Doughty Blvd, Inwood, NY 11096<br><a href="tel:+15162762889">(516) 276-2889</a></address>
                     </li>
@@ -1085,6 +1115,7 @@
             <ul class="call-list">
                 <li><a class="call-list__link" href="tel:+13473954008"><span class="call-list__name">Williamsburg</span><span class="call-list__address">16 Sumner Pl, Brooklyn</span><span class="call-list__phone">(347) 395-4008</span></a></li>
                 <li><a class="call-list__link" href="tel:+17187154484"><span class="call-list__name">Flatbush</span><span class="call-list__address">2577 Nostrand Ave, Brooklyn</span><span class="call-list__phone">(718) 715-4484</span></a></li>
+                <li><a class="call-list__link" href="tel:+13473845630"><span class="call-list__name">Crown Heights</span><span class="call-list__address">358 Kingston Ave, Brooklyn</span><span class="call-list__phone">(347) 384-5630</span></a></li>
                 <li><a class="call-list__link" href="tel:+15162762889"><span class="call-list__name">Inwood · Five Towns</span><span class="call-list__address">233 Doughty Blvd, Inwood</span><span class="call-list__phone">(516) 276-2889</span></a></li>
                 <li><a class="call-list__link" href="tel:+18454143711"><span class="call-list__name">Monsey</span><span class="call-list__address">40 Main St, Monsey</span><span class="call-list__phone">(845) 414-3711</span></a></li>
             </ul>
