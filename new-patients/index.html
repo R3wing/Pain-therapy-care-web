@@ -88,7 +88,10 @@
                     { "@type": "Question", "name": "Can someone come with me?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Many patients bring a family member to help with questions and directions." } },
                     { "@type": "Question", "name": "Do you speak my language?", "acceptedAnswer": { "@type": "Answer", "text": "Our Williamsburg, Flatbush and Inwood offices support English, Spanish and Yiddish. Monsey supports English and Yiddish. [CONFIRM: languages spoken at Crown Heights]" } },
                     { "@type": "Question", "name": "What if I have already tried physical therapy or injections elsewhere?", "acceptedAnswer": { "@type": "Answer", "text": "Bring what you have, including reports and imaging. Knowing what you have tried helps your provider suggest what to try next." } },
-                    { "@type": "Question", "name": "Do I need to bring my x-rays or MRI?", "acceptedAnswer": { "@type": "Answer", "text": "If you have them, yes. They help your provider understand your pain. If you do not have imaging, your provider will tell you whether you need it." } }
+                    { "@type": "Question", "name": "Do I need to bring my x-rays or MRI?", "acceptedAnswer": { "@type": "Answer", "text": "If you have them, yes. They help your provider understand your pain. If you do not have imaging, your provider will tell you whether you need it." } },
+                    { "@type": "Question", "name": "Can you help me get to my appointment?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We can arrange transportation to your appointment, depending on your insurance plan. Please request it at least one day before your visit and call to confirm your ride." } },
+                    { "@type": "Question", "name": "Can I walk in without an appointment?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, we accept walk-ins. Patients with a scheduled appointment are seen first, so booking ahead is the best way to avoid a wait." } },
+                    { "@type": "Question", "name": "Do you complete disability or other forms?", "acceptedAnswer": { "@type": "Answer", "text": "No. We do not complete paperwork such as disability forms." } }
                 ]
             }
         ]
@@ -147,9 +150,10 @@
                 <div class="utility-bar__meta">
                     <span class="utility-bar__item">
                         <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
-                        Same-day appointments
+                        Same-day appointments often available
                     </span>
-                    <a class="utility-bar__link" href="/es/" lang="es" hreflang="es">Español</a>
+                    <!-- Enlace "Español" (/es/) oculto hasta que exista esa versión (no debe haber enlaces rotos):
+                    <a class="utility-bar__link" href="/es/" lang="es" hreflang="es">Español</a> -->
                 </div>
             </div>
         </div>
@@ -486,7 +490,6 @@
 
         <!-- =====================================================
              5. YOUR FIRST VISIT, STEP BY STEP
-             CONFIRMAR CON CLIENTE: "Same-day appointments are often available" (Inwood abre solo los lunes)
         ====================================================== -->
         <section class="section np-section" id="first-visit" tabindex="-1" aria-labelledby="visit-title">
             <div class="container" data-reveal>
@@ -663,7 +666,6 @@
         <!-- =====================================================
              8. OUR OFFICES: tarjetas generadas desde tools/locations/data.js
              (partial "offices": NO editar a mano lo que hay entre los marcadores)
-             CONFIRMAR CON CLIENTE: sábado y domingo figuran como cerrados porque la web en vivo no los menciona
         ====================================================== -->
         <section class="section section--cloud np-section" id="offices" tabindex="-1" aria-labelledby="offices-title">
             <div class="container" data-reveal>
@@ -677,7 +679,7 @@
                             <h3 class="location-card__name">Williamsburg</h3>
                             <address class="location-card__details">
                                 <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>16 Sumner Place<br>Brooklyn, NY 11206</span></p>
-                                <p class="np-office__note">3rd floor · Just off Broadway</p>
+                                <p class="np-office__note">3rd floor</p>
                             </address>
                             <p class="np-office__phone"><a href="tel:+13473954008" aria-label="Call Pain Therapy Williamsburg at (347) 395-4008"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>(347) 395-4008</a></p>
                             <dl class="np-hours">
@@ -706,7 +708,7 @@
                             <p class="np-office__phone"><a href="tel:+17187154484" aria-label="Call Pain Therapy Flatbush at (718) 715-4484"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>(718) 715-4484</a></p>
                             <dl class="np-hours">
                                 <div><dt>Mon–Thu</dt><dd>10:30 am – 5:00 pm</dd></div>
-                                <div><dt>Fri</dt><dd>10:00 am – 2:00 pm</dd></div>
+                                <div><dt>Fri</dt><dd>9:00 am – 2:00 pm</dd></div>
                                 <div><dt>Sat, Sun</dt><dd>Closed</dd></div>
                             </dl>
                             <ul class="badge-list np-office__languages" aria-label="Languages spoken at Flatbush">
@@ -725,7 +727,6 @@
                             <h3 class="location-card__name">Crown Heights</h3>
                             <address class="location-card__details">
                                 <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>358 Kingston Ave<br>Brooklyn, NY 11213</span></p>
-                                <p class="np-office__note">[CONFIRM: floor / suite]</p>
                             </address>
                             <p class="np-office__phone"><a href="tel:+13473845630" aria-label="Call Pain Therapy Crown Heights at (347) 384-5630"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>(347) 384-5630</a></p>
                             <dl class="np-hours">
@@ -772,8 +773,8 @@
                             </address>
                             <p class="np-office__phone"><a href="tel:+18454143711" aria-label="Call Pain Therapy Monsey at (845) 414-3711"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>(845) 414-3711</a></p>
                             <dl class="np-hours">
-                                <div><dt>Mon, Tue, Thu, Fri</dt><dd>9:00 am – 5:00 pm</dd></div>
-                                <div><dt>Wed, Sat, Sun</dt><dd>Closed</dd></div>
+                                <div><dt>Mon, Tue, Thu</dt><dd>9:00 am – 4:00 pm</dd></div>
+                                <div><dt>Wed, Fri–Sun</dt><dd>Closed</dd></div>
                             </dl>
                             <ul class="badge-list np-office__languages" aria-label="Languages spoken at Monsey">
                                 <li class="badge">English</li>
@@ -855,6 +856,18 @@
                     <details class="faq__item">
                         <summary class="faq__question">Do I need to bring my x-rays or MRI?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
                         <div class="faq__answer"><p>If you have them, yes. They help your provider understand your pain. If you do not have imaging, your provider will tell you whether you need it.</p></div>
+                    </details>
+                    <details class="faq__item">
+                        <summary class="faq__question">Can you help me get to my appointment?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
+                        <div class="faq__answer"><p>Yes. We can arrange transportation to your appointment, depending on your insurance plan. Please request it at least one day before your visit and call to confirm your ride.</p></div>
+                    </details>
+                    <details class="faq__item">
+                        <summary class="faq__question">Can I walk in without an appointment?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
+                        <div class="faq__answer"><p>Yes, we accept walk-ins. Patients with a scheduled appointment are seen first, so booking ahead is the best way to avoid a wait.</p></div>
+                    </details>
+                    <details class="faq__item">
+                        <summary class="faq__question">Do you complete disability or other forms?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
+                        <div class="faq__answer"><p>No. We do not complete paperwork such as disability forms.</p></div>
                     </details>
                 </div>
             </div>

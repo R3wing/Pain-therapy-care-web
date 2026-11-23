@@ -121,6 +121,40 @@ const footerLocations = function () {
     }).join('\n');
 };
 
+/* ---------- providers (fuente: tools/providers/data.js) ---------- */
+
+const providersData = function () { return require('../providers/data.js'); };
+const specialtyShown = function (p) { return p.specialty && p.specialty.charAt(0) !== '['; };
+
+/* Tarjeta SIN enlace (la página de bio es del Bloque 4). 'joining-soon' = sin foto, con badge. */
+const providerCard = function (p) {
+    const L = [];
+    if (p.status === 'joining-soon') {
+        L.push('<li class="provider-card provider-card--soon">');
+        L.push('    <!-- CONFIRMAR CON CLIENTE: fecha de inicio (y foto / credenciales cuando lleguen) -->');
+        L.push('    <div class="provider-card__initial" aria-hidden="true">' + p.name.charAt(0) + '</div>');
+        L.push('    <h3 class="provider-card__name">' + p.name + '</h3>');
+        L.push('    <p class="badge provider-card__badge">Joining soon</p>');
+        L.push('</li>');
+        return L.join('\n');
+    }
+    L.push('<li class="provider-card">');
+    if (p.image && p.image.url) {
+        L.push('    <div class="provider-card__photo">');
+        L.push('        <img src="' + p.image.url + '" alt="' + p.image.alt + '" width="' + p.image.width + '" height="' + p.image.height + '" loading="lazy" decoding="async">');
+        L.push('    </div>');
+    } else {
+        const m = (p.image && p.image.media) || ('provider-' + p.slug);
+        L.push('    <div class="media-placeholder media-placeholder--1x1" data-media="' + m + '">');
+        L.push('        <span class="media-placeholder__label">IMAGE: ' + m + '.webp · 600×600</span>');
+        L.push('    </div>');
+    }
+    L.push('    <h3 class="provider-card__name">' + p.name + '</h3>');
+    if (specialtyShown(p)) L.push('    <p class="provider-card__role">' + p.specialty + '</p>');
+    L.push('</li>');
+    return L.join('\n');
+};
+
 const PHONE_ICON = '<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>';
 
 const HEADER_MODES = {
@@ -194,7 +228,13 @@ const RENDER = {
         }, 'insurance-band');
     },
 
-    'providers-grid': function () { return read('providers-grid'); },
+    /* Equipo: todos (Home) o solo los de una sede (location=<key>). Generado desde tools/providers/data.js.
+       <!-- @partial providers-grid indent=16 --> */
+    'providers-grid': function (o) {
+        const list = providersData().filter(function (p) { return !o.location || p.locations.indexOf(o.location) !== -1; });
+        const cards = list.map(function (p) { return providerCard(p).split('\n').map(function (x) { return '    ' + x; }).join('\n'); });
+        return indent('<ul class="providers-grid">\n' + cards.join('\n') + '\n</ul>', o.indent || 0);
+    },
 
     /* Teléfonos de todas las sedes (.call-list), generados desde data.js. indent = sangría de las líneas 2+ */
     'call-list': function (o) { return indent(callListHtml(), o.indent || 0); },

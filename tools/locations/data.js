@@ -3,19 +3,16 @@
    NAP: debe coincidir carácter por carácter con Google Business Profile.
    Lo que aún no se conoce va como [MARCADOR] visible.
 
-   hours  → horarios (formato en tools/shared/hours.js). Fuente: tabla de horarios
-            enviada por el cliente. Un día sin tramo = cerrado.
-   floor  → piso / suite / nota de acceso (se muestra en el hero de la sede y en la
-            tarjeta de /new-patients/; NO forma parte del NAP: la dirección debe
-            quedar idéntica a Google Business Profile).
+   hours  → horarios CONFIRMADOS por el cliente (formato en tools/shared/hours.js).
+            Un día sin tramo = cerrado.
+   floor  → piso / suite: nota de acceso, SEPARADA de la dirección (el NAP no cambia).
+   accessLine → frase de piso / elevador para "Accessibility" y la FAQ (vacío si no aplica).
    languages → idiomas de atención (fuente: página en vivo /new-patients/).
-   Sábado y domingo: la web en vivo NO los menciona; se muestran como cerrados
-   (CONFIRMAR CON CLIENTE).
-
    shortAddr    → dirección corta para menús, Call ▾, hoja Call y selectores.
-   scheduleNote → aviso en /schedule/ al elegir la sede (opcional).
+   scheduleNote → aviso en /schedule/ al elegir la sede (opcional; el cierre -45 min se añade solo).
+   hoursFaqNote → frase final de la FAQ de horario (opcional).
    custom       → (opcional) textos propios de la página de la sede: heroText, venue,
-                  hoursText, badge, metaDesc, conditions[], providerSlug (→ tools/providers/data.js), faq[], treatmentsTitle, gallery:'facade+3'.
+                  hoursText, badge, metaDesc, conditions[], gallery:'facade+3'. Los providers de cada sede salen de tools/providers/data.js (locations).
 
    ORDEN del array = orden en menús, footer, Home, Schedule… (las 3 de Brooklyn juntas).
    geo          → { lat, lng } (6 decimales) solo para mapas y schema; NO cambia la dirección.
@@ -42,8 +39,8 @@ module.exports = [
         kicker: 'Brooklyn, NY',
         titleArea: 'Williamsburg, Brooklyn',
         placeLabel: 'Williamsburg, Brooklyn',      // para textos alt
-        hasSubway: true,
-        floor: '3rd floor · Just off Broadway',
+        floor: '3rd floor',
+        accessLine: 'Our office is on the 3rd floor, accessible by elevator.',
         hours: [
             { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
             { days: ['Fri'], opens: '09:00', closes: '14:00' }
@@ -69,11 +66,11 @@ module.exports = [
         kicker: 'Brooklyn, NY',
         titleArea: 'Flatbush, Brooklyn',
         placeLabel: 'Flatbush, Brooklyn',
-        hasSubway: true,
         floor: 'Ground floor, Suite C',
+        accessLine: 'Ground floor, Suite C.',
         hours: [
             { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
-            { days: ['Fri'], opens: '10:00', closes: '14:00' }
+            { days: ['Fri'], opens: '09:00', closes: '14:00' }
         ],
         languages: ['English', 'Spanish', 'Yiddish'],
         geo: { lat: 40.621630, lng: -73.945686 },
@@ -99,21 +96,20 @@ module.exports = [
         kicker: 'Brooklyn, NY',
         titleArea: 'Crown Heights, Brooklyn',
         placeLabel: 'Crown Heights, Brooklyn',
-        hasSubway: true,                           // solo define el rótulo "Subway & bus"; el contenido es [CONFIRM]
-        floor: '[CONFIRM: floor / suite]',
+        floor: '',                                 // sin nota de piso
         hours: [
             { days: ['Tue'], opens: '09:00', closes: '17:00' }
         ],
         languages: [],                             // [CONFIRM: idiomas] → no se afirma ninguno
         geo: { lat: 40.666568, lng: -73.942810 },
         scheduleNote: 'Crown Heights is open on Tuesdays only.',
+        hoursFaqNote: ' To book another day, call or visit one of our other Brooklyn locations.',
         custom: {
             metaDesc: 'Pain management in Crown Heights, Brooklyn at 358 Kingston Ave. Non-surgical care for back, neck, joint and nerve pain. Open Tuesdays. Call (347) 384-5630.',
             /* Texto del cliente, literal */
             heroText: 'Evaluation and non-surgical management of back pain, neck pain, joint pain, leg and foot pain, neuropathic pain, and other musculoskeletal conditions.',
             hoursText: 'Tuesdays only, 9:00 AM–5:00 PM',
             badge: 'Open Tuesdays only',
-            treatmentsTitle: 'What we treat in Crown Heights',
             gallery: 'facade+3',
             conditions: [
                 { title: 'Back pain',          links: [['Lower back pain', 'lower-back-pain']] },
@@ -122,15 +118,6 @@ module.exports = [
                 { title: 'Leg and foot pain',  links: [['Sciatica', 'sciatica'], ['Plantar fasciitis', 'plantar-fasciitis']] },
                 { title: 'Neuropathic pain',   links: [['Peripheral neuropathy', 'peripheral-neuropathy']] }
             ],
-            providerSlug: 'olutimilehin-oyeniran-md',   // → tools/providers/data.js
-            faq: [
-                { q: 'What days is the Crown Heights office open?',
-                  a: 'Our Crown Heights office is open on Tuesdays only, from 9:00 AM to 5:00 PM. To book another day, call or visit one of our other Brooklyn locations.' },
-                { q: 'Is there parking or public transportation near the Crown Heights office?',
-                  a: '[CONFIRM: parking and transportation near Crown Heights]' },
-                { q: 'Do you accept Medicare and Medicaid at the Crown Heights office?',
-                  a: 'Yes. We accept Medicare, Medicaid and most major insurance plans at all five locations.' }
-            ]
         }
     },
     {
@@ -151,14 +138,15 @@ module.exports = [
         kicker: 'Five Towns, Nassau County, NY',
         titleArea: 'Inwood, Five Towns',
         placeLabel: 'Inwood, Five Towns',
-        hasSubway: false,
         floor: '2nd floor',
+        accessLine: 'Our office is on the 2nd floor, accessible by elevator.',
         hours: [
             { days: ['Mon'], opens: '08:30', closes: '16:30' }
         ],
         languages: ['English', 'Spanish', 'Yiddish'],
         geo: { lat: 40.618158, lng: -73.747115 },
         scheduleNote: 'Inwood is open on Mondays only.',
+        hoursFaqNote: ' To book another day, call or visit one of our other locations.',
         legacyUrl: '/locations/brooklyn-ny-inwood/'
     },
     {
@@ -179,12 +167,12 @@ module.exports = [
         kicker: 'Rockland County, NY',
         titleArea: 'Monsey, Rockland County',
         placeLabel: 'Monsey, NY',
-        hasSubway: false,
         floor: '',
         hours: [
-            { days: ['Mon', 'Tue', 'Thu', 'Fri'], opens: '09:00', closes: '17:00' }
+            { days: ['Mon', 'Tue', 'Thu'], opens: '09:00', closes: '16:00' }
         ],
         languages: ['English', 'Yiddish'],
+        scheduleNote: 'Open Mon, Tue and Thu.',
         geo: { lat: 41.111256, lng: -74.068546 },
     }
 ];

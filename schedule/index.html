@@ -529,6 +529,14 @@
                                     </div>
 
                                     <div class="insurance-field">
+                                        <div class="insurance-check">
+                                            <input class="insurance-check__input" id="transport-help" name="transport_help" type="checkbox" value="yes" aria-describedby="transport-help-hint">
+                                            <label class="insurance-check__label" for="transport-help">I need help with transportation <span class="insurance-field__optional">(optional)</span></label>
+                                        </div>
+                                        <p class="insurance-field__hint" id="transport-help-hint">Available depending on your insurance plan. Please request it at least one day before your visit.</p>
+                                    </div>
+
+                                    <div class="insurance-field">
                                         <label class="insurance-field__label" for="sc-email">Email <span class="insurance-field__optional">(optional)</span></label>
                                         <input class="insurance-input" id="sc-email" name="email" type="email" autocomplete="email" inputmode="email" data-validate="email">
                                         <p class="insurance-field__error" id="sc-email-error" hidden>
@@ -537,8 +545,9 @@
                                         </p>
                                     </div>
 
-                                    <fieldset class="schedule-group" id="g-besttime">
+                                    <fieldset class="schedule-group" id="g-besttime" aria-describedby="g-besttime-hint">
                                         <legend class="insurance-field__label schedule-group__legend">Best time to call <span class="insurance-field__optional">(optional)</span></legend>
+                                        <p class="insurance-field__hint" id="g-besttime-hint">New patients are seen until 45 minutes before closing.</p>
                                         <ul class="schedule-options schedule-options--4 schedule-options--compact">
                                             <li>
                                                 <label class="schedule-option schedule-option--radio">

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- STAGING: quitar "noindex, nofollow" el día del lanzamiento (hay textos pendientes de confirmar) -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESC}}">
+    <link rel="canonical" href="{{URL}}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Pain Therapy Medical Care">
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:description" content="{{DESC}}">
+    <meta property="og:url" content="{{URL}}">{{OG}}
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="{{BASE}}assets/icons/paintherapy-isotype_1.svg" type="image/svg+xml">
+
+    <!-- Marca "JS disponible" antes del primer pintado -->
+    <script src="{{BASE}}assets/js/js-detect.js"></script>
+
+    <!-- Fuentes: Montserrat (Gotham no es libre; se usa si está instalada) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{BASE}}styles.css">
+    {{HEAD_SCRIPTS}}
+    <script src="{{BASE}}assets/js/main.js" defer></script>
+
+    <!--
+        Datos estructurados (BlogPosting + BreadcrumbList, y FAQPage si el post tiene preguntas).
+        Página generada por tools/blog/build.js desde tools/blog/data.json: no editar a mano.
+        El contenido es el del post de WordPress (limpiado, sin cambiar el texto).
+        "Medically reviewed by …" NO se muestra: no hay revisor en los datos.
+    -->
+    <script type="application/ld+json">
+{{JSONLD}}
+    </script>
+</head>
+<body>
+
+    <!-- =====================================================
+         SPRITE DE ÍCONOS
+    ====================================================== -->
+    {{SPRITE}}
+
+    {{HEADER}}
+
+    <main id="content" tabindex="-1">
+
+        <!-- =====================================================
+             1. BREADCRUMB
+        ====================================================== -->
+        {{BREADCRUMB}}
+
+        <!-- =====================================================
+             2. CABECERA (fondo --cloud)
+        ====================================================== -->
+        <section class="service-hero blog-head" aria-labelledby="hero-title">
+            <div class="container blog-head__inner">
+                {{PILL}}
+                <h1 class="service-hero__title blog-head__title" id="hero-title">{{H1}}</h1>
+                <p class="blog-meta">{{META_LINE}}</p>
+            </div>
+        </section>
+
+        <div class="container blog-article">
+            <!-- 3. TL;DR -->
+{{TLDR_BOX}}
+            <!-- 4. IMAGEN DESTACADA -->
+{{FIGURE}}
+            <!-- 5. TOC + CUERPO -->
+            <div class="blog-layout">
+                <div class="blog-layout__toc">
+{{TOC_SIDE}}
+                </div>
+                <article class="blog-layout__main">
+{{TOC_INLINE}}
+                    <div class="blog-prose">
+{{BODY}}
+                    </div>
+                    <!-- 8. RELATED CARE + AUTOR -->
+{{RELATED_CARE}}
+{{AUTHOR_BOX}}
+                </article>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             9. KEEP READING
+        ====================================================== -->
+        <section class="section section--cloud" aria-labelledby="keep-title">
+            <div class="container">
+                <h2 class="section-title" id="keep-title">Keep reading</h2>
+                <ul class="blog-grid">
+{{KEEP_READING}}
+                </ul>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             10. CTA FINAL
+        ====================================================== -->
+        {{CTA_FINAL}}
+
+    </main>
+
+    {{FOOTER}}
+
+    {{MOBILE_AND_SHEET}}
+
+</body>
+</html>

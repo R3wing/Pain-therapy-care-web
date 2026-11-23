@@ -233,15 +233,6 @@ module.exports = [
                 { t: 'Twitch response', d: 'A twitch indicates the muscle is releasing tension.' }
             ]
         },
-        provider: {
-            title: 'Meet your A-IMS expert',
-            name: 'Anna Ducksoon Lee, MD',
-            role: 'A-IMS expert',
-            image: {
-                src: 'https://paintherapycare.com/wp-content/uploads/2026/04/Anna-Ducksoon-Lee_converted.avif',
-                alt: 'Anna Ducksoon Lee, MD'
-            }
-        },
         faq: [
             { q: 'What is the difference between IMS and dry needling?', a: 'IMS is a form of dry needling. Fine needles are placed in tight or shortened muscles to help release tension.' },
             { q: 'Are there restrictions after IMS treatment?', a: 'There are typically no significant restrictions. Your provider may suggest avoiding intense exercise for 24 to 48 hours, drinking plenty of water, doing gentle stretching or light activity, and minimizing alcohol right after treatment. Most patients resume normal activities shortly after.' },
@@ -251,7 +242,6 @@ module.exports = [
         related: ['physical-therapy-occupational-therapy', 'aqua-therapy', 'pelvic-floor-therapy'],
         confirm: [
             'NO se copiaron: "highly effective", "significant improvements after just a few sessions", "targets the root cause", "restores nerve function", "flush out toxins", "revolutionary", "pioneer", "life-changing".',
-            'Médico: la web en vivo presenta a "Anna Lee, MD" como experta en A-IMS con bio (pionera, más de 15 años, certificada en Cresskill, NJ). Solo se dejó nombre y rol. Confirmar nombre exacto y bio.',
             'La web en vivo pregunta "Will I feel any pain after the treatment?" (dos veces) y NO la responde: pedir la respuesta al médico.',
             'Faltan: número de sesiones, duración y contraindicaciones.',
             'Nombre del tratamiento: la web usa "IMS", "AIMS" y "A-IMS®" de forma inconsistente; confirmar el nombre oficial.',

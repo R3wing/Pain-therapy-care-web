@@ -1,0 +1,23 @@
+{
+    "_note": "Redirecciones 301 que se configuran en el hosting final (Vercel: redirects en vercel.json · WordPress: plugin Redirection / .htaccess). NO se resuelven en el HTML.",
+    "redirects": [
+        {
+            "source": "/providers/jennifer-schoenfeld-do/",
+            "destination": "/providers/",
+            "permanent": true,
+            "reason": "Jennifer Schoenfeld, DO ya no trabaja en la práctica (confirmado por el cliente)"
+        },
+        {
+            "source": "/providers/anna-ducksoon-lee-md/",
+            "destination": "/providers/",
+            "permanent": true,
+            "reason": "Anna Ducksoon Lee, MD ya no trabaja en la práctica (confirmado por el cliente)"
+        },
+        {
+            "source": "/locations/brooklyn-ny-inwood/",
+            "destination": "/locations/inwood-ny/",
+            "permanent": true,
+            "reason": "URL anterior de la sede de Inwood (ver legacyUrl en tools/locations/data.js)"
+        }
+    ]
+}

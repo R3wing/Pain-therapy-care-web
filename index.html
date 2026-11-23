@@ -9,7 +9,8 @@
     <meta name="description" content="Brooklyn pain management clinic offering shockwave, EMTT, and laser therapy for back, joint, heel, and hip pain. Book your appointment today.">
     <link rel="canonical" href="https://paintherapycare.com/">
     <link rel="alternate" hreflang="en" href="https://paintherapycare.com/">
-    <link rel="alternate" hreflang="es" href="https://paintherapycare.com/es/">
+    <!-- hreflang="es" (/es/) oculto hasta que exista la versión en español:
+    <link rel="alternate" hreflang="es" href="https://paintherapycare.com/es/"> -->
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -90,6 +91,7 @@
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "10:30", "closes": "17:00" },
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "14:00" }
                 ],
+                "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": true }],
                 "knowsLanguage": ["en", "es", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
@@ -110,8 +112,9 @@
                 },
                 "openingHoursSpecification": [
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "10:30", "closes": "17:00" },
-                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "10:00", "closes": "14:00" }
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "14:00" }
                 ],
+                "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": true }],
                 "knowsLanguage": ["en", "es", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
@@ -133,6 +136,7 @@
                 "openingHoursSpecification": [
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday"], "opens": "09:00", "closes": "17:00" }
                 ],
+                "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": true }],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
             {
@@ -153,6 +157,7 @@
                 "openingHoursSpecification": [
                     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "08:30", "closes": "16:30" }
                 ],
+                "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": true }],
                 "knowsLanguage": ["en", "es", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
@@ -172,8 +177,9 @@
                     "addressCountry": "US"
                 },
                 "openingHoursSpecification": [
-                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Thursday", "Friday"], "opens": "09:00", "closes": "17:00" }
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Thursday"], "opens": "09:00", "closes": "16:00" }
                 ],
+                "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": true }],
                 "knowsLanguage": ["en", "yi"],
                 "parentOrganization": { "@id": "https://paintherapycare.com/#organization" }
             },
@@ -251,9 +257,10 @@
                 <div class="utility-bar__meta">
                     <span class="utility-bar__item">
                         <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
-                        Same-day appointments
+                        Same-day appointments often available
                     </span>
-                    <a class="utility-bar__link" href="/es/" lang="es" hreflang="es">Español</a>
+                    <!-- Enlace "Español" (/es/) oculto hasta que exista esa versión (no debe haber enlaces rotos):
+                    <a class="utility-bar__link" href="/es/" lang="es" hreflang="es">Español</a> -->
                 </div>
             </div>
         </div>
@@ -491,7 +498,7 @@
                     </div>
 
                     <ul class="check-list check-list--on-dark">
-                        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Same-day appointments</li>
+                        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Same-day appointments often available</li>
                         <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Board-certified physicians</li>
                         <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>5 locations</li>
                     </ul>
@@ -808,7 +815,7 @@
                     <li class="step">
                         <span class="step__number" aria-hidden="true">01</span>
                         <h3 class="step__title">Request or call</h3>
-                        <p class="step__text">Book online or call the location nearest you. Same-day appointments are available.</p>
+                        <p class="step__text">Book online or call the location nearest you. Same-day appointments are often available.</p>
                     </li>
                     <li class="step">
                         <span class="step__number" aria-hidden="true">02</span>
@@ -834,49 +841,44 @@
                     <h2 class="section-title" id="providers-title">Physicians who take time to listen</h2>
                     <a class="text-link" href="/providers/">Meet our team <span aria-hidden="true">→</span></a>
                 </header>
-                <!-- @partial providers-grid -->
+                <!-- @partial providers-grid indent=16 -->
                 <ul class="providers-grid">
                     <li class="provider-card">
                         <div class="media-placeholder media-placeholder--1x1" data-media="provider-henry-sardar">
                             <span class="media-placeholder__label">IMAGE: provider-henry-sardar.webp · 600×600</span>
-                            <!-- <img src="assets/images/providers/provider-henry-sardar.webp" alt="Portrait of Dr. Henry Sardar" width="600" height="600" loading="lazy" decoding="async"> -->
                         </div>
                         <h3 class="provider-card__name">Henry Sardar, MD</h3>
                     </li>
                     <li class="provider-card">
                         <div class="media-placeholder media-placeholder--1x1" data-media="provider-lee-trosterman">
                             <span class="media-placeholder__label">IMAGE: provider-lee-trosterman.webp · 600×600</span>
-                            <!-- <img src="assets/images/providers/provider-lee-trosterman.webp" alt="Portrait of Dr. Lee Trosterman" width="600" height="600" loading="lazy" decoding="async"> -->
                         </div>
                         <h3 class="provider-card__name">Lee Trosterman, MD</h3>
                     </li>
                     <li class="provider-card">
                         <div class="media-placeholder media-placeholder--1x1" data-media="provider-jason-hernandez">
                             <span class="media-placeholder__label">IMAGE: provider-jason-hernandez.webp · 600×600</span>
-                            <!-- <img src="assets/images/providers/provider-jason-hernandez.webp" alt="Portrait of Dr. Jason Hernandez" width="600" height="600" loading="lazy" decoding="async"> -->
                         </div>
                         <h3 class="provider-card__name">Jason Hernandez, MD</h3>
                     </li>
                     <li class="provider-card">
-                        <div class="media-placeholder media-placeholder--1x1" data-media="provider-jennifer-schoenfeld">
-                            <span class="media-placeholder__label">IMAGE: provider-jennifer-schoenfeld.webp · 600×600</span>
-                            <!-- <img src="assets/images/providers/provider-jennifer-schoenfeld.webp" alt="Portrait of Dr. Jennifer Schoenfeld" width="600" height="600" loading="lazy" decoding="async"> -->
+                        <div class="provider-card__photo">
+                            <img src="https://paintherapycare.com/wp-content/uploads/2026/11/Dr.-Olutimilehin-Oyeniran.png" alt="Portrait of Olutimilehin Oyeniran, MD" width="1254" height="1254" loading="lazy" decoding="async">
                         </div>
-                        <h3 class="provider-card__name">Jennifer Schoenfeld, DO</h3>
+                        <h3 class="provider-card__name">Olutimilehin Oyeniran, MD</h3>
+                        <p class="provider-card__role">Pain Management</p>
                     </li>
                     <li class="provider-card">
                         <div class="media-placeholder media-placeholder--1x1" data-media="provider-michelle-abraham">
                             <span class="media-placeholder__label">IMAGE: provider-michelle-abraham.webp · 600×600</span>
-                            <!-- <img src="assets/images/providers/provider-michelle-abraham.webp" alt="Portrait of Michelle Abraham, PA-C" width="600" height="600" loading="lazy" decoding="async"> -->
                         </div>
                         <h3 class="provider-card__name">Michelle Abraham, PA-C</h3>
                     </li>
-                    <li class="provider-card">
-                        <div class="media-placeholder media-placeholder--1x1" data-media="provider-anna-ducksoon-lee">
-                            <span class="media-placeholder__label">IMAGE: provider-anna-ducksoon-lee.webp · 600×600</span>
-                            <!-- <img src="assets/images/providers/provider-anna-ducksoon-lee.webp" alt="Portrait of Dr. Anna Ducksoon Lee" width="600" height="600" loading="lazy" decoding="async"> -->
-                        </div>
-                        <h3 class="provider-card__name">Anna Ducksoon Lee, MD</h3>
+                    <li class="provider-card provider-card--soon">
+                        <!-- CONFIRMAR CON CLIENTE: fecha de inicio (y foto / credenciales cuando lleguen) -->
+                        <div class="provider-card__initial" aria-hidden="true">N</div>
+                        <h3 class="provider-card__name">Naveen Sharma, DO</h3>
+                        <p class="badge provider-card__badge">Joining soon</p>
                     </li>
                 </ul>
                 <!-- @end providers-grid -->
@@ -942,7 +944,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>2577 Nostrand Ave<br>Brooklyn, NY 11210</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+17187154484" aria-label="Call Pain Therapy Flatbush at (718) 715-4484">(718) 715-4484</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 10:00 am – 2:00 pm</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon–Thu: 10:30 am – 5:00 pm<br>Fri: 9:00 am – 2:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=flatbush">Book here<span class="visually-hidden"> at Flatbush</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=2577+Nostrand+Ave+Brooklyn+NY+11210" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Flatbush (opens in a new tab)</span></a>
@@ -981,7 +983,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>40 Main St<br>Monsey, NY 10952</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+18454143711" aria-label="Call Pain Therapy Monsey at (845) 414-3711">(845) 414-3711</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Tue, Thu, Fri: 9:00 am – 5:00 pm</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Tue, Thu: 9:00 am – 4:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=monsey">Book here<span class="visually-hidden"> at Monsey</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=40+Main+St+Monsey+NY+10952" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Monsey (opens in a new tab)</span></a>

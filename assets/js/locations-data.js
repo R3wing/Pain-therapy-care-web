@@ -80,7 +80,7 @@ window.PT_LOCATIONS = [
         "tel": "+18454143711",
         "lat": 41.111256,
         "lng": -74.068546,
-        "days": "Mon, Tue, Thu, Fri",
+        "days": "Mon, Tue, Thu",
         "directions": "https://www.google.com/maps/dir/?api=1&destination=40%20Main%20St%2C%20Monsey%2C%20NY%2010952"
     }
 ];

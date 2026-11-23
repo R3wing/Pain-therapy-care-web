@@ -43,14 +43,17 @@
     };
     /* @end locations:schedule */
 
+    /* GENERADO desde tools/providers/data.js (node tools/build-all.js): solo providers ACTIVOS.
+       Los que ya no trabajan en la práctica y los "joining-soon" NO se aceptan en ?provider=. */
+    /* @locations:providers */
     var PROVIDERS = {
         'henry-sardar-md': 'Henry Sardar, MD',
         'lee-trosterman-md': 'Lee Trosterman, MD',
         'jason-hernandez-md': 'Jason Hernandez, MD',
-        'jennifer-schoenfeld-do': 'Jennifer Schoenfeld, DO',
-        'michelle-abraham-pa-c': 'Michelle Abraham, PA-C',
-        'anna-ducksoon-lee-md': 'Anna Ducksoon Lee, MD'
+        'olutimilehin-oyeniran-md': 'Olutimilehin Oyeniran, MD',
+        'michelle-abraham-pa-c': 'Michelle Abraham, PA-C'
     };
+    /* @end locations:providers */
 
     var SERVICES = {
         'shock-wave-therapy': 'Shockwave Therapy',
@@ -218,8 +221,11 @@
         var locationNote = form.querySelector('[data-location-note]');
         /* @locations:notes */
         var LOCATION_NOTES = {
-            'crown-heights': 'Crown Heights is open on Tuesdays only.',
-            'inwood': 'Inwood is open on Mondays only.'
+            'williamsburg': 'New patients are seen until 45 minutes before closing.',
+            'flatbush': 'New patients are seen until 45 minutes before closing.',
+            'crown-heights': 'Crown Heights is open on Tuesdays only. New patients are seen until 4:15 pm.',
+            'inwood': 'Inwood is open on Mondays only. New patients are seen until 3:45 pm.',
+            'monsey': 'Open Mon, Tue and Thu. New patients are seen until 3:15 pm.'
         };
         /* @end locations:notes */
         function renderLocationNote() {
@@ -443,6 +449,11 @@
 
 
         /* ---------- 4) Envío ---------- */
+        function transportHelp() {
+            var box = form.querySelector('#transport-help');
+            return !!(box && box.checked);
+        }
+
         function smsOptIn() {
             var box = form.querySelector('#sms-consent');
             return !!(box && box.checked);
@@ -476,6 +487,7 @@
             track('generate_lead', {
                 form: 'schedule',
                 location: has(LOCATIONS, selectedLocation()) ? selectedLocation() : undefined,
+                transport_help: transportHelp(),   /* booleano: sin datos personales */
                 sms_opt_in: smsOptIn()   /* booleano: sin teléfono ni datos personales */
             });
             /* Pequeña espera para que GTM procese el evento antes de salir */

@@ -104,84 +104,98 @@ function treatmentsHtml(l) {
 }
 
 
-/* ---------- sedes con lista de condiciones (en vez de pills de tecnología) ---------- */
+/* ---------- sedes con lista de condiciones: se suman a los 3 grupos de tratamientos ---------- */
 
 function conditionsHtml(l) {
-    const groups = l.custom.conditions.map(function (g, i) {
+    return l.custom.conditions.map(function (g, i) {
         const links = g.links.map(function (c) {
-            return `<li><a class="pill-link location-pill-link" href="/conditions/${c[1]}/">${c[0]}</a></li>`;
+            return '<li><a class="pill-link location-pill-link" href="/conditions/' + c[1] + '/">' + c[0] + '</a></li>';
         }).join('\n');
         return [
             '<div class="location-treatments__group">',
-            `    <h3 class="location-treatments__title" id="cond-${i}">${g.title}</h3>`,
-            `    <ul class="location-treatments__list" aria-labelledby="cond-${i}">`,
+            '    <h3 class="location-treatments__title" id="cond-' + i + '">' + g.title + '</h3>',
+            '    <ul class="location-treatments__list" aria-labelledby="cond-' + i + '">',
             indent(links, 8),
             '    </ul>',
             '</div>'
         ].join('\n');
     }).join('\n');
-    return groups + '\n' + [
-        '<!-- CONFIRMAR CON CLIENTE: qué tratamientos de tecnología (Shockwave, EMTT, Laser…) se ofrecen en esta sede -->',
-        '<p class="location-areas__text">[CONFIRM: technology treatments available at this location]</p>'
-    ].join('\n');
 }
 
-function providerOf(l) {
-    const slug = l.custom && l.custom.providerSlug;
-    if (!slug) return null;
-    const p = providers.filter(function (x) { return x.slug === slug; })[0];
-    if (!p) fail(l.sede + ': el provider "' + slug + '" no existe en tools/providers/data.js');
-    return p;
+/* Providers activos (no "joining-soon") de una sede: para el JSON-LD */
+function activeProvidersOf(l) {
+    return providers.filter(function (p) { return p.status !== 'joining-soon' && p.locations.indexOf(l.key) !== -1; });
 }
 
-/* Tarjeta SIN enlace: su página de bio se crea en el Bloque 4 (cuando haya bio) */
-function providerHtml(l) {
-    const p = providerOf(l);
-    const img = p.image || {};
-    const photo = img.url
-        ? [
-            '    <div class="provider-card__photo">',
-            `        <img src="${img.url}" alt="${img.alt}" width="${img.width}" height="${img.height}" loading="lazy" decoding="async">`,
-            '    </div>'
-        ]
-        : [
-            `    <div class="media-placeholder media-placeholder--1x1" data-media="${img.media}">`,
-            `        <span class="media-placeholder__label">IMAGE: ${img.media}.webp · 600×600</span>`,
-            '    </div>'
-        ];
-    return [
-        '<!-- CONFIRMAR CON CLIENTE: bio. Sin enlace hasta que exista su página de bio (Bloque 4) -->',
-        '<li class="provider-card">'
-    ].concat(photo, [
-        `    <h3 class="provider-card__name">${p.name}</h3>`,
-        `    <p class="provider-card__role">${p.specialty}</p>`,
-        '</li>'
-    ]).join('\n');
+/* Providers de la sede: SOLO los suyos (tools/providers/data.js → locations) */
+function providersHtml(l) {
+    return lib.render('providers-grid', { location: l.key, depth: 2 })
+        .replace(/^<ul class="providers-grid">\s*/, '')
+        .replace(/\s*<\/ul>$/, '')
+        .split('\n').map(function (x) { return x.replace(/^ {4}/, ''); }).join('\n');
 }
 
 /* ---------- FAQ (mismo texto en HTML y en JSON-LD) ---------- */
 
+/* "9:00 AM" / "4:30 PM" (formato de las respuestas) */
+function t12(t) {
+    const m = /^(\d{1,2}):(\d{2})$/.exec(t);
+    const h = parseInt(m[1], 10);
+    return ((h % 12) || 12) + ':' + m[2] + ' ' + (h >= 12 ? 'PM' : 'AM');
+}
+
+function joinList(a) {
+    return a.length > 1 ? a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1] : a[0];
+}
+
+/* Respuesta de horario, construida desde hours de data.js */
+function hoursAnswer(l) {
+    const open = [];
+    l.hours.forEach(function (s) { s.days.forEach(function (d) { if (open.indexOf(d) === -1) open.push(d); }); });
+    if (l.hours.length === 1) {
+        const s0 = l.hours[0];
+        const days = s0.days.length === 1
+            ? 'on ' + hours.FULL[s0.days[0]] + 's only'
+            : joinList(s0.days.map(function (d) { return hours.FULL[d]; }));
+        return 'Our ' + l.sede + ' office is open ' + days + ', from ' + t12(s0.opens) + ' to ' + t12(s0.closes) + '.' + (l.hoursFaqNote || '');
+    }
+    const parts = l.hours.map(function (s) {
+        return hours.dayLabel(s.days).replace(/–/g, ' to ').replace(/\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/g, function (d) { return hours.FULL[d]; }) + ', ' + t12(s.opens) + ' to ' + t12(s.closes);
+    });
+    return 'Our ' + l.sede + ' office is open ' + parts.join(', and ') + '. We are closed on the other days.' + (l.hoursFaqNote || '');
+}
+
+const TRANSPORT = 'We can arrange transportation to your appointment, depending on your insurance plan. Please request it at least one day before your visit and call to confirm your ride.';
+const ACCESS = 'Wheelchair accessible, with ramp access and a step-free entrance.';
+
 function faqData(l) {
-    if (l.custom && l.custom.faq) return l.custom.faq;
-    /* Seguros: mismas aseguradoras en todas las sedes; el número sale de data.js */
-    const insuranceAnswer = 'Yes. We accept Medicare, Medicaid and most major insurance plans at all ' + lib.numWord() + ' locations.';
+    const daysQuestion = l.hours.reduce(function (n, s) { return n + s.days.length; }, 0) < 5;
+    const floorLine = l.accessLine ? ' ' + l.accessLine : '';
     return [
         {
-            q: `Is there parking near the ${l.sede} clinic?`,
-            a: '[PARKING]'
+            q: daysQuestion ? 'What days is the ' + l.sede + ' office open?' : 'What are the hours at the ' + l.sede + ' office?',
+            a: hoursAnswer(l)
         },
         {
-            q: l.hasSubway ? 'Which subway or bus lines are closest?' : 'How do I get there by car or bus?',
-            a: '[SUBWAY / BUS]'
+            q: 'Can you help me get to my appointment?',
+            a: 'Yes. ' + TRANSPORT
+        },
+        {
+            q: 'Is the office wheelchair accessible?',
+            a: 'Yes. Our ' + l.sede + ' office is wheelchair accessible, with ramp access and a step-free entrance.' + floorLine
+        },
+        {
+            q: 'Can I walk in without an appointment?',
+            a: 'Yes, we accept walk-ins. Patients with a scheduled appointment are seen first, so booking ahead is the best way to avoid a wait.'
         },
         {
             q: 'Do you accept Medicare and Medicaid at this location?',
-            a: insuranceAnswer
+            a: 'Yes. We accept Medicare, Medicaid and most major insurance plans at all ' + lib.numWord() + ' locations.'
         },
         {
             q: 'Can I get a same-day appointment?',
-            a: `Same-day appointments may be available. Call ${l.phone} or request online.`,
-            html: `Same-day appointments may be available. Call <a href="tel:${l.tel}" aria-label="Call Pain Therapy ${l.sede} at ${l.phone}">${l.phone}</a> or <a href="/schedule/?location=${l.key}">request online</a>.`
+            a: 'Same-day appointments are often available. Call ' + l.phone + ' or request online.',
+            html: 'Same-day appointments are often available. Call <a href="tel:' + l.tel + '" aria-label="Call Pain Therapy ' + l.sede + ' at ' + l.phone + '">' + l.phone + '</a> or <a href="/schedule/?location=' + l.key + '">request online</a>.'
         }
     ];
 }
@@ -242,8 +256,7 @@ function othersHtml(current) {
 function jsonLd(l) {
     const u = url(l);
     const services = [];
-    /* Sedes con custom.conditions: los tratamientos de tecnología NO están confirmados → sin availableService */
-    if (!(l.custom && l.custom.conditions)) {
+    {
         TREATMENTS.forEach(function (g) {
             g.items.forEach(function (t) {
                 services.push({ '@type': t[2], name: t[3], url: `${SITE}/services/${t[1]}/` });
@@ -297,15 +310,19 @@ function jsonLd(l) {
     if (services.length) clinic.availableService = services;
     if (l.openedOn) clinic.foundingDate = l.openedOn;
     if (l.geo) clinic.geo = { '@type': 'GeoCoordinates', latitude: l.geo.lat, longitude: l.geo.lng };
-    const prov = providerOf(l);
-    if (prov) {
-        clinic.employee = { '@id': u + '#physician' };
-        const doc = { '@type': 'Physician', '@id': u + '#physician', name: prov.givenName + ' ' + prov.familyName, honorificSuffix: prov.credential };
-        if (prov.image && prov.image.url) doc.image = prov.image.url;
-        doc.medicalSpecialty = 'PainMedicine';
-        doc.worksFor = { '@id': u + '#clinic' };
-        doc.workLocation = { '@id': u + '#clinic' };
-        data['@graph'].splice(1, 0, doc);
+    clinic.amenityFeature = [{ '@type': 'LocationFeatureSpecification', name: 'Wheelchair accessible', value: true }];
+    const docs = activeProvidersOf(l);
+    if (docs.length) {
+        clinic.employee = docs.map(function (p) { return { '@id': u + '#' + p.slug }; });
+        docs.slice().reverse().forEach(function (p) {
+            const isDoc = p.credential === 'MD' || p.credential === 'DO';
+            const node = { '@type': isDoc ? 'Physician' : 'Person', '@id': u + '#' + p.slug, name: p.name.replace(/,.*$/, ''), honorificSuffix: p.credential };
+            if (p.image && p.image.url) node.image = p.image.url;
+            if (p.specialty === 'Pain Management') node.medicalSpecialty = 'PainMedicine';
+            node.worksFor = { '@id': u + '#clinic' };
+            if (isDoc) node.workLocation = { '@id': u + '#clinic' };
+            data['@graph'].splice(1, 0, node);
+        });
     }
     return indent(JSON.stringify(data, null, 4), 4);
 }
@@ -360,11 +377,6 @@ function ctaFor(l) {
 
 /* ---------- build ---------- */
 
-/* Providers: solo los <li> (la plantilla ya trae el <ul>) */
-const providerItems = lib.render('providers-grid', { depth: 2 })
-    .replace(/^<ul class="providers-grid">\s*/, '')
-    .replace(/\s*<\/ul>$/, '');
-
 const report = [];
 
 locations.forEach(function (l) {
@@ -397,7 +409,10 @@ locations.forEach(function (l) {
         HERO_TEXT: c.heroText || 'Drug-free Shockwave, EMTT and Laser Therapy close to home. Medicare, Medicaid and most insurance accepted.',
         NAP_VENUE: l.venue ? `\n                        <p class="location-nap__venue">at ${l.venue}</p>` : '',
         MAP: lib.render('map', { key: l.slug, depth: 2, indent: 20 }),
-        BADGE_TEXT: c.badge || 'Same-day appointments',
+        BADGE_TEXT: c.badge || 'Same-day appointments often available',
+        ACCESS_TEXT: ACCESS,
+        ACCESS_EXTRA: l.accessLine ? '\n                        <p class="location-info__text">' + l.accessLine + '</p>' : '',
+        TRANSPORT_TEXT: TRANSPORT,
         GALLERY_CLASS: c.gallery === 'facade+3' ? ' location-gallery--4' : '',
         GALLERY_FACADE: c.gallery === 'facade+3' ? [
             '<li>',
@@ -407,7 +422,7 @@ locations.forEach(function (l) {
             '    </div>',
             '</li>'
         ].map(function (x, i) { return i ? ' '.repeat(20) + x : x; }).join('\n') + '\n' + ' '.repeat(20) : '',
-        TREATMENTS_TITLE: c.treatmentsTitle || `Treatments available in ${l.sede}`,
+        TREATMENTS_TITLE: c.conditions ? 'What we treat in ' + l.sede : `Treatments available in ${l.sede}`,
         CLINICS_WORD: lib.numWord(),
         JSONLD_NOTES: (l.venue ? `NAP: nombre del schema decidido por el cliente (“${l.schemaName}”); el centro “${l.venue}” figura en la línea “at …”.\n        CONFIRMAR: verificar que coincide con el nombre exacto en Google Business Profile.
 
@@ -418,7 +433,6 @@ locations.forEach(function (l) {
         TEL: l.tel,
         MAPS_SEARCH: mapsSearch(l),
         MAPS_DIR: mapsDir(l),
-        TRANSIT_TITLE: l.hasSubway ? 'Subway &amp; bus' : 'Bus &amp; driving',
         JSONLD: jsonLd(l),
         HEAD_SCRIPTS: lib.render('head-scripts', { depth: 2 }),
         SPRITE: lib.render('sprite', { depth: 2 }),
@@ -427,8 +441,8 @@ locations.forEach(function (l) {
         MOBILE_AND_SHEET: mobileFor(l),
         INSURANCE_BAND: insuranceBandFor(l),
         CTA_FINAL: ctaFor(l),
-        PROVIDERS: ' '.repeat(20) + (c.providerSlug ? indent(providerHtml(l), 20).trimStart() : providerItems),
-        TREATMENTS: indent(c.conditions ? conditionsHtml(l) : treatmentsHtml(l), 20),
+        PROVIDERS: ' '.repeat(20) + indent(providersHtml(l), 20).trimStart(),
+        TREATMENTS: indent(c.conditions ? conditionsHtml(l) + '\n' + treatmentsHtml(l) : treatmentsHtml(l), 20),
         REVIEWS: indent(reviewsHtml(l), 20),
         FAQ: indent(faqHtml(l), 20),
         OTHERS: indent(othersHtml(l), 20)

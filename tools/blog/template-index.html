@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- STAGING: quitar "noindex, nofollow" el día del lanzamiento (hay textos pendientes de confirmar) -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESC}}">
+    <link rel="canonical" href="{{URL}}">{{PAGE_LINKS}}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pain Therapy Medical Care">
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:description" content="{{DESC}}">
+    <meta property="og:url" content="{{URL}}">{{OG}}
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="{{BASE}}assets/icons/paintherapy-isotype_1.svg" type="image/svg+xml">
+
+    <!-- Marca "JS disponible" antes del primer pintado -->
+    <script src="{{BASE}}assets/js/js-detect.js"></script>
+
+    <!-- Fuentes: Montserrat (Gotham no es libre; se usa si está instalada) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{BASE}}styles.css">
+    {{HEAD_SCRIPTS}}
+    <script src="{{BASE}}assets/js/main.js" defer></script>{{PAGE_SCRIPTS}}
+
+    <!--
+        Datos estructurados ({{SCHEMA_NOTE}}).
+        Página generada por tools/blog/build.js desde tools/blog/data.json: no editar a mano.
+    -->
+    <script type="application/ld+json">
+{{JSONLD}}
+    </script>
+</head>
+<body>
+
+    <!-- =====================================================
+         SPRITE DE ÍCONOS
+    ====================================================== -->
+    {{SPRITE}}
+
+    {{HEADER}}
+
+    <main id="content" tabindex="-1">
+
+        <!-- =====================================================
+             1. BREADCRUMB
+        ====================================================== -->
+        {{BREADCRUMB}}
+
+        <!-- =====================================================
+             2. HERO (fondo --cloud)
+        ====================================================== -->
+        <section class="service-hero blog-hero" aria-labelledby="hero-title">
+            <div class="container blog-hero__inner">
+                <h1 class="service-hero__title" id="hero-title">{{H1}}</h1>
+                <p class="service-hero__text">{{SUBTITLE}}</p>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             3. BÚSQUEDA (assets/js/blog.js). Sin JS: se ve la paginación normal
+        ====================================================== -->
+        <section class="blog-searchbar" aria-label="Search the blog">
+            <div class="container">
+{{SEARCH}}
+            </div>
+        </section>
+
+        <!-- =====================================================
+             4-7. CATEGORÍAS · DESTACADO · GRID · PAGINACIÓN
+        ====================================================== -->
+        <section class="section blog-listing" aria-labelledby="listing-title">
+            <div class="container">
+                <h2 class="visually-hidden" id="listing-title">Latest articles</h2>
+{{CHIPS}}
+{{FEATURED}}
+                <ul class="blog-grid">
+{{GRID}}
+                </ul>
+{{PAGINATION}}
+            </div>
+        </section>
+
+        <!-- =====================================================
+             8. CTA FINAL (sin newsletter: no hay endpoint)
+        ====================================================== -->
+        {{CTA_FINAL}}
+
+    </main>
+
+    {{FOOTER}}
+
+    {{MOBILE_AND_SHEET}}
+
+</body>
+</html>
