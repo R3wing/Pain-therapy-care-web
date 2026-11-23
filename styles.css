@@ -6889,3 +6889,494 @@ a.blog-pill:hover {
         display: none;
     }
 }
+
+
+/* =========================================================
+   === PAGE: ABOUT ===
+   /about-us/. Reutiliza: .service-hero, .section(--cloud), .location-card,
+   .service-locations, .map, .insurers, .faq, .cta-band y las piezas .prov-*
+   del bloque PAGE: PROVIDERS (más abajo). Aquí solo lo que es propio de About.
+========================================================= */
+
+/* Sedes + mapa general (data-map="all"): mapa arriba, tarjetas debajo */
+.prov-clinics {
+    display: grid;
+    gap: var(--sp-6);
+}
+
+.prov-clinics__map .map {
+    aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 900px) {
+    .prov-clinics__map .map {
+        aspect-ratio: 16 / 7;
+    }
+}
+
+.prov-clinics .service-locations {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* Marcador visible de texto pendiente de confirmar (igual que en Conditions) */
+.prov-confirm {
+    font-weight: 600;
+    color: var(--slate);
+}
+
+
+/* =========================================================
+   === PAGE: PROVIDERS ===
+   /providers/ (índice con filtros), /providers/<slug>/ (bios) y las piezas
+   que comparte /about-us/ (.prov-card, .prov-grid, .prov-features).
+   Reutiliza: .service-hero, .pill, .badge, .check-list, .pill-link, .location-card,
+   .review-card, .insurers, .cta-band, .breadcrumb.
+========================================================= */
+
+/* ---------- Hero (extiende .service-hero) ---------- */
+
+.prov-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.prov-hero__inner,
+.prov-bio-hero {
+    position: relative;
+    z-index: 1;
+}
+
+.prov-hero__arcs {
+    top: 12%;
+    right: -110px;
+    z-index: 0;
+    width: 260px;
+    height: 325px;
+}
+
+.prov-hero--media .service-hero__media .media-placeholder {
+    border-radius: var(--r-card);
+}
+
+/* Bio: foto 1:1 (5/12) + texto (7/12). En móvil, foto arriba (máx. 320 px) */
+.prov-bio-hero {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+}
+
+.prov-bio-hero__photo {
+    width: 100%;
+    max-width: 320px;
+}
+
+.prov-bio-hero__photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center top;
+    background: var(--placeholder);
+    border-radius: var(--r-card);
+}
+
+.prov-bio-hero__text {
+    display: grid;
+    justify-items: start;
+    gap: var(--sp-4);
+    max-width: 640px;
+}
+
+.prov-bio-hero__headline {
+    font-family: var(--font-display);
+    font-size: 1.1875rem;
+    font-weight: 600;
+    color: var(--navy-900);
+}
+
+.prov-bio-hero__sees {
+    color: var(--slate);
+}
+
+.prov-bio-hero__sees-label {
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+/* ---------- Tarjeta de provider (índice, About, carrusel) ---------- */
+
+.prov-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6) var(--sp-5);
+    list-style: none;
+}
+
+.prov-grid[hidden],
+.prov-empty[hidden],
+.prov-card[hidden] {
+    display: none;
+}
+
+.prov-card {
+    position: relative;
+    display: grid;
+    gap: var(--sp-3);
+    align-content: start;
+}
+
+.prov-card__photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center top;
+    background: var(--placeholder);
+    border-radius: var(--r-card);
+}
+
+.prov-card__name {
+    font-size: var(--fs-h3);
+}
+
+/* Una sola acción por tarjeta: el enlace del nombre cubre toda la tarjeta */
+.prov-card__link {
+    color: var(--navy-900);
+    text-decoration: none;
+}
+
+.prov-card__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--r-card);
+}
+
+.prov-card__link:hover {
+    color: var(--action-700);
+    text-decoration: underline;
+}
+
+.prov-card__link:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.prov-card__link:focus-visible::after {
+    outline: 3px solid var(--action-700);
+    outline-offset: 3px;
+}
+
+.prov-card__role {
+    font-size: .9375rem;
+    font-weight: 500;
+    color: var(--slate);
+}
+
+.prov-card__locs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    list-style: none;
+}
+
+.prov-card__soon {
+    justify-self: start;
+    margin: 0;
+}
+
+/* Las fotos de la Home y de las sedes (tarjetas existentes) también se recortan desde arriba */
+.provider-card__photo img {
+    object-position: center top;
+}
+
+@media (min-width: 640px) {
+    .prov-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .prov-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* ---------- Filtros (solo con JS) ---------- */
+
+.prov-filters {
+    display: none;
+}
+
+.js .prov-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+    align-items: flex-end;
+    margin-bottom: var(--sp-4);
+}
+
+.prov-filters__field {
+    display: grid;
+    flex: 1 1 220px;
+    gap: var(--sp-1);
+    max-width: 340px;
+}
+
+.prov-filters__label {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+.prov-filters__select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 var(--sp-4);
+    font: inherit;
+    color: var(--navy-900);
+    background: var(--white);
+    border: 1px solid var(--input-border);
+    border-radius: var(--r-btn);
+}
+
+.prov-filters__clear[hidden] {
+    display: none;
+}
+
+.prov-status {
+    min-height: 1.5em;
+    margin-bottom: var(--sp-5);
+    font-size: var(--fs-small);
+    color: var(--slate);
+}
+
+.prov-empty {
+    display: grid;
+    justify-items: start;
+    gap: var(--sp-4);
+    padding: var(--sp-6);
+    background: var(--cloud);
+    border-radius: var(--r-card);
+}
+
+.prov-empty__text {
+    max-width: 52ch;
+}
+
+.prov-more {
+    margin-top: var(--sp-6);
+}
+
+/* ---------- Valores / hechos (3 tarjetas con ícono) ---------- */
+
+.prov-features {
+    display: grid;
+    gap: var(--sp-4);
+    list-style: none;
+}
+
+.prov-feature {
+    display: grid;
+    gap: var(--sp-3);
+    align-content: start;
+    padding: var(--sp-6);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+}
+
+.prov-feature__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    color: var(--teal-700);
+    background: var(--teal-50);
+    border-radius: 50%;
+}
+
+.prov-feature__title {
+    font-size: var(--fs-h3);
+}
+
+.prov-feature__text {
+    color: var(--slate);
+}
+
+@media (min-width: 760px) {
+    .prov-features {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* ---------- Bio: biografía, listas y formación ---------- */
+
+.prov-prose {
+    display: grid;
+    gap: var(--sp-4);
+    max-width: 68ch;
+}
+
+.prov-checks {
+    display: grid;
+    gap: var(--sp-3);
+    max-width: 68ch;
+}
+
+.prov-subtitle {
+    margin-top: var(--sp-6);
+    margin-bottom: var(--sp-3);
+    font-size: var(--fs-h3);
+}
+
+.prov-dl {
+    display: grid;
+    max-width: 68ch;
+}
+
+.prov-dl__row {
+    display: grid;
+    gap: var(--sp-1);
+    padding: var(--sp-3) 0;
+    border-top: 1px solid var(--border);
+}
+
+.prov-dl dt {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+@media (min-width: 640px) {
+    .prov-dl__row {
+        grid-template-columns: 12em 1fr;
+        gap: var(--sp-4);
+    }
+}
+
+/* Conditions treated: pills-enlace alineadas a la izquierda */
+.prov-pills {
+    justify-content: flex-start;
+    margin-top: 0;
+}
+
+.prov-pill {
+    padding-right: var(--sp-5);
+}
+
+.prov-pill.is-pending:hover {
+    color: var(--navy-900);
+    border-color: var(--input-border);
+}
+
+.prov-reviews {
+    max-width: 560px;
+}
+
+/* ---------- Carrusel "Meet the rest of our team" ---------- */
+
+.prov-carousel__nav {
+    display: none;
+}
+
+.js .prov-carousel__nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-4);
+}
+
+.prov-carousel__btn {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    color: var(--navy-900);
+    cursor: pointer;
+    background: var(--white);
+    border: 1px solid var(--input-border);
+    border-radius: 50%;
+}
+
+.prov-carousel__btn:hover:not(:disabled) {
+    color: var(--action-700);
+    border-color: var(--action-700);
+}
+
+.prov-carousel__btn:disabled {
+    cursor: not-allowed;
+    opacity: .4;
+}
+
+.prov-carousel__btn--prev .icon {
+    transform: scaleX(-1);
+}
+
+.prov-carousel__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(200px, 68%);
+    gap: var(--sp-4);
+    padding-bottom: var(--sp-3);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+}
+
+.prov-carousel__track > li {
+    scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+    .prov-carousel__track {
+        grid-auto-columns: minmax(220px, 36%);
+    }
+}
+
+@media (min-width: 900px) {
+    .prov-carousel__track {
+        grid-auto-columns: minmax(220px, 26%);
+    }
+
+    .prov-hero__arcs {
+        top: 50%;
+        right: -40px;
+        width: 400px;
+        height: 500px;
+        transform: translateY(-50%);
+    }
+
+    .prov-bio-hero {
+        grid-template-columns: 5fr 7fr;
+        gap: var(--sp-8);
+    }
+
+    .prov-bio-hero__photo {
+        max-width: none;
+    }
+}
+
+/* Escritorio: cuadrícula (sin botones) */
+@media (min-width: 1200px) {
+    .prov-carousel__track {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        overflow: visible;
+    }
+
+    .js .prov-carousel__nav {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .prov-carousel__track {
+        scroll-behavior: auto;
+    }
+}

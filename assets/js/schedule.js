@@ -47,11 +47,12 @@
        Los que ya no trabajan en la práctica y los "joining-soon" NO se aceptan en ?provider=. */
     /* @locations:providers */
     var PROVIDERS = {
-        'henry-sardar-md': 'Henry Sardar, MD',
+        'henry-sardar-md': 'Henry Sardar, DO',
         'lee-trosterman-md': 'Lee Trosterman, MD',
         'jason-hernandez-md': 'Jason Hernandez, MD',
         'olutimilehin-oyeniran-md': 'Olutimilehin Oyeniran, MD',
-        'michelle-abraham-pa-c': 'Michelle Abraham, PA-C'
+        'michelle-abraham-pa-c': 'Michelle Abraham, PA-C',
+        'naveen-sharma-do': 'Naveen Sharma, DO'
     };
     /* @end locations:providers */
 
