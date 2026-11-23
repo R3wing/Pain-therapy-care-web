@@ -6543,31 +6543,6 @@ a.blog-pill:hover {
     }
 }
 
-.blog-tldr__title {
-    margin-bottom: var(--sp-3);
-    line-height: 1;
-}
-
-.blog-tldr__tag {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--sp-2);
-    padding: 5px var(--sp-3) 5px var(--sp-2);
-    font-family: var(--font-display);
-    font-size: .75rem;
-    font-weight: 800;
-    letter-spacing: .1em;
-    color: var(--white);
-    background: var(--navy-900);
-    border-radius: var(--r-pill);
-}
-
-.blog-tldr__tag .icon {
-    width: 16px;
-    height: 16px;
-    color: var(--sky-200);
-}
-
 .blog-tldr__body {
     display: grid;
     gap: var(--sp-4);

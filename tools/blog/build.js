@@ -299,6 +299,10 @@ function sanitize(raw, ctx, post) {
 
 /* TL;DR: caja estilizada al inicio ("<strong>TL;DR</strong>" + párrafo + viñetas). Se extrae del cuerpo. */
 function extractTldr(raw) {
+    // Formato B: "<p><strong>TL;DR:</strong> texto…</p>" al inicio (+ la lista que lo sigue, sin encabezado entre medias)
+    const mb = /^\s*<p>\s*<strong>\s*TL;?\s*DR\s*:?\s*<\/strong>\s*([\s\S]*?)<\/p>(\s*<(ul|ol)>[\s\S]*?<\/\3>)?/i.exec(raw);
+    if (mb) return { body: raw.slice(mb[0].length), tldr: '<p>' + mb[1].trim() + '</p>' + (mb[2] ? mb[2].trim() : '') };
+
     const re = /<strong>\s*TL;?\s*DR\s*:?\s*<\/strong>/i;
     const m = re.exec(raw);
     if (!m || m.index > 1500) return { body: raw, tldr: '' };
@@ -382,6 +386,7 @@ function detect(list, text) {
     return null;
 }
 
+const noTldr = (t) => String(t || '').replace(/^\s*TL;?\s?DR\s*:?\s*/i, '');
 const words = (html) => plainText(html).split(/\s+/).filter(Boolean).length;
 
 const P = posts.map(function (post) {
@@ -422,7 +427,7 @@ const P = posts.map(function (post) {
     const loc = detect(LOC_KW, txt);
 
     const tldrText = tl.html ? plainText((/<p>([\s\S]*?)<\/p>/.exec(tl.html) || [, tl.html])[1]) : '';
-    const summary = tldrText || post.excerpt || plainText(html).slice(0, 200);
+    const summary = tldrText || noTldr(post.excerpt) || plainText(html).slice(0, 200);
     const img = post.image
         ? (post.image.large || { url: post.image.url, width: post.image.width, height: post.image.height })
         : null;
@@ -482,7 +487,7 @@ P.forEach(function (x) {
 const seoTrimmed = { title: [], desc: [] };
 P.forEach(function (x) {
     const s = x.post.seo || {};
-    let t = s.title || x.title, d = s.description || x.tldrText || x.post.excerpt;
+    let t = s.title || x.title, d = noTldr(s.description) || x.tldrText || noTldr(x.post.excerpt);
     if (t.length > 60) { seoTrimmed.title.push(x.slug + ' (' + t.length + ')'); t = clip(t, 60); }
     if (d.length > 155) { seoTrimmed.desc.push(x.slug + ' (' + d.length + ')'); d = clip(d, 155); }
     x.seoTitle = t; x.seoDesc = d;
@@ -857,12 +862,13 @@ function postPage(x) {
           (x.image.caption ? '\n        <figcaption class="blog-figure__caption">' + escText(x.image.caption) + '</figcaption>' : '') + '\n    </figure>\n</div>'
         : '';
 
-    /* TL;DR: etiqueta + párrafo principal + viñetas, en la misma columna que el cuerpo (.blog-top = grid del layout) */
+    /* Resumen (el TL;DR del post): SIN etiqueta visible ("TL;DR" es jerga); encabezado oculto "Summary" para lectores de pantalla.
+       Párrafo principal + viñetas, en la misma columna que el cuerpo (.blog-top = grid del layout) */
     const tldr = x.tldrHtml
         ? [
             '<div class="blog-top">',
             '    <aside class="blog-tldr" aria-labelledby="tldr-title">',
-            '        <h2 class="blog-tldr__title" id="tldr-title"><span class="blog-tldr__tag"><svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>TL;DR</span></h2>',
+            '        <h2 class="visually-hidden" id="tldr-title">Summary</h2>',
             '        <div class="blog-tldr__body">',
             indent(x.tldrHtml, 12),
             '        </div>',
