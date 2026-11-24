@@ -63,7 +63,7 @@ function aboutMain() {
         indent(lib.render('map', { key: 'all' }), 8),
         '    </div>',
         '    <div class="service-locations prov-clinics__cards">',
-        indent(pk.locationCards(), 8),
+        indent(pk.locationCards({ map: true }), 8),
         '    </div>',
         '</div>'
     ].join('\n');
