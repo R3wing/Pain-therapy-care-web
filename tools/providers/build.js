@@ -207,17 +207,23 @@ function trainingDl(p) {
     }).join('\n'), 4) + '\n</dl>';
 }
 
+/* Reseñas de la bio: salen de tools/reviews/data.js filtradas por provider (máx. 3) + enlace a /reviews/.
+   Sin estrellas ni promedio (igual que /reviews/). */
+const allReviews = require('../reviews/data.js');
+const reviewsFor = (p) => allReviews.filter(function (r) { return r.provider === p.slug; });
+
 function reviewsBlock(p) {
-    const stars = '<svg class="stars" viewBox="0 0 120 24" role="img" aria-label="5 out of 5 stars"><use href="#i-star" width="24" height="24"/><use href="#i-star" x="24" width="24" height="24"/><use href="#i-star" x="48" width="24" height="24"/><use href="#i-star" x="72" width="24" height="24"/><use href="#i-star" x="96" width="24" height="24"/></svg>';
-    return '<div class="prov-reviews">\n' + indent(p.reviews.map(function (r) {
+    const list = reviewsFor(p).slice(0, 3);
+    const cards = list.map(function (r) {
+        const paras = r.text.split('\n\n').map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('');
         return [
             '<figure class="review-card">',
-            '    ' + stars,
-            '    <blockquote class="review-card__quote"><p>“' + esc(r.quote) + '”</p></blockquote>',
-            '    <figcaption class="review-card__author">' + esc(r.author) + '</figcaption>',
+            '    <blockquote class="review-card__quote"' + (r.lang !== 'en' ? ' lang="' + r.lang + '"' : '') + '>' + paras + '</blockquote>',
+            '    <figcaption class="review-card__author">' + esc(r.name) + '</figcaption>',
             '</figure>'
         ].join('\n');
-    }).join('\n'), 4) + '\n</div>';
+    }).join('\n');
+    return '<div class="prov-reviews">\n' + indent(cards, 4) + '\n</div>\n<p class="prov-more">' + link('/reviews/', 'Read all patient reviews', { cls: 'text-link', arrow: true }) + '</p>';
 }
 
 function carousel(p) {
@@ -268,8 +274,8 @@ function bioMain(p) {
     blocks.push(section('where-title', 'Where to see ' + p.short, '<div class="service-locations">\n' + indent(pk.providerLocationCards(p), 4) + '\n</div>', Object.assign(tone(), { sectionId: 'locations' })));
 
     // Reseñas: SOLO reales y que mencionen al provider
-    if ((p.reviews || []).length) {
-        blocks.push('<!-- Reseña real publicada en la Home (Google) que menciona a ' + esc(p.short) + ' -->');
+    if (reviewsFor(p).length) {
+        blocks.push('<!-- Reseñas de tools/reviews/data.js (texto literal de paintherapycare.com/reviews/) que nombran a ' + esc(p.short) + ' -->');
         blocks.push(section('reviews-title', 'What patients say about ' + p.short, reviewsBlock(p), tone()));
     }
 

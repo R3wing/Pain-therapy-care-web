@@ -7380,3 +7380,151 @@ a.blog-pill:hover {
         scroll-behavior: auto;
     }
 }
+
+/* =========================================================
+   === PAGE: TREATMENT CATEGORIES ===
+   /services/ y las 3 categorías (tools/treatment-categories/).
+   Reutiliza: .service-hero*, .pill-link, .treatments-grid, .treatment-card, .faq, .location-card.
+   Solo añade: título de grupo del mega-menú como enlace y píldora activa.
+========================================================= */
+
+/* Mega-menú Treatments: el título de cada grupo enlaza a su categoría (mismo aspecto que el título) */
+.mega-menu__heading a {
+    display: inline-block;
+    min-height: 24px;
+    padding: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+.mega-menu__heading a:hover {
+    color: var(--action-700);
+    text-decoration: underline;
+}
+
+/* Píldora de la categoría activa (aria-current="page") */
+.pill-link[aria-current="page"] {
+    color: var(--action-700);
+    border-color: var(--action-700);
+    box-shadow: 0 0 0 1px var(--action-700);
+}
+
+.pill-links + .treatments-grid,
+.treatments-grid + .pill-links {
+    margin-top: var(--sp-6);
+}
+
+/* =========================================================
+   === PAGE: CONTACT ===
+   /contact-us/ (tools/contact/). Reutiliza: .insurance-form, .insurance-field, .insurance-input,
+   .insurance-check, .schedule-form-card, .schedule-nav, .prov-clinics, .location-card.
+   Solo añade: altura del textarea y la línea legal del formulario.
+========================================================= */
+
+.contact-form__message {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.contact-form__legal {
+    margin-top: var(--sp-3);
+    font-size: var(--fs-small);
+    color: var(--slate);
+}
+
+/* =========================================================
+   === PAGE: REVIEWS ===
+   /reviews/ (tools/reviews/) y bloque de reseñas de las bios.
+   Reutiliza: .service-hero*, .pill-link, .review-card, .badge, .btn, .prov-clinics, .location-card.
+   Solo añade: lista de reseñas, filtro (solo con JS) y botones "Leave us a review".
+========================================================= */
+
+.reviews-list {
+    display: grid;
+    gap: var(--sp-5);
+    margin-top: var(--sp-6);
+    list-style: none;
+}
+
+.reviews-list__item[hidden] {
+    display: none;
+}
+
+.reviews-list__item .review-card {
+    height: 100%;
+}
+
+.review-card__quote p + p {
+    margin-top: var(--sp-3);
+}
+
+.review-card__author .badge {
+    margin-left: var(--sp-2);
+}
+
+@media (min-width: 700px) {
+    .reviews-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1100px) {
+    .reviews-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Filtro: sin JS no se ve (se muestran todas las reseñas) */
+.reviews-filter {
+    display: none;
+}
+
+.js .reviews-filter {
+    display: block;
+}
+
+.reviews-filter .pill-links {
+    margin-top: 0;
+}
+
+button.reviews-filter__btn {
+    font: inherit;
+    font-family: var(--font-display);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.reviews-filter__btn[aria-pressed="true"] {
+    color: var(--action-700);
+    border-color: var(--action-700);
+    box-shadow: 0 0 0 1px var(--action-700);
+}
+
+.reviews-filter__status {
+    margin-top: var(--sp-3);
+    font-size: var(--fs-small);
+    text-align: center;
+    color: var(--slate);
+}
+
+.reviews-leave {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-3);
+    margin-top: var(--sp-5);
+    list-style: none;
+}
+
+.reviews-leave .btn.is-pending {
+    cursor: default;
+}
+
+/* Bloque de reseñas de la bio: varias tarjetas apiladas */
+.prov-reviews {
+    display: grid;
+    gap: var(--sp-4);
+}

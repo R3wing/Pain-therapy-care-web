@@ -24,6 +24,8 @@ const services = require('./data.js');
 const locations = require('../locations/data.js');
 const lib = require('../shared/lib.js');
 const hours = require('../shared/hours.js');
+const categories = require('../treatment-categories/data.js').categories;
+const catOf = function (slug) { return categories.filter(function (c) { return c.services.indexOf(slug) !== -1; })[0]; };
 
 locations.forEach(hours.check);
 
@@ -269,7 +271,8 @@ function jsonLd(s) {
                 itemListElement: [
                     { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
                     { '@type': 'ListItem', position: 2, name: 'Treatments', item: SITE + '/services/' },
-                    { '@type': 'ListItem', position: 3, name: s.name, item: u }
+                    { '@type': 'ListItem', position: 3, name: catOf(s.slug).name, item: SITE + '/services/' + catOf(s.slug).slug + '/' },
+                    { '@type': 'ListItem', position: 4, name: s.name, item: u }
                 ]
             },
             {
@@ -315,6 +318,8 @@ services.forEach(function (s) {
         H1: esc(s.h1),
         LEAD: esc(s.lead),
         CHECKS: indent(s.checks.map(function (c) { return `<li>${ICON_CHECK}${esc(c)}</li>`; }).join('\n'), 24),
+        CAT_SLUG: catOf(s.slug).slug,
+        CAT_NAME: esc(catOf(s.slug).name),
         IMG_SRC: s.image.src,
         IMG_ALT: esc(s.image.alt),
         SCHEDULE_HREF: scheduleHref,

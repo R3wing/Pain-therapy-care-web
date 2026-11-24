@@ -21,7 +21,7 @@
      specialties[]    → lista con checks
      certifications[] → pills + hasCredential del schema (SOLO lo que figura en la web en vivo)
      treats[]    → slugs de /conditions/<slug>/ (enlace solo si la página existe)
-     reviews[]   → { quote, author }: SOLO reseñas reales que mencionan al provider
+     (reseñas de la bio: ya NO van aquí; salen de tools/reviews/data.js filtradas por provider)
      education[] · internship[] · residency[] · fellowship[] · certification (texto) · languages[]
                  → bloque "Education & training" de la bio (datos confirmados por el cliente, correo del 24-nov;
                    NUNCA direcciones, teléfonos ni emails personales de los CV)
@@ -53,7 +53,6 @@ module.exports = [
         specialties: ['Osteopathic Manipulation', 'Herbal Medicine', 'Interventional Pain Techniques', 'Chronic Pain Management'],
         certifications: ['Double Board-certified in Pain Management and Physical Medicine & Rehabilitation'],
         treats: ['lower-back-pain', 'neck-pain', 'knee-pain', 'hip-pain', 'arthritis', 'sciatica', 'peripheral-neuropathy'],
-        reviews: [{ quote: 'Best pain management with care and quick results… Thank you Dr. Sardar & Ms. Wendy!', author: 'Gloria Ramos' }],
         image: { url: IMG + 'Henry-Sardar-DO.png', width: 1269, height: 1240, alt: 'Portrait of Henry Sardar, DO' }   // PNG 477 KB: conviene una versión ~800 px / WebP
     },
     {

@@ -279,7 +279,7 @@ const RENDER = {
             if (closed) rows.push('<div><dt>' + closed + '</dt><dd>Closed</dd></div>');
             return [
                 '<li>',
-                '    <article class="location-card np-office">',
+                '    <article class="location-card np-office" data-location="' + l.slug + '">',
                 '        <h3 class="location-card__name">' + l.listName + '</h3>',
                 '        <address class="location-card__details">',
                 '            <p class="location-card__row">' + icon('i-pin') + '<span>' + l.street + '<br>' + l.city + ', ' + l.region + ' ' + l.zip + '</span></p>',
@@ -308,7 +308,7 @@ const RENDER = {
         const cards = locs().map(function (l) {
             hours.check(l);
             return [
-                '<article class="location-card" data-map-card="' + l.key + '">',
+                '<article class="location-card" data-map-card="' + l.key + '" data-location="' + l.slug + '">',
                 '    <h3 class="location-card__name"><a href="/locations/' + l.slug + '/">' + l.listName + '</a></h3>',
                 '    <address class="location-card__details">',
                 '        <p class="location-card__row">' + svgIcon('i-pin') + '<span>' + l.street + '<br>' + l.city + ', ' + l.region + ' ' + l.zip + '</span></p>',

@@ -20,8 +20,9 @@
    - Analítica: "Get directions" → directions_click {location}; teléfono → call_click.
      Lo registra el listener global de analytics.js (enlaces maps/dir y tel:) gracias a
      data-analytics-location; aquí NO se vuelve a contar.
-   - Home: pasar el mouse / enfocar una tarjeta [data-map-card] resalta su pin, y un
-     clic en un pin resalta la tarjeta.
+   - Tarjetas de sede [data-location="<slug>"] (o [data-map-card] en la Home) del mismo grupo
+     ([data-map-group] o la <section> más cercana): hover / foco / primer toque resalta su pin y abre
+     su tooltip; hover o clic en un pin resalta la tarjeta (.is-active). Sin scroll automático.
 ========================================================= */
 
 (function () {
@@ -124,6 +125,16 @@
         var canvas = el('div', 'map__canvas');
         container.appendChild(canvas);
 
+        /* Tarjetas de sede vinculadas a este mapa: las [data-location="<slug>"] (o [data-map-card="<key>"], atributo
+           anterior de la Home) de su grupo = [data-map-group] o la <section> más cercana. Cualquier página sirve. */
+        var group = container.closest('[data-map-group]') || container.closest('section') || document;
+        var cards = [];
+        Array.prototype.forEach.call(group.querySelectorAll('[data-location], [data-map-card]'), function (card) {
+            var v = card.getAttribute('data-location') || card.getAttribute('data-map-card');
+            var hit = list.filter(function (l) { return l.key === v || l.slug === v; })[0];
+            if (hit) cards.push({ el: card, key: hit.key });
+        });
+
         var touch = L.Browser.mobile;
         var map = L.map(canvas, {
             scrollWheelZoom: false,
@@ -176,20 +187,30 @@
                 var icon = m.getElement();
                 if (icon) icon.classList.toggle('map-pin--active', on);
                 m.setZIndexOffset(on ? 1000 : 0);
+                /* Tooltip con el nombre (solo con varias sedes; con prefers-reduced-motion no se anima) */
+                if (!single) { if (on) m.openTooltip(); else m.closeTooltip(); }
             });
-            Array.prototype.forEach.call(document.querySelectorAll('[data-map-card]'), function (c) {
-                c.classList.toggle('is-map-active', c.getAttribute('data-map-card') === k);
+            cards.forEach(function (c) {
+                var on = c.key === k;
+                c.el.classList.toggle('is-map-active', on);   /* estilo existente (borde azul) */
+                c.el.classList.toggle('is-active', on);
             });
         }
 
         list.forEach(function (loc) {
             var m = L.marker([loc.lat, loc.lng], {
                 icon: pinIcon(),
-                title: loc.name,
+                title: single ? loc.name : undefined,   /* varias sedes: el nombre sale en el tooltip de Leaflet */
                 keyboard: true,
                 riseOnHover: true
             }).addTo(map);
             m.bindPopup(popupContent(loc), { maxWidth: 280, minWidth: 220, autoPanPadding: [24, 24] });
+            if (!single) {
+                m.bindTooltip(loc.name, { direction: 'top', offset: [0, -34], opacity: 1, className: 'map-tooltip' });
+                /* Pin ↔ tarjeta: pasar el mouse por un pin resalta su tarjeta (sin scroll automático) */
+                m.on('mouseover', function () { highlight(loc.key); });
+                m.on('mouseout', function () { highlight(selected); });
+            }
             markers[loc.key] = m;
 
             /* El <div> del marcador solo existe cuando el mapa ya tiene vista: se configura en 'add' */
@@ -221,15 +242,17 @@
         } else {
             map.fitBounds(L.latLngBounds(list.map(function (l) { return [l.lat, l.lng]; })), { paddingTopLeft: [48, 72], paddingBottomRight: [48, 32] });
 
-            /* Tarjetas de sede de la página (Home): hover/foco ↔ pin */
-            Array.prototype.forEach.call(document.querySelectorAll('[data-map-card]'), function (card) {
-                var k = card.getAttribute('data-map-card');
+            /* Tarjetas de sede del grupo: hover/foco ↔ pin. En touch, el primer toque resalta el pin
+               (touchstart pasivo: no bloquea los enlaces "Get directions" ni "Call") */
+            cards.forEach(function (c) {
+                var k = c.key;
                 var on = function () { highlight(k); };
                 var off = function () { highlight(selected); };
-                card.addEventListener('mouseenter', on);
-                card.addEventListener('mouseleave', off);
-                card.addEventListener('focusin', on);
-                card.addEventListener('focusout', off);
+                c.el.addEventListener('mouseenter', on);
+                c.el.addEventListener('mouseleave', off);
+                c.el.addEventListener('focusin', on);
+                c.el.addEventListener('focusout', off);
+                c.el.addEventListener('touchstart', function () { selected = k; highlight(k); }, { passive: true });
             });
         }
 

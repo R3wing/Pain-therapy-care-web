@@ -145,7 +145,7 @@ function locationCards(o) {
     o = o || {};
     return locations.map(function (l) {
         return [
-            '<article class="location-card"' + (o.map ? ' data-map-card="' + l.key + '"' : '') + '>',   // o.map: map.js anima el pin al pasar el ratón
+            '<article class="location-card"' + (o.map ? ' data-location="' + l.slug + '"' : '') + '>',   // o.map: map.js anima el pin al pasar el ratón
             '    <h3 class="location-card__name"><a href="/locations/' + l.slug + '/">' + l.listName + '</a></h3>',
             '    <address class="location-card__details">',
             '        <p class="location-card__row">' + icon('i-pin') + '<span>' + l.street + '<br>' + l.city + ', ' + l.region + ' ' + l.zip + '</span></p>',

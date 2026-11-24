@@ -57,13 +57,14 @@
 {{CONFIRM_NOTE}}
         <!-- =====================================================
              1. BREADCRUMB
-             /services/ (hub) se crea cuando estén los 3 grupos de tratamientos
+             Home › Treatments › Categoría › Tratamiento (tools/treatment-categories/)
         ====================================================== -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <div class="container">
                 <ol class="breadcrumb__list">
                     <li class="breadcrumb__item"><a href="/">Home</a></li>
                     <li class="breadcrumb__item"><a href="/services/">Treatments</a></li>
+                    <li class="breadcrumb__item"><a href="/services/{{CAT_SLUG}}/">{{CAT_NAME}}</a></li>
                     <li class="breadcrumb__item"><span aria-current="page">{{NAME}}</span></li>
                 </ol>
             </div>
