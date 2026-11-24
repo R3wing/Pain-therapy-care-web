@@ -10,6 +10,7 @@
    languages → idiomas de atención (fuente: página en vivo /new-patients/).
    shortAddr    → dirección corta para menús, Call ▾, hoja Call y selectores.
    scheduleNote → aviso en /schedule/ al elegir la sede (opcional; el cierre -45 min se añade solo).
+   winterFriday → (opcional) { close, lastNewPatient, active }: viernes de invierno (cierra antes y último paciente nuevo fijo).
    hoursFaqNote → frase final de la FAQ de horario (opcional).
    custom       → (opcional) textos propios de la página de la sede: heroText, venue,
                   hoursText, badge, metaDesc, conditions[], gallery:'facade+3'. Los providers de cada sede salen de tools/providers/data.js (locations).
@@ -141,11 +142,13 @@ module.exports = [
         floor: '2nd floor',
         accessLine: 'Our office is on the 2nd floor, accessible by elevator.',
         hours: [
-            { days: ['Mon'], opens: '08:30', closes: '16:30' }
+            { days: ['Mon', 'Wed', 'Fri'], opens: '09:00', closes: '17:00' }
         ],
         languages: ['English', 'Spanish', 'Yiddish'],
         geo: { lat: 40.618158, lng: -73.747115 },
-        scheduleNote: 'Inwood is open on Mondays only.',
+        // Temporada de invierno: poner active:false cuando el cliente lo indique
+        winterFriday: { close: "16:45", lastNewPatient: "15:40", active: true },
+        scheduleNote: 'Open Mon, Wed and Fri.',
         hoursFaqNote: ' To book another day, call or visit one of our other locations.',
         legacyUrl: '/locations/brooklyn-ny-inwood/'
     },
@@ -169,10 +172,10 @@ module.exports = [
         placeLabel: 'Monsey, NY',
         floor: '',
         hours: [
-            { days: ['Mon', 'Tue', 'Thu'], opens: '09:00', closes: '16:00' }
+            { days: ['Mon', 'Thu'], opens: '09:00', closes: '16:00' }
         ],
         languages: ['English', 'Yiddish'],
-        scheduleNote: 'Open Mon, Tue and Thu.',
+        scheduleNote: 'Open Mon and Thu.',
         geo: { lat: 41.111256, lng: -74.068546 },
     }
 ];

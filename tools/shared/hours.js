@@ -27,7 +27,24 @@ function time12(t) {
 }
 
 function range(slot) {
-    return time12(slot.opens) + ' – ' + time12(slot.closes);
+    return time12(slot.opens) + ' – ' + time12(slot.closes) + (slot.winter ? ' (winter hours)' : '');
+}
+
+/* Tramos efectivos: aplica la regla de viernes de invierno (loc.winterFriday, data.js).
+   Si está activa, el viernes que cierra DESPUÉS de winterFriday.close se separa en su propio
+   tramo { winter: true } que cierra a winterFriday.close. Si active es false, no cambia nada. */
+function slots(loc) {
+    const base = loc.hours || [];
+    const w = loc.winterFriday;
+    if (!w || !w.active) return base;
+    const out = [];
+    base.forEach(function (s) {
+        if (s.days.indexOf('Fri') === -1 || s.closes <= w.close) { out.push(s); return; }
+        const rest = s.days.filter(function (d) { return d !== 'Fri'; });
+        if (rest.length) out.push({ days: rest, opens: s.opens, closes: s.closes });
+        out.push({ days: ['Fri'], opens: s.opens, closes: w.close, winter: true });
+    });
+    return out;
 }
 
 function check(loc) {
@@ -55,7 +72,7 @@ function dayLabel(days) {
 /* Líneas cortas para tarjetas y hero: [{ label: "Mon–Thu", range: "10:30 am – 5:00 pm" }] */
 function groups(loc) {
     if (!loc.hours || !loc.hours.length) return [];
-    return loc.hours.map(function (s) { return { label: dayLabel(s.days), range: range(s) }; });
+    return slots(loc).map(function (s) { return { label: dayLabel(s.days), range: range(s) }; });
 }
 
 /* Días sin ningún tramo = cerrados: "Sat, Sun" · "Wed, Sat, Sun" · '' si abre todos los días */
@@ -79,8 +96,8 @@ function tableRows(loc) {
     return DAYS.map(function (d) {
         let cell = MARKER;
         if (loc.hours && loc.hours.length) {
-            const slot = loc.hours.filter(function (s) { return s.days.indexOf(d) !== -1; })[0];
-            cell = slot ? range(slot) : 'Closed';
+            const slot = slots(loc).filter(function (s) { return s.days.indexOf(d) !== -1; })[0];
+            cell = slot ? range(slot).replace(' (winter hours)', '<br>(winter hours)') : 'Closed';   // salto de línea: la celda es nowrap y en móvil desbordaría
         }
         return '<tr data-day="' + d + '"><th scope="row">' + FULL[d] + '</th><td>' + cell + '</td></tr>';
     }).join('\n');
@@ -98,7 +115,7 @@ function languageCodes(loc) {
 /* schema.org: openingHoursSpecification (vacío si no hay horarios) */
 function schemaSpec(loc) {
     if (!loc.hours || !loc.hours.length) return [];
-    return loc.hours.map(function (s) {
+    return slots(loc).map(function (s) {
         return {
             '@type': 'OpeningHoursSpecification',
             dayOfWeek: s.days.map(function (d) { return FULL[d]; }),
@@ -108,4 +125,4 @@ function schemaSpec(loc) {
     });
 }
 
-module.exports = { DAYS, FULL, MARKER, time12, range, check, dayLabel, closedLabel, groups, summaryHtml, tableRows, languageCodes, schemaSpec };
+module.exports = { slots, DAYS, FULL, MARKER, time12, range, check, dayLabel, closedLabel, groups, summaryHtml, tableRows, languageCodes, schemaSpec };

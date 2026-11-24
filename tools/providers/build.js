@@ -199,11 +199,11 @@ function bioHero(p) {
 
 /* Formación: <dl> solo si hay datos en vivo */
 function trainingDl(p) {
-    const rows = [['Education', p.education], ['Residency', p.residency], ['Fellowship', p.fellowship], ['Languages', p.languages]]
+    const rows = [['Education', p.education], ['Internship', p.internship], ['Residency', p.residency], ['Fellowship', p.fellowship], ['Certification', p.certification], ['Languages', p.languages]]
         .filter(function (r) { return r[1] && (!Array.isArray(r[1]) || r[1].length); });
     if (!rows.length) return '';
     return '<dl class="prov-dl">\n' + indent(rows.map(function (r) {
-        return '<div class="prov-dl__row"><dt>' + r[0] + '</dt><dd>' + esc(Array.isArray(r[1]) ? r[1].join(', ') : r[1]) + '</dd></div>';
+        return '<div class="prov-dl__row"><dt>' + r[0] + '</dt><dd>' + (Array.isArray(r[1]) ? (r[0] === 'Languages' ? esc(r[1].join(', ')) : r[1].map(esc).join('<br>')) : esc(r[1])) + '</dd></div>';
     }).join('\n'), 4) + '\n</dl>';
 }
 
@@ -251,8 +251,8 @@ function bioMain(p) {
         : '';
     const dl = trainingDl(p);
     if (focus || dl) {
-        const title = p.focusLabel || ((p.certifications || []).length ? 'Specialties & certifications' : 'Areas of focus');
-        blocks.push(section('focus-title', title, [focus, dl ? '<h3 class="prov-subtitle">Training</h3>\n' + dl : ''].filter(Boolean).join('\n'), tone()));
+        const title = !focus ? 'Education & training' : (p.focusLabel || ((p.certifications || []).length ? 'Specialties & certifications' : 'Areas of focus'));
+        blocks.push(section('focus-title', title, [focus, dl ? (focus ? '<h3 class="prov-subtitle">Education &amp; training</h3>\n' : '') + dl : ''].filter(Boolean).join('\n'), tone()));
     }
 
     // Conditions treated: pills-enlace (enlace seguro)
@@ -322,19 +322,17 @@ function bioLd(p) {
 
 function bioNote(p) {
     const lines = [];
-    if (p.slug === 'olutimilehin-oyeniran-md') {
-        lines.push('Bio y áreas de enfoque: texto CONFIRMADO por el cliente (resumen profesional). Sin pronombres: siempre "Dr. Oyeniran".');
-        lines.push('Sin certificaciones, formación, residencia ni idiomas (no se muestran). Pendiente: CV completo.');
-        lines.push('Meta description nueva (no existe página en vivo).');
+    if (p.slug === 'olutimilehin-oyeniran-md' || p.slug === 'naveen-sharma-do') {
+        lines.push('Bio: texto oficial entregado por el cliente (correo del 24-nov).');
     } else {
-        lines.push('Texto de la bio: página en vivo https://paintherapycare.com/providers/' + p.slug + '/ (API de WordPress). Horarios y sede: tools/locations/data.js (se ignoran los horarios viejos de la bio en vivo).');
+        lines.push('Texto de la bio: página en vivo https://paintherapycare.com/providers/' + p.slug + '/ (API de WordPress).');
         lines.push('Title y description: los de la web en vivo.');
-        lines.push('Sin formación, residencia ni idiomas en la web en vivo: esas secciones no se muestran.');
-        lines.push('"Conditions treated": derivadas SOLO de las condiciones que cita la bio en vivo (enlace solo si existe la página).');
     }
+    lines.push('Formación e idiomas: confirmados por el cliente (correo del 24-nov); no se publican datos personales de los CV.');
+    lines.push('Sede y horarios: tools/locations/data.js (se ignoran los horarios viejos de la bio en vivo).');
     if (p.slug === 'henry-sardar-md') lines.push('DO confirmado por el cliente; la URL conserva "-md" (es la de la web en vivo: no cambiarla).');
     lines.forEach(function (t) { if (t.includes('--')) pk.fail(p.slug + ': una nota contiene "--"'); });
-    return '\n        <!--\n          CONFIRMAR CON CLIENTE / ORIGEN (solo para el equipo, no se ve en la página):\n' + lines.map(function (t) { return '          - ' + t; }).join('\n') + '\n        -->\n';
+    return '\n        <!--\n          ORIGEN DE LOS DATOS (solo para el equipo, no se ve en la página):\n' + lines.map(function (t) { return '          - ' + t; }).join('\n') + '\n        -->\n';
 }
 
 

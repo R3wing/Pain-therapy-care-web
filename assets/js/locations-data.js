@@ -64,7 +64,7 @@ window.PT_LOCATIONS = [
         "tel": "+15162762889",
         "lat": 40.618158,
         "lng": -73.747115,
-        "days": "Mondays only",
+        "days": "Mon, Wed, Fri",
         "directions": "https://www.google.com/maps/dir/?api=1&destination=233%20Doughty%20Blvd%2C%20Inwood%2C%20NY%2011096"
     },
     {
@@ -80,7 +80,7 @@ window.PT_LOCATIONS = [
         "tel": "+18454143711",
         "lat": 41.111256,
         "lng": -74.068546,
-        "days": "Mon, Tue, Thu",
+        "days": "Mon, Thu",
         "directions": "https://www.google.com/maps/dir/?api=1&destination=40%20Main%20St%2C%20Monsey%2C%20NY%2010952"
     }
 ];

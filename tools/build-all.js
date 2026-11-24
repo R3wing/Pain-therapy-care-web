@@ -89,14 +89,23 @@ console.log('\n› JS con tabla de sedes');
         },
         /* Aviso por sede: días (scheduleNote) + "New patients are seen until …" (cierre − 45 min) */
         notes: function () {
+            const t12 = function (total) {
+                const h = Math.floor(total / 60), mm = total % 60;
+                return ((h % 12) || 12) + ':' + (mm < 10 ? '0' : '') + mm + ' ' + (h >= 12 ? 'pm' : 'am');
+            };
             const closing = function (l) {
                 const ends = [];
                 l.hours.forEach(function (s) { if (ends.indexOf(s.closes) === -1) ends.push(s.closes); });
                 if (ends.length !== 1) return 'New patients are seen until 45 minutes before closing.';
                 const m = /^(\d{1,2}):(\d{2})$/.exec(ends[0]);
-                const total = parseInt(m[1], 10) * 60 + parseInt(m[2], 10) - 45;
-                const h = Math.floor(total / 60), mm = total % 60;
-                return 'New patients are seen until ' + (((h % 12) || 12) + ':' + (mm < 10 ? '0' : '') + mm + ' ' + (h >= 12 ? 'pm' : 'am')) + '.';
+                let out = 'New patients are seen until ' + t12(parseInt(m[1], 10) * 60 + parseInt(m[2], 10) - 45) + '.';
+                /* Viernes de invierno (data.js → winterFriday): reemplaza el "cierre − 45 min" solo ese viernes */
+                const w = l.winterFriday;
+                if (w && w.active) {
+                    const n = /^(\d{1,2}):(\d{2})$/.exec(w.lastNewPatient);
+                    out += ' On Fridays, the last new-patient appointment is ' + t12(parseInt(n[1], 10) * 60 + parseInt(n[2], 10)).toUpperCase() + '.';
+                }
+                return out;
             };
             return '        var LOCATION_NOTES = {\n' + locations.map(function (l) {
                 return '            ' + q(l.key) + ': ' + q((l.scheduleNote ? l.scheduleNote + ' ' : '') + closing(l));
@@ -139,7 +148,7 @@ console.log('\n› Datos para los mapas');
         const open = [];
         (l.hours || []).forEach(function (s) { s.days.forEach(function (d) { if (open.indexOf(d) === -1) open.push(d); }); });
         if (open.length === 1) return hours.FULL[open[0]] + 's only';
-        return hours.groups(l).map(function (g) { return g.label; }).join(' · ');
+        return hours.groups({ hours: l.hours }).map(function (g) { return g.label; }).join(' · ');
     };
 
     const rows = locations.map(function (l) {

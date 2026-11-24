@@ -76,10 +76,19 @@
                     {
                         "@type": "OpeningHoursSpecification",
                         "dayOfWeek": [
-                            "Monday"
+                            "Monday",
+                            "Wednesday"
                         ],
-                        "opens": "08:30",
-                        "closes": "16:30"
+                        "opens": "09:00",
+                        "closes": "17:00"
+                    },
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": [
+                            "Friday"
+                        ],
+                        "opens": "09:00",
+                        "closes": "16:45"
                     }
                 ],
                 "parentOrganization": {
@@ -186,6 +195,7 @@
                 "name": "Naveen Sharma",
                 "honorificSuffix": "DO",
                 "image": "https://paintherapycare.com/wp-content/uploads/2026/11/Naveen-Sharma-DO.jpeg",
+                "medicalSpecialty": "PainMedicine",
                 "worksFor": {
                     "@id": "https://paintherapycare.com/locations/inwood-ny/#clinic"
                 },
@@ -226,7 +236,7 @@
                         "name": "What days is the Inwood office open?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Our Inwood office is open on Mondays only, from 8:30 AM to 4:30 PM. To book another day, call or visit one of our other locations."
+                            "text": "Our Inwood office is open Monday, Wednesday and Friday, from 9:00 AM to 5:00 PM. During winter hours, we close at 4:45 PM on Fridays. To book another day, call or visit one of our other locations."
                         }
                     },
                     {
@@ -569,7 +579,7 @@
                         </p>
                         <p class="location-nap__row">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>
-                            <span>Mon: 8:30 am – 4:30 pm</span>
+                            <span>Mon, Wed: 9:00 am – 5:00 pm<br>Fri: 9:00 am – 4:45 pm (winter hours)</span>
                         </p>
                         <p class="badge location-badge">
                             <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-calendar"></use></svg>
@@ -633,11 +643,11 @@
                                 <tr><th scope="col">Day</th><th scope="col">Hours</th></tr>
                             </thead>
                             <tbody>
-                                <tr data-day="Mon"><th scope="row">Monday</th><td>8:30 am – 4:30 pm</td></tr>
+                                <tr data-day="Mon"><th scope="row">Monday</th><td>9:00 am – 5:00 pm</td></tr>
                                 <tr data-day="Tue"><th scope="row">Tuesday</th><td>Closed</td></tr>
-                                <tr data-day="Wed"><th scope="row">Wednesday</th><td>Closed</td></tr>
+                                <tr data-day="Wed"><th scope="row">Wednesday</th><td>9:00 am – 5:00 pm</td></tr>
                                 <tr data-day="Thu"><th scope="row">Thursday</th><td>Closed</td></tr>
-                                <tr data-day="Fri"><th scope="row">Friday</th><td>Closed</td></tr>
+                                <tr data-day="Fri"><th scope="row">Friday</th><td>9:00 am – 4:45 pm<br>(winter hours)</td></tr>
                                 <tr data-day="Sat"><th scope="row">Saturday</th><td>Closed</td></tr>
                                 <tr data-day="Sun"><th scope="row">Sunday</th><td>Closed</td></tr>
                             </tbody>
@@ -735,6 +745,7 @@
                             <img src="https://paintherapycare.com/wp-content/uploads/2026/11/Naveen-Sharma-DO.jpeg" alt="Portrait of Naveen Sharma, DO" width="702" height="760" loading="lazy" decoding="async">
                         </div>
                         <h3 class="provider-card__name">Naveen Sharma, DO</h3>
+                        <p class="provider-card__role">Sports Medicine</p>
                     </li>
                 </ul>
             </div>
@@ -901,7 +912,7 @@
                 <div class="faq">
                     <details class="faq__item" open>
                         <summary class="faq__question">What days is the Inwood office open?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
-                        <div class="faq__answer"><p>Our Inwood office is open on Mondays only, from 8:30 AM to 4:30 PM. To book another day, call or visit one of our other locations.</p></div>
+                        <div class="faq__answer"><p>Our Inwood office is open Monday, Wednesday and Friday, from 9:00 AM to 5:00 PM. During winter hours, we close at 4:45 PM on Fridays. To book another day, call or visit one of our other locations.</p></div>
                     </details>
                     <details class="faq__item">
                         <summary class="faq__question">Can you help me get to my appointment?<svg class="icon faq__icon" aria-hidden="true" focusable="false"><use href="#i-chevron"></use></svg></summary>
@@ -978,7 +989,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>40 Main St<br>Monsey, NY 10952</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+18454143711" aria-label="Call Pain Therapy Monsey at (845) 414-3711">(845) 414-3711</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Tue, Thu: 9:00 am – 4:00 pm</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Thu: 9:00 am – 4:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/locations/monsey-ny/">View location<span class="visually-hidden">: Monsey</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=40+Main+St+Monsey+NY+10952" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Monsey (opens in a new tab)</span></a>

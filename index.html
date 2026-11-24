@@ -155,7 +155,8 @@
                     "addressCountry": "US"
                 },
                 "openingHoursSpecification": [
-                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday"], "opens": "08:30", "closes": "16:30" }
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Wednesday"], "opens": "09:00", "closes": "17:00" },
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "16:45" }
                 ],
                 "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": true }],
                 "knowsLanguage": ["en", "es", "yi"],
@@ -177,7 +178,7 @@
                     "addressCountry": "US"
                 },
                 "openingHoursSpecification": [
-                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Thursday"], "opens": "09:00", "closes": "16:00" }
+                    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Thursday"], "opens": "09:00", "closes": "16:00" }
                 ],
                 "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": "Wheelchair accessible", "value": true }],
                 "knowsLanguage": ["en", "yi"],
@@ -513,7 +514,70 @@
         </section>
 
         <!-- =====================================================
-             4. BANDA DE ASEGURADORAS
+             4. WHERE DOES IT HURT?
+        ====================================================== -->
+        <section class="section section--cloud" id="conditions" aria-labelledby="areas-title">
+            <div class="container" data-reveal>
+                <header class="section-header section-header--center">
+                    <h2 class="section-title" id="areas-title">Where does it hurt?</h2>
+                    <p class="section-lead">Choose an area to see the conditions we treat.</p>
+                </header>
+
+                <ul class="areas-grid">
+                    <li>
+                        <a class="area-tile" href="/conditions/lower-back-pain/">
+                            <span class="area-tile__icon" aria-hidden="true">
+                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="3" width="10" height="5" rx="2"/><rect x="10" y="10" width="12" height="5" rx="2"/><rect x="10" y="17" width="12" height="5" rx="2"/><rect x="11" y="24" width="10" height="5" rx="2"/></g></svg>
+                            </span>
+                            <span class="area-tile__label">Back <span class="visually-hidden">pain</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="area-tile" href="/conditions/neck-pain/">
+                            <span class="area-tile__icon" aria-hidden="true">
+                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="8" r="5"/><path d="M13 13v4M19 13v4"/><path d="M5 29c0-6 4-11 11-11s11 5 11 11"/></g></svg>
+                            </span>
+                            <span class="area-tile__label">Neck <span class="visually-hidden">pain</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="area-tile" href="/conditions/knee-pain/">
+                            <span class="area-tile__icon" aria-hidden="true">
+                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10l-2 4 3 12"/><path d="M20 3v9l2 5-3 12"/><circle cx="16" cy="15" r="3"/></g></svg>
+                            </span>
+                            <span class="area-tile__label">Knee <span class="visually-hidden">pain</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="area-tile" href="/conditions/rotator-cuff-injury/">
+                            <span class="area-tile__icon" aria-hidden="true">
+                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 29V19a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6"/><circle cx="20" cy="18" r="3"/><path d="m22 21 4 8"/></g></svg>
+                            </span>
+                            <span class="area-tile__label">Shoulder <span class="visually-hidden">pain</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="area-tile" href="/conditions/plantar-fasciitis/">
+                            <span class="area-tile__icon" aria-hidden="true">
+                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v13c0 3-3 5-3 8a4 4 0 0 0 4 4h14a3 3 0 0 0 0-6h-6c-3 0-5-2-5-5V3"/><circle cx="11" cy="24" r="1.5"/></g></svg>
+                            </span>
+                            <span class="area-tile__label">Foot &amp; Heel <span class="visually-hidden">pain</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="area-tile" href="/conditions/hip-pain/">
+                            <span class="area-tile__icon" aria-hidden="true">
+                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7c3 0 6 3 11 3s8-3 11-3v5c0 6-5 10-11 10S5 18 5 12z"/><path d="m10 21-2 8M22 21l2 8"/><circle cx="16" cy="15" r="2"/></g></svg>
+                            </span>
+                            <span class="area-tile__label">Hip <span class="visually-hidden">pain</span></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             5. BANDA DE ASEGURADORAS
         ====================================================== -->
         <!-- @partial insurance-band -->
         <section class="insurers insurance-band on-dark" aria-labelledby="insurers-title">
@@ -612,69 +676,6 @@
             </div>
         </section>
         <!-- @end insurance-band -->
-
-        <!-- =====================================================
-             5. WHERE DOES IT HURT?
-        ====================================================== -->
-        <section class="section section--cloud" id="conditions" aria-labelledby="areas-title">
-            <div class="container" data-reveal>
-                <header class="section-header section-header--center">
-                    <h2 class="section-title" id="areas-title">Where does it hurt?</h2>
-                    <p class="section-lead">Choose an area to see the conditions we treat.</p>
-                </header>
-
-                <ul class="areas-grid">
-                    <li>
-                        <a class="area-tile" href="/conditions/lower-back-pain/">
-                            <span class="area-tile__icon" aria-hidden="true">
-                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="11" y="3" width="10" height="5" rx="2"/><rect x="10" y="10" width="12" height="5" rx="2"/><rect x="10" y="17" width="12" height="5" rx="2"/><rect x="11" y="24" width="10" height="5" rx="2"/></g></svg>
-                            </span>
-                            <span class="area-tile__label">Back <span class="visually-hidden">pain</span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="area-tile" href="/conditions/neck-pain/">
-                            <span class="area-tile__icon" aria-hidden="true">
-                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="8" r="5"/><path d="M13 13v4M19 13v4"/><path d="M5 29c0-6 4-11 11-11s11 5 11 11"/></g></svg>
-                            </span>
-                            <span class="area-tile__label">Neck <span class="visually-hidden">pain</span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="area-tile" href="/conditions/knee-pain/">
-                            <span class="area-tile__icon" aria-hidden="true">
-                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10l-2 4 3 12"/><path d="M20 3v9l2 5-3 12"/><circle cx="16" cy="15" r="3"/></g></svg>
-                            </span>
-                            <span class="area-tile__label">Knee <span class="visually-hidden">pain</span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="area-tile" href="/conditions/rotator-cuff-injury/">
-                            <span class="area-tile__icon" aria-hidden="true">
-                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 29V19a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6"/><circle cx="20" cy="18" r="3"/><path d="m22 21 4 8"/></g></svg>
-                            </span>
-                            <span class="area-tile__label">Shoulder <span class="visually-hidden">pain</span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="area-tile" href="/conditions/plantar-fasciitis/">
-                            <span class="area-tile__icon" aria-hidden="true">
-                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v13c0 3-3 5-3 8a4 4 0 0 0 4 4h14a3 3 0 0 0 0-6h-6c-3 0-5-2-5-5V3"/><circle cx="11" cy="24" r="1.5"/></g></svg>
-                            </span>
-                            <span class="area-tile__label">Foot &amp; Heel <span class="visually-hidden">pain</span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="area-tile" href="/conditions/hip-pain/">
-                            <span class="area-tile__icon" aria-hidden="true">
-                                <svg viewBox="0 0 32 32" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7c3 0 6 3 11 3s8-3 11-3v5c0 6-5 10-11 10S5 18 5 12z"/><path d="m10 21-2 8M22 21l2 8"/><circle cx="16" cy="15" r="2"/></g></svg>
-                            </span>
-                            <span class="area-tile__label">Hip <span class="visually-hidden">pain</span></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </section>
 
         <!-- =====================================================
              6. TRATAMIENTOS DESTACADOS (reutiliza .treatment-card)
@@ -848,37 +849,42 @@
                             <img src="https://paintherapycare.com/wp-content/uploads/2026/11/Henry-Sardar-DO.png" alt="Portrait of Henry Sardar, DO" width="1269" height="1240" loading="lazy" decoding="async">
                         </div>
                         <h3 class="provider-card__name">Henry Sardar, DO</h3>
+                        <p class="provider-card__role">Physical Medicine & Rehabilitation</p>
                     </li>
                     <li class="provider-card">
                         <div class="provider-card__photo">
                             <img src="https://paintherapycare.com/wp-content/uploads/2026/11/Lee-Trosterman-MD.png" alt="Portrait of Lee Trosterman, MD" width="1254" height="1254" loading="lazy" decoding="async">
                         </div>
                         <h3 class="provider-card__name">Lee Trosterman, MD</h3>
+                        <p class="provider-card__role">Physical Medicine & Rehabilitation</p>
                     </li>
                     <li class="provider-card">
                         <div class="provider-card__photo">
                             <img src="https://paintherapycare.com/wp-content/uploads/2026/11/DRJASONHERNANDEZ5-scaled.jpg" alt="Portrait of Jason Hernandez, MD" width="2560" height="1707" loading="lazy" decoding="async">
                         </div>
                         <h3 class="provider-card__name">Jason Hernandez, MD</h3>
+                        <p class="provider-card__role">Sports Medicine</p>
                     </li>
                     <li class="provider-card">
                         <div class="provider-card__photo">
                             <img src="https://paintherapycare.com/wp-content/uploads/2026/11/Dr.-Olutimilehin-Oyeniran.png" alt="Portrait of Olutimilehin Oyeniran, MD" width="1254" height="1254" loading="lazy" decoding="async">
                         </div>
                         <h3 class="provider-card__name">Olutimilehin Oyeniran, MD</h3>
-                        <p class="provider-card__role">Pain Management</p>
+                        <p class="provider-card__role">Sports Medicine</p>
                     </li>
                     <li class="provider-card">
                         <div class="provider-card__photo">
                             <img src="https://paintherapycare.com/wp-content/uploads/2026/11/Michelle-Abraham-PA-C.png" alt="Portrait of Michelle Abraham, PA-C" width="1206" height="1304" loading="lazy" decoding="async">
                         </div>
                         <h3 class="provider-card__name">Michelle Abraham, PA-C</h3>
+                        <p class="provider-card__role">Physician Assistant</p>
                     </li>
                     <li class="provider-card">
                         <div class="provider-card__photo">
                             <img src="https://paintherapycare.com/wp-content/uploads/2026/11/Naveen-Sharma-DO.jpeg" alt="Portrait of Naveen Sharma, DO" width="702" height="760" loading="lazy" decoding="async">
                         </div>
                         <h3 class="provider-card__name">Naveen Sharma, DO</h3>
+                        <p class="provider-card__role">Sports Medicine</p>
                     </li>
                 </ul>
                 <!-- @end providers-grid -->
@@ -970,7 +976,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>233 Doughty Blvd<br>Inwood, NY 11096</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+15162762889" aria-label="Call Pain Therapy Inwood at (516) 276-2889">(516) 276-2889</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon: 8:30 am – 4:30 pm</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Wed: 9:00 am – 5:00 pm<br>Fri: 9:00 am – 4:45 pm (winter hours)</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=inwood">Book here<span class="visually-hidden"> at Inwood</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=233+Doughty+Blvd+Inwood+NY+11096" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Inwood (opens in a new tab)</span></a>
@@ -983,7 +989,7 @@
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg><span>40 Main St<br>Monsey, NY 10952</span></p>
                             <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:+18454143711" aria-label="Call Pain Therapy Monsey at (845) 414-3711">(845) 414-3711</a></p>
                         </address>
-                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Tue, Thu: 9:00 am – 4:00 pm</span></p>
+                        <p class="location-card__row"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg><span>Mon, Thu: 9:00 am – 4:00 pm</span></p>
                         <div class="location-card__actions">
                             <a class="btn btn--primary btn--md" href="/schedule/?location=monsey">Book here<span class="visually-hidden"> at Monsey</span></a>
                             <a class="btn btn--outline btn--md" href="https://www.google.com/maps/dir/?api=1&amp;destination=40+Main+St+Monsey+NY+10952" target="_blank" rel="noopener">Directions<span class="visually-hidden"> to Monsey (opens in a new tab)</span></a>

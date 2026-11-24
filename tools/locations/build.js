@@ -149,6 +149,12 @@ function joinList(a) {
 }
 
 /* Respuesta de horario, construida desde hours de data.js */
+/* Viernes de invierno activo (data.js → winterFriday): frase extra en la FAQ de horario */
+function winterNote(l) {
+    const w = l.winterFriday;
+    return w && w.active ? ' During winter hours, we close at ' + t12(w.close) + ' on Fridays.' : '';
+}
+
 function hoursAnswer(l) {
     const open = [];
     l.hours.forEach(function (s) { s.days.forEach(function (d) { if (open.indexOf(d) === -1) open.push(d); }); });
@@ -157,7 +163,7 @@ function hoursAnswer(l) {
         const days = s0.days.length === 1
             ? 'on ' + hours.FULL[s0.days[0]] + 's only'
             : joinList(s0.days.map(function (d) { return hours.FULL[d]; }));
-        return 'Our ' + l.sede + ' office is open ' + days + ', from ' + t12(s0.opens) + ' to ' + t12(s0.closes) + '.' + (l.hoursFaqNote || '');
+        return 'Our ' + l.sede + ' office is open ' + days + ', from ' + t12(s0.opens) + ' to ' + t12(s0.closes) + '.' + winterNote(l) + (l.hoursFaqNote || '');
     }
     const parts = l.hours.map(function (s) {
         return hours.dayLabel(s.days).replace(/–/g, ' to ').replace(/\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/g, function (d) { return hours.FULL[d]; }) + ', ' + t12(s.opens) + ' to ' + t12(s.closes);
@@ -318,7 +324,7 @@ function jsonLd(l) {
             const isDoc = p.credential === 'MD' || p.credential === 'DO';
             const node = { '@type': isDoc ? 'Physician' : 'Person', '@id': u + '#' + p.slug, name: p.name.replace(/,.*$/, ''), honorificSuffix: p.credential };
             if (p.image && p.image.url) node.image = p.image.url;
-            if (p.specialty === 'Pain Management') node.medicalSpecialty = 'PainMedicine';
+            if (isDoc) node.medicalSpecialty = 'PainMedicine';   // igual que las bios de /providers/
             node.worksFor = { '@id': u + '#clinic' };
             if (isDoc) node.workLocation = { '@id': u + '#clinic' };
             data['@graph'].splice(1, 0, node);
