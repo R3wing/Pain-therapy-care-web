@@ -63,7 +63,12 @@
                 "name": "Pain Therapy Medical Care – Crown Heights",
                 "url": "https://paintherapycare.com/locations/brooklyn-ny-crown-heights/",
                 "telephone": "+1-347-384-5630",
-                "image": "https://paintherapycare.com/assets/images/og-brooklyn-ny-crown-heights.jpg",
+                "image": [
+                    "https://paintherapycare.com/assets/images/og-brooklyn-ny-crown-heights.jpg",
+                    "https://paintherapycare.com/wp-content/uploads/2026/11/entrada-de-clinica-ahava-v2.png",
+                    "https://paintherapycare.com/wp-content/uploads/2026/11/imagen-interiror-clinica-ahava-v2.png",
+                    "https://paintherapycare.com/wp-content/uploads/2026/11/imagen-interior-con-exit.png"
+                ],
                 "address": {
                     "@type": "PostalAddress",
                     "streetAddress": "358 Kingston Ave",
@@ -540,7 +545,9 @@
         <!-- =====================================================
              2. HERO LOCAL
         ====================================================== -->
-        <section class="location-hero" aria-labelledby="hero-title">
+        <section class="location-hero location-hero--has-image" aria-labelledby="hero-title">
+            <img class="location-hero__bg" src="https://paintherapycare.com/wp-content/uploads/2026/11/entrada-de-clinica-ahava-v2.png" alt="" aria-hidden="true" width="1920" height="1080" fetchpriority="high" decoding="async">
+            <div class="location-hero__veil" aria-hidden="true"></div>
             <div class="location-hero__deco" aria-hidden="true">
                 <svg class="arcs location-hero__arcs" aria-hidden="true" focusable="false"><use href="#i-arcs"></use></svg>
             </div>
@@ -653,29 +660,20 @@
                 <header class="section-header">
                     <h2 class="section-title" id="inside-title">Our Crown Heights clinic</h2>
                 </header>
-                <ul class="location-gallery location-gallery--4">
-                    <li>
-                        <div class="media-placeholder location-gallery__media" data-media="brooklyn-ny-crown-heights-facade">
-                            <span class="media-placeholder__label">IMAGE: brooklyn-ny-crown-heights-facade.webp · 1200×900</span>
-                            <!-- <img src="../../assets/images/locations/brooklyn-ny-crown-heights-facade.webp" alt="Entrance of Ahava Medical Center at 358 Kingston Ave, Brooklyn, NY 11213" width="1200" height="900" loading="lazy" decoding="async"> -->
-                        </div>
-                    </li>
+                <ul class="location-gallery">
                     <li>
                         <div class="media-placeholder location-gallery__media" data-media="brooklyn-ny-crown-heights-interior-1">
-                            <span class="media-placeholder__label">IMAGE: brooklyn-ny-crown-heights-interior-1.webp · 1200×900</span>
-                            <!-- <img src="../../assets/images/locations/brooklyn-ny-crown-heights-interior-1.webp" alt="Reception and waiting area at Pain Therapy Medical Care in Crown Heights, Brooklyn" width="1200" height="900" loading="lazy" decoding="async"> -->
+                            <img src="https://paintherapycare.com/wp-content/uploads/2026/11/entrada-de-clinica-ahava-v2.png" alt="Clinic entrance with a blue awning and two Ahava Medical banners at the Crown Heights clinic" width="1200" height="900" loading="lazy" decoding="async">
                         </div>
                     </li>
                     <li>
                         <div class="media-placeholder location-gallery__media" data-media="brooklyn-ny-crown-heights-interior-2">
-                            <span class="media-placeholder__label">IMAGE: brooklyn-ny-crown-heights-interior-2.webp · 1200×900</span>
-                            <!-- <img src="../../assets/images/locations/brooklyn-ny-crown-heights-interior-2.webp" alt="Treatment room with Shockwave and EMTT equipment at our Crown Heights, Brooklyn clinic" width="1200" height="900" loading="lazy" decoding="async"> -->
+                            <img src="https://paintherapycare.com/wp-content/uploads/2026/11/imagen-interiror-clinica-ahava-v2.png" alt="Waiting area with green upholstered chairs and a wall mirror at the Crown Heights clinic" width="1200" height="900" loading="lazy" decoding="async">
                         </div>
                     </li>
                     <li>
                         <div class="media-placeholder location-gallery__media" data-media="brooklyn-ny-crown-heights-interior-3">
-                            <span class="media-placeholder__label">IMAGE: brooklyn-ny-crown-heights-interior-3.webp · 1200×900</span>
-                            <!-- <img src="../../assets/images/locations/brooklyn-ny-crown-heights-interior-3.webp" alt="Rehabilitation and therapy area at Pain Therapy Medical Care in Crown Heights, Brooklyn" width="1200" height="900" loading="lazy" decoding="async"> -->
+                            <img src="https://paintherapycare.com/wp-content/uploads/2026/11/imagen-interior-con-exit.png" alt="Interior hallway with an exit sign and exam room doors at the Crown Heights clinic" width="1200" height="900" loading="lazy" decoding="async">
                         </div>
                     </li>
                 </ul>

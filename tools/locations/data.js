@@ -113,7 +113,14 @@ module.exports = [
         titleArea: 'Crown Heights, Brooklyn',
         placeLabel: 'Crown Heights, Brooklyn',
         floor: '',                                 // sin nota de piso
-        gallery: [],   // Pendiente: fotos de la sede (fachada o interior), 1200×900. Mientras tanto se ven los placeholders.
+        heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/entrada-de-clinica-ahava-v2.png',   // imagen de fondo del hero (decorativa, con velo)
+        /* Galería "Our Crown Heights clinic": fotos reales de la Media Library (PNG 1448×1086, 4:3; ~0,7–1,1 MB: conviene subir versiones .webp).
+           "interiror" (2.ª foto) está así en WordPress: se copia tal cual. La entrada muestra un toldo con "596 Albany Ave" (la dirección de la sede es 358 Kingston Ave): por eso el alt no menciona calle. */
+        gallery: [
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/entrada-de-clinica-ahava-v2.png', alt: 'Clinic entrance with a blue awning and two Ahava Medical banners at the Crown Heights clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/imagen-interiror-clinica-ahava-v2.png', alt: 'Waiting area with green upholstered chairs and a wall mirror at the Crown Heights clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/imagen-interior-con-exit.png', alt: 'Interior hallway with an exit sign and exam room doors at the Crown Heights clinic' }
+        ],
         hours: [
             // Antes: Tue 9–5. Cambio a jueves con el mismo horario, confirmado por el cliente el 25-nov-2026.
             { days: ['Thu'], opens: '09:00', closes: '17:00' }
@@ -128,7 +135,6 @@ module.exports = [
             heroText: 'Evaluation and non-surgical management of back pain, neck pain, joint pain, leg and foot pain, neuropathic pain, and other musculoskeletal conditions.',
             hoursText: 'Thursdays only, 9:00 AM–5:00 PM',
             badge: 'Open Thursdays only',
-            gallery: 'facade+3',
             conditions: [
                 { title: 'Back pain',          links: [['Lower back pain', 'lower-back-pain']] },
                 { title: 'Neck pain',          links: [['Neck pain', 'neck-pain']] },
