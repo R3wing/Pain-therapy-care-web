@@ -1060,6 +1060,12 @@ main:focus-visible {
     overflow: hidden;
     color: var(--white);
     background: var(--navy-900);
+    /* Overlay del video: opacidades del navy-950 (#0A2633). Móvil: degradado vertical; ≥768 px: horizontal. */
+    --hero-ov-strong: .68;   /* zona del texto */
+    --hero-ov-mid: .42;
+    --hero-ov-soft: .08;     /* lado derecho: el video casi sin filtro */
+    /* Fin de la zona fuerte = borde derecho del texto (max 640 px dentro del contenedor de 1200 px) + margen */
+    --hero-ov-end: calc(max(672px, 50% + 40px) + 24px);
 }
 
 .hero__media {
@@ -1086,7 +1092,7 @@ main:focus-visible {
     inset: 0;
     z-index: -2;
     background:
-        linear-gradient(180deg, rgba(10, 38, 51, .94) 0%, rgba(10, 38, 51, .86) 65%, rgba(10, 38, 51, .62) 100%);
+        linear-gradient(180deg, rgba(10, 38, 51, .4) 0, rgba(10, 38, 51, var(--hero-ov-strong)) 220px, rgba(10, 38, 51, var(--hero-ov-strong)) 100%);
 }
 
 .hero__arcs {
@@ -1126,6 +1132,13 @@ main:focus-visible {
     max-width: 34em;
     font-size: var(--fs-body);
     color: var(--white);
+}
+
+/* Texto pequeño sobre el video aclarado (no el H1) */
+.hero__kicker,
+.hero__text,
+.hero .check-list--on-dark li {
+    text-shadow: 0 1px 2px rgba(10, 38, 51, .45);
 }
 
 /* Botón Pausa/Play */
@@ -1977,11 +1990,16 @@ main:focus-visible {
         gap: var(--sp-3);
     }
 
-    /* Hero: overlay horizontal */
+    /* Hero: overlay horizontal (fuerte detrás del texto, claro a la derecha) + franja superior */
     .hero::before {
         background:
-            linear-gradient(180deg, rgba(10, 38, 51, .75) 0, rgba(10, 38, 51, .75) 120px, rgba(10, 38, 51, 0) 260px),
-            linear-gradient(90deg, rgba(10, 38, 51, .94) 0%, rgba(10, 38, 51, .7) 48%, rgba(10, 38, 51, .15) 100%);
+            linear-gradient(180deg, rgba(10, 38, 51, .5) 0, rgba(10, 38, 51, 0) 160px),
+            linear-gradient(90deg,
+                rgba(10, 38, 51, var(--hero-ov-strong)) 0%,
+                rgba(10, 38, 51, var(--hero-ov-strong)) var(--hero-ov-end),
+                rgba(10, 38, 51, var(--hero-ov-mid)) calc(var(--hero-ov-end) + 20%),
+                rgba(10, 38, 51, var(--hero-ov-soft)) calc(var(--hero-ov-end) + 45%),
+                rgba(10, 38, 51, var(--hero-ov-soft)) 100%);
     }
 
     .hero__arcs {
@@ -2277,6 +2295,19 @@ main:focus-visible {
     /* Hero */
     .hero {
         min-height: clamp(640px, 85vh, 900px);
+    }
+
+    /* Hero ≥1200 px: el texto se acerca al borde izquierdo (no al contenedor centrado) para dejar ver más el video.
+       La zona fuerte del overlay sigue al texto: margen izquierdo + 640 px de texto + 24 px. */
+    .hero {
+        --hero-pad-left: clamp(32px, 3.5vw, 56px);
+        --hero-ov-end: calc(var(--hero-pad-left) + 640px + 24px);
+    }
+
+    .hero__inner {
+        max-width: none;
+        margin-inline: 0;
+        padding-inline: var(--hero-pad-left) var(--gutter);
     }
 
     .hero__arcs {
@@ -7527,4 +7558,60 @@ button.reviews-filter__btn {
 .prov-reviews {
     display: grid;
     gap: var(--sp-4);
+}
+
+/* === PAGE: LOCATION HERO IMAGE ===
+   Foto de fondo desvanecida en el hero de las sedes con heroImage. Velo = color actual del hero (--cloud); visibilidad de la foto +40% (25-nov). */
+.location-hero--has-image {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.location-hero--has-image .location-hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(.7) brightness(1.05);
+    z-index: -2;
+}
+
+.location-hero--has-image .location-hero__veil {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg,
+        rgba(245, 248, 250, .3) 0,
+        rgba(245, 248, 250, .3) 100%);
+}
+
+@media (max-width: 767px) {
+    .location-hero--has-image .location-hero__veil {
+        background: linear-gradient(180deg,
+            rgba(245, 248, 250, .3) 0,
+            rgba(245, 248, 250, .3) 100%);
+    }
+}
+
+/* Texto del hero con foto: --ink (paleta). El título lleva una sombra clara muy tenue que solo ayuda a separarlo de la foto */
+.location-hero--has-image .location-hero__title,
+.location-hero--has-image .location-hero__text {
+    color: var(--ink);
+}
+
+.location-hero--has-image .location-hero__title {
+    text-shadow:
+        0 1px 2px rgba(255, 255, 255, .55),
+        0 0 10px rgba(255, 255, 255, .35);
+}
+
+/* Párrafo del hero con foto: pastilla blanca translúcida (misma estética que la tarjeta de dirección) para que se lea sobre cualquier foto */
+.location-hero--has-image .location-hero__text {
+    padding: var(--sp-3) var(--sp-4);
+    background: rgba(255, 255, 255, .82);
+    border-radius: var(--r-btn);
+    text-shadow: none;
 }

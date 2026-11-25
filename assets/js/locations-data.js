@@ -48,7 +48,7 @@ window.PT_LOCATIONS = [
         "tel": "+13473845630",
         "lat": 40.666568,
         "lng": -73.94281,
-        "days": "Tuesdays only",
+        "days": "Thursdays only",
         "directions": "https://www.google.com/maps/dir/?api=1&destination=358%20Kingston%20Ave%2C%20Brooklyn%2C%20NY%2011213"
     },
     {

@@ -204,9 +204,11 @@
         }
 
         /* Providers que atienden en una sola sede: ?provider= fuerza esa sede (las otras se ocultan) y muestra su horario.
-           Hoy: Dr. Sardar (solo Williamsburg, lun–jue 1:00–3:00 PM) */
+           Hoy: Dr. Sardar (solo Williamsburg, lun–jue 1:00–3:00 PM) y Dr. Oyeniran (solo Crown Heights, jueves) */
         var PROVIDER_SITE = {
-            'henry-sardar-md': { location: 'williamsburg', note: 'Dr. Sardar sees patients in Williamsburg Monday to Thursday, 1:00–3:00 PM.' }
+            'henry-sardar-md': { location: 'williamsburg', note: 'Dr. Sardar sees patients in Williamsburg Monday to Thursday, 1:00–3:00 PM.' },
+            /* Dr. Oyeniran: solo Crown Heights (jueves). El aviso de la sede ya dice "Open Thursdays only", sin nota propia */
+            'olutimilehin-oyeniran-md': { location: 'crown-heights', note: '' }
         };
         var providerSite = pProvider && has(PROVIDER_SITE, pProvider) ? PROVIDER_SITE[pProvider] : null;
         if (providerSite) {
@@ -244,7 +246,7 @@
         var LOCATION_NOTES = {
             'williamsburg': 'New patients are seen until 45 minutes before closing.',
             'flatbush': 'New patients are seen until 45 minutes before closing.',
-            'crown-heights': 'Crown Heights is open on Tuesdays only. New patients are seen until 4:15 pm.',
+            'crown-heights': 'Open Thursdays only. New patients are seen until 4:15 pm.',
             'inwood': 'Open Mon, Wed and Fri. New patients are seen until 4:15 pm. On Fridays, the last new-patient appointment is 3:40 PM.',
             'monsey': 'Open Mon and Thu. New patients are seen until 3:15 pm.'
         };
@@ -253,7 +255,7 @@
             if (!locationNote) return;
             var key = selectedLocation();
             var msg = has(LOCATION_NOTES, key) ? LOCATION_NOTES[key] : '';
-            if (providerSite && msg) msg = providerSite.note + ' ' + msg;
+            if (providerSite && providerSite.note && msg) msg = providerSite.note + ' ' + msg;
             locationNote.textContent = msg;
             locationNote.hidden = !msg;
         }

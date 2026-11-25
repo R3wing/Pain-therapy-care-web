@@ -279,7 +279,7 @@ function jsonLd(l) {
                 name: l.schemaName,
                 url: u,
                 telephone: l.schemaTel,
-                image: `${SITE}/assets/images/og-${l.slug}.jpg`,
+                image: l.gallery && l.gallery.length ? [`${SITE}/assets/images/og-${l.slug}.jpg`].concat(l.gallery.map(function (g) { return g.src; })) : `${SITE}/assets/images/og-${l.slug}.jpg`,
                 address: {
                     '@type': 'PostalAddress',
                     streetAddress: l.street,
@@ -335,6 +335,33 @@ function jsonLd(l) {
 
 
 /* ---------- ajustes por sede sobre los fragmentos de la Home ---------- */
+
+/* Galería "Our <sede> clinic": si la sede trae l.gallery (array de { src, alt }) se muestran las fotos reales
+   (misma tarjeta .media-placeholder: el borde punteado y el texto "IMAGE: …" desaparecen solos cuando hay <img>).
+   Sin l.gallery se mantiene el placeholder de siempre. */
+const GALLERY_ALT = {
+    1: 'Reception and waiting area at Pain Therapy Medical Care in ',
+    2: 'Treatment room with Shockwave and EMTT equipment at our ',
+    3: 'Rehabilitation and therapy area at Pain Therapy Medical Care in '
+};
+/* Hero con foto de fondo (solo sedes con l.heroImage): imagen decorativa + velo que la desvanece */
+function heroBg(src) {
+    const pad = ' '.repeat(12);
+    return pad + '<img class="location-hero__bg" src="' + src + '" alt="" aria-hidden="true" width="1920" height="1080" fetchpriority="high" decoding="async">\n' +
+           pad + '<div class="location-hero__veil" aria-hidden="true"></div>\n';
+}
+
+function galleryMedia(l, n) {
+    const pad = ' '.repeat(28);
+    const photo = l.gallery && l.gallery[n - 1];
+    if (photo) {
+        if (!photo.src || !photo.alt) throw new Error(l.key + ': gallery[' + (n - 1) + '] necesita src y alt');
+        return '<img src="' + photo.src + '" alt="' + photo.alt.replace(/"/g, '&quot;') + '" width="1200" height="900" loading="lazy" decoding="async">';
+    }
+    const alt = n === 2 ? GALLERY_ALT[2] + l.placeLabel + ' clinic' : GALLERY_ALT[n] + l.placeLabel;
+    return '<span class="media-placeholder__label">IMAGE: ' + l.slug + '-interior-' + n + '.webp · 1200×900</span>\n' + pad +
+        '<!-- <img src="../../assets/images/locations/' + l.slug + '-interior-' + n + '.webp" alt="' + alt + '" width="1200" height="900" loading="lazy" decoding="async"> -->';
+}
 
 function headerFor(l) {
     return lib.render('header', { mode: 'scrolled', call: '#locations', depth: 2, current: `/locations/${l.slug}/` });
@@ -419,6 +446,11 @@ locations.forEach(function (l) {
         ACCESS_TEXT: ACCESS,
         ACCESS_EXTRA: l.accessLine ? '\n                        <p class="location-info__text">' + l.accessLine + '</p>' : '',
         TRANSPORT_TEXT: TRANSPORT,
+        GALLERY_MEDIA_1: galleryMedia(l, 1),
+        GALLERY_MEDIA_2: galleryMedia(l, 2),
+        GALLERY_MEDIA_3: galleryMedia(l, 3),
+        HERO_CLASS: l.heroImage ? ' location-hero--has-image' : '',
+        HERO_BG: l.heroImage ? heroBg(l.heroImage) : '',
         GALLERY_CLASS: c.gallery === 'facade+3' ? ' location-gallery--4' : '',
         GALLERY_FACADE: c.gallery === 'facade+3' ? [
             '<li>',

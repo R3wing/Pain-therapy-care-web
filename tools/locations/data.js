@@ -5,6 +5,7 @@
 
    hours  → horarios CONFIRMADOS por el cliente (formato en tools/shared/hours.js).
             Un día sin tramo = cerrado.
+   gallery → (opcional) [{ src, alt }] ×3: fotos reales de "Our <sede> clinic" (hoy Williamsburg y Flatbush; sin fotos se ven los placeholders).
    floor  → piso / suite: nota de acceso, SEPARADA de la dirección (el NAP no cambia).
    accessLine → frase de piso / elevador para "Accessibility" y la FAQ (vacío si no aplica).
    languages → idiomas de atención (fuente: página en vivo /new-patients/).
@@ -26,6 +27,7 @@ module.exports = [
         key: 'williamsburg',                       // ?location= en /schedule/ (igual que la Home)
         shortAddr: '16 Sumner Pl, Brooklyn',
         slug: 'brooklyn-ny-williamsburg',
+        heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Fachada-de-Ahava-Medical-con-furgoneta-azul.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Williamsburg',                      // nombre corto en botones y títulos
         listName: 'Williamsburg',                  // como aparece en menús / Call ▾
         schemaName: 'Pain Therapy Medical Care – Williamsburg',
@@ -41,6 +43,12 @@ module.exports = [
         titleArea: 'Williamsburg, Brooklyn',
         placeLabel: 'Williamsburg, Brooklyn',      // para textos alt
         floor: '3rd floor',
+        /* Galería "Our Williamsburg clinic": fotos reales de la Media Library de WordPress (1200×900). Sin gallery = placeholder. */
+        gallery: [
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Fachada-de-Ahava-Medical-con-furgoneta-azul.png', alt: 'Clinic entrance with the Ahava Medical sign and a blue van parked outside the Williamsburg clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/brooklyn-ny-williamsburg-interior-1.webp', alt: 'Reception desk and front office at the Williamsburg clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/brooklyn-ny-williamsburg-interior-3.webp', alt: 'Hallway with numbered exam rooms at the Williamsburg clinic' }
+        ],
         accessLine: 'Our office is on the 3rd floor, accessible by elevator.',
         hours: [
             { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
@@ -53,6 +61,7 @@ module.exports = [
         key: 'flatbush',
         shortAddr: '2577 Nostrand Ave, Brooklyn',
         slug: 'brooklyn-ny-flatbush',
+        heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Fachada-moderna-de-Ahava-Medical.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Flatbush',
         listName: 'Flatbush',
         schemaName: 'Pain Therapy Medical Care – Flatbush',
@@ -68,6 +77,12 @@ module.exports = [
         titleArea: 'Flatbush, Brooklyn',
         placeLabel: 'Flatbush, Brooklyn',
         floor: 'Ground floor, Suite C',
+        /* Galería "Our Flatbush clinic": fotos reales de la Media Library de WordPress (PNG 1448×1086, 4:3; pesan ~800–960 KB: conviene subir versiones .webp). */
+        gallery: [
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Fachada-moderna-de-Ahava-Medical.png', alt: 'Entrance doors and glass storefront at the Flatbush clinic, 2577 Nostrand Ave' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Clinica-Ahava-bajo-el-sol-otonal.png', alt: 'Building exterior with trees and banners at the Flatbush clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Clinica-medica-moderna-Ahava-al-amanecer.png', alt: 'Front of the Flatbush clinic seen from the sidewalk on Nostrand Ave' }
+        ],
         accessLine: 'Ground floor, Suite C.',
         hours: [
             { days: ['Mon', 'Tue', 'Wed', 'Thu'], opens: '10:30', closes: '17:00' },
@@ -98,19 +113,21 @@ module.exports = [
         titleArea: 'Crown Heights, Brooklyn',
         placeLabel: 'Crown Heights, Brooklyn',
         floor: '',                                 // sin nota de piso
+        gallery: [],   // Pendiente: fotos de la sede (fachada o interior), 1200×900. Mientras tanto se ven los placeholders.
         hours: [
-            { days: ['Tue'], opens: '09:00', closes: '17:00' }
+            // Antes: Tue 9–5. Cambio a jueves con el mismo horario, confirmado por el cliente el 25-nov-2026.
+            { days: ['Thu'], opens: '09:00', closes: '17:00' }
         ],
         languages: [],                             // [CONFIRM: idiomas] → no se afirma ninguno
         geo: { lat: 40.666568, lng: -73.942810 },
-        scheduleNote: 'Crown Heights is open on Tuesdays only.',
+        scheduleNote: 'Open Thursdays only.',
         hoursFaqNote: ' To book another day, call or visit one of our other Brooklyn locations.',
         custom: {
-            metaDesc: 'Pain management in Crown Heights, Brooklyn at 358 Kingston Ave. Non-surgical care for back, neck, joint and nerve pain. Open Tuesdays. Call (347) 384-5630.',
+            metaDesc: 'Pain management in Crown Heights, Brooklyn at 358 Kingston Ave. Non-surgical care for back, neck, joint & nerve pain. Open Thursdays. Call (347) 384-5630.',
             /* Texto del cliente, literal */
             heroText: 'Evaluation and non-surgical management of back pain, neck pain, joint pain, leg and foot pain, neuropathic pain, and other musculoskeletal conditions.',
-            hoursText: 'Tuesdays only, 9:00 AM–5:00 PM',
-            badge: 'Open Tuesdays only',
+            hoursText: 'Thursdays only, 9:00 AM–5:00 PM',
+            badge: 'Open Thursdays only',
             gallery: 'facade+3',
             conditions: [
                 { title: 'Back pain',          links: [['Lower back pain', 'lower-back-pain']] },
@@ -125,6 +142,7 @@ module.exports = [
         key: 'inwood',
         shortAddr: '233 Doughty Blvd, Inwood',
         slug: 'inwood-ny',
+        heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Edificio-medico-moderno-Ahava-233.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Inwood',
         listName: 'Inwood · Five Towns',
         schemaName: 'Pain Therapy Medical Care – Inwood (Five Towns)',
@@ -140,6 +158,12 @@ module.exports = [
         titleArea: 'Inwood, Five Towns',
         placeLabel: 'Inwood, Five Towns',
         floor: '2nd floor',
+        /* Galería "Our Inwood clinic": fotos reales de la Media Library de WordPress (PNG ~1590×990, ~780–850 KB: conviene subir versiones .webp 1200×900). */
+        gallery: [
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Edificio-medico-moderno-Ahava-233.png', alt: 'Three-story clinic building with the number 233 and its parking lot at the Inwood clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Edificio-medico-moderno-con-fachada-233.png', alt: 'Side view of the clinic building and its entrance canopy at the Inwood clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Fachada-moderna-de-Ahava-Medical-1.png', alt: 'Entrance with the Ahava Medical sign at the Inwood clinic, 233 Doughty Blvd' }
+        ],
         accessLine: 'Our office is on the 2nd floor, accessible by elevator.',
         hours: [
             { days: ['Mon', 'Wed', 'Fri'], opens: '09:00', closes: '17:00' }
@@ -156,6 +180,7 @@ module.exports = [
         key: 'monsey',
         shortAddr: '40 Main St, Monsey',
         slug: 'monsey-ny',
+        heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Complejo-comercial-moderno-en-otono.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Monsey',
         listName: 'Monsey',
         schemaName: 'Pain Therapy Medical Care – Monsey',
@@ -171,6 +196,13 @@ module.exports = [
         titleArea: 'Monsey, Rockland County',
         placeLabel: 'Monsey, NY',
         floor: '',
+        /* Galería "Our Monsey clinic": fotos reales de la Media Library de WordPress (PNG 1448×1086, 4:3; ~810–920 KB: conviene subir versiones .webp).
+           Las 3 muestran el letrero de OTRO negocio (LOADIO) y la 2.ª también un cartel de "Ahava Vision": NO se mencionan en los alt. */
+        gallery: [
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Edificio-moderno-con-entrada-de-baja-altura.png', alt: 'Two-story building with a wood-paneled facade and a covered driveway at the Monsey clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Complejo-comercial-moderno-en-otono.png', alt: 'Corner of the building with a stone-clad entrance tower at the Monsey clinic' },
+            { src: 'https://paintherapycare.com/wp-content/uploads/2026/11/Mercado-moderno-LOADIO-bajo-cielo-nublado.png', alt: 'Stone-clad building corner and covered driveway seen from the sidewalk at the Monsey clinic' }
+        ],
         hours: [
             { days: ['Mon', 'Thu'], opens: '09:00', closes: '16:00' }
         ],

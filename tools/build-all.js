@@ -25,7 +25,7 @@ const lib = require('./shared/lib.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const CHECK = process.argv.includes('--check');
-const SKIP_DIRS = new Set(['tools', 'node_modules', 'assets', '.git']);
+const SKIP_DIRS = new Set(['tools', 'node_modules', 'assets', '.git', '.vercel']);
 
 /* ---------- 1) generadores ---------- */
 

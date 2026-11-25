@@ -369,6 +369,12 @@ const RENDER = {
         return indent(items.join('\n'), o.indent || 0);
     },
 
+    /* Línea final del bloque de contacto de las páginas legales (Terms y Privacy): enlace a /contact-us/ + email de tools/shared/site.js */
+    'legal-contact-more': function () {
+        const email = require('./site.js').contactEmail;
+        return '<p class="legal-contact__more"><a href="/contact-us/">Contact us online</a> · Email: <a href="mailto:' + email + '">' + email + '</a></p>';
+    },
+
     /* Mapa (Leaflet) de una sede o de todas. El fallback sin JS / si falla es la lista de sedes
        con enlaces "Open in Google Maps". key = 'all' | slug de la sede. */
     map: function (o) {
