@@ -351,6 +351,18 @@ function heroBg(src) {
            pad + '<div class="location-hero__veil" aria-hidden="true"></div>\n';
 }
 
+/* Sección "Neighborhoods we serve near …": título y 6 barrios desde data.js (texto, sin enlaces) */
+function areasTitle(l) {
+    if (!l.areasTitle) throw new Error(l.key + ': falta areasTitle');
+    return l.areasTitle;
+}
+function areasItems(l) {
+    if (!Array.isArray(l.neighborhoods) || l.neighborhoods.length !== 6) throw new Error(l.key + ': neighborhoods necesita exactamente 6 barrios');
+    return l.neighborhoods.map(function (n) {
+        return ' '.repeat(20) + '<li class="location-areas__item">' + String(n).replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</li>';
+    }).join(String.fromCharCode(10));
+}
+
 function galleryMedia(l, n) {
     const pad = ' '.repeat(28);
     const photo = l.gallery && l.gallery[n - 1];
@@ -451,6 +463,8 @@ locations.forEach(function (l) {
         GALLERY_MEDIA_3: galleryMedia(l, 3),
         HERO_CLASS: l.heroImage ? ' location-hero--has-image' : '',
         HERO_BG: l.heroImage ? heroBg(l.heroImage) : '',
+        AREAS_TITLE: areasTitle(l),
+        AREAS_ITEMS: areasItems(l),
         GALLERY_CLASS: c.gallery === 'facade+3' ? ' location-gallery--4' : '',
         GALLERY_FACADE: c.gallery === 'facade+3' ? [
             '<li>',

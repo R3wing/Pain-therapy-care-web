@@ -13,6 +13,8 @@
    scheduleNote → aviso en /schedule/ al elegir la sede (opcional; el cierre -45 min se añade solo).
    winterFriday → (opcional) { close, lastNewPatient, active }: viernes de invierno (cierra antes y último paciente nuevo fijo).
    hoursFaqNote → frase final de la FAQ de horario (opcional).
+   areasTitle   → título de la sección "Neighborhoods we serve near …".
+   neighborhoods→ [6 nombres] de esa sección (texto, no enlaces).
    custom       → (opcional) textos propios de la página de la sede: heroText, venue,
                   hoursText, badge, metaDesc, conditions[], gallery:'facade+3'. Los providers de cada sede salen de tools/providers/data.js (locations).
 
@@ -29,6 +31,8 @@ module.exports = [
         slug: 'brooklyn-ny-williamsburg',
         heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Fachada-de-Ahava-Medical-con-furgoneta-azul.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Williamsburg',                      // nombre corto en botones y títulos
+        areasTitle: 'Neighborhoods we serve near Williamsburg',   // título de la sección de barrios
+        neighborhoods: ['Williamsburg', 'East Williamsburg', 'Bushwick', 'Bedford-Stuyvesant', 'South Williamsburg', 'Clinton Hill'],   // 6 barrios, texto (no enlaces)
         listName: 'Williamsburg',                  // como aparece en menús / Call ▾
         schemaName: 'Pain Therapy Medical Care – Williamsburg',
         street: '16 Sumner Place',
@@ -63,6 +67,8 @@ module.exports = [
         slug: 'brooklyn-ny-flatbush',
         heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Fachada-moderna-de-Ahava-Medical.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Flatbush',
+        areasTitle: 'Neighborhoods we serve near Flatbush',   // título de la sección de barrios
+        neighborhoods: ['Flatbush', 'Midwood', 'East Flatbush', 'Flatlands', 'Marine Park', 'Ditmas Park'],   // 6 barrios, texto (no enlaces)
         listName: 'Flatbush',
         schemaName: 'Pain Therapy Medical Care – Flatbush',
         street: '2577 Nostrand Ave',
@@ -96,6 +102,8 @@ module.exports = [
         shortAddr: '358 Kingston Ave, Brooklyn',
         slug: 'brooklyn-ny-crown-heights',
         sede: 'Crown Heights',
+        areasTitle: 'Neighborhoods we serve near Crown Heights',   // título de la sección de barrios
+        neighborhoods: ['Crown Heights', 'Weeksville', 'Wingate', 'Prospect Lefferts Gardens', 'East Flatbush', 'Bedford-Stuyvesant'],   // 6 barrios, texto (no enlaces)
         listName: 'Crown Heights',
         /* NAP: nombre decidido por el cliente (no es el de Ahava). Verificar contra Google Business Profile. */
         schemaName: 'Pain Therapy Medical Care – Crown Heights',
@@ -150,6 +158,8 @@ module.exports = [
         slug: 'inwood-ny',
         heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Edificio-medico-moderno-Ahava-233.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Inwood',
+        areasTitle: 'Neighborhoods we serve near Inwood (Five Towns)',   // título de la sección de barrios
+        neighborhoods: ['Inwood', 'Lawrence', 'Cedarhurst', 'Woodmere', 'Hewlett', 'Far Rockaway'],   // 6 barrios, texto (no enlaces)
         listName: 'Inwood · Five Towns',
         schemaName: 'Pain Therapy Medical Care – Inwood (Five Towns)',
         street: '233 Doughty Blvd',
@@ -188,6 +198,8 @@ module.exports = [
         slug: 'monsey-ny',
         heroImage: 'https://paintherapycare.com/wp-content/uploads/2026/11/Complejo-comercial-moderno-en-otono.png',   // imagen de fondo del hero (decorativa, con velo)
         sede: 'Monsey',
+        areasTitle: 'Neighborhoods we serve near Monsey',   // título de la sección de barrios
+        neighborhoods: ['Monsey', 'Spring Valley', 'Airmont', 'Chestnut Ridge', 'New Square', 'Kaser'],   // 6 barrios, texto (no enlaces)
         listName: 'Monsey',
         schemaName: 'Pain Therapy Medical Care – Monsey',
         street: '40 Main St',
